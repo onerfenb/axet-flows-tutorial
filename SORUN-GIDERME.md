@@ -378,6 +378,61 @@ flow.set("sayac", sayac);
 
 ---
 
+## AI ajanı sorunları
+
+### `Project ID not configured` (VALIDATION_ERROR)
+
+Ajan düğümünde proje seçilmemiş. Düğümü açıp **Project** seçin.
+
+**Dikkat:** Bu düğümde açılır menüleri **fareyle** seçin. Klavyeyle (ok
+tuşları + Enter) yapılan seçim ekranda görünür ama kaydedilmez —
+`projectId` boş kalır. Kontrol için düğümü kapatıp tekrar açın.
+
+---
+
+### `Budget exhausted or billing disabled for this project`
+
+**Kod hatası değil, bütçe/yetki sorunudur.** Seçili projenin AI kredisi kapalı.
+
+**Çözüm:** Başka bir proje deneyin (birden fazla projeye erişiminiz olabilir).
+Hepsi kapalıysa proje sahibinden veya IT'den AI bütçesi isteyin.
+
+Hata zinciri mimariyi gösterir:
+
+```
+Mastra API error 500  ->  litellm.APIError  ->  OpenAIException
+   (ajan katmani)          (model yonlendirici)     (saglayici)
+```
+
+---
+
+### Palette iki farklı ajan düğümü var, hangisi?
+
+| Düğüm | Kategori | Kullan |
+|---|---|---|
+| `Flows AI Agent` (`axet-agents-execute`) | **aXet AI** | ✅ Evet |
+| `aXet Agent` | **Deprecated nodes** | ❌ Hayır |
+
+---
+
+### AI yanıtına erişemiyorum
+
+Yanıt nesne olarak gelir, metin `response` anahtarındadır:
+
+```javascript
+const metin = msg.payload.response;
+```
+
+---
+
+### Model kurum içi bilgiyi bilmiyor
+
+Beklenen davranış — genel dil modelleri kurum içi ürünleri bilmez. Bilgiyi
+siz vermelisiniz: bağlamı prompt'a ekleyin, RAG aracı bağlayın veya kurumsal
+veriyi okuyan bir MCP aracı kullanın.
+
+---
+
 ## Tasarımcı / tarayıcı sorunları
 
 ### Sekme kapanmıyor, "Bu siteden ayrılmak istiyor musunuz?" çıkıyor
@@ -400,6 +455,29 @@ Invoke-RestMethod -Uri 'http://127.0.0.1:<PORT>/flows' |
   Where-Object { $_.type -notin 'tab','subflow' } |
   Select-Object type, name
 ```
+
+---
+
+### "The server is running a more recent set of flows"
+
+Sunucudaki akış, tarayıcı taslağınızdan ileri gitmiş — başka bir sekmeden
+veya API'den deploy yapılmış.
+
+| Seçenek | Ne olur |
+|---|---|
+| **Merge** | İki taraf birleşir (çakışma yoksa en doğrusu) |
+| Ignore & deploy | Sizin taslağınız yazılır, diğer değişiklikler **silinir** |
+| Review changes | Farkı gösterir |
+
+"No conflicts" yazıyorsa **Merge** seçin.
+
+---
+
+### "The workspace contains some nodes that are not properly configured"
+
+Bir düğümün şeması eksik. **Çalışmayı engellemez** — `Confirm deploy`
+diyebilirsiniz. Genelde akış API ile üretildiğinde görülür; elle sürüklenen
+düğümlerde editör varsayılanları kendisi doldurur.
 
 ---
 

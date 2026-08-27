@@ -39,11 +39,12 @@ Her dersin tasarımcıda karşılık gelen bir akış sekmesi vardır:
 | 2 | [İlk Akış](02-ilk-akis.md) | ~20 dk | `Ders 2 - Ilk Akis` | `msg` nesnesi, function, deploy |
 | 3 | [HTTP ve Dallanma](03-http-dallanma.md) | ~25 dk | `Ders 3 - HTTP` | `http request`, JSON tipi, `switch` |
 | 4 | [Zamanlayıcı ve Dosya](04-zamanlayici-dosya.md) | ~20 dk | `Ders 4 - Zamanlayici` | Zamanlayıcı, `file`, context, volume |
+| 5 | [aXet AI Ajanı](05-axet-ai.md) | ~25 dk | `Ders 5 - aXet AI` | AI ajanı, model seçimi, hata dalı, MCP |
 | — | [Sorun Giderme](SORUN-GIDERME.md) | başvuru | — | Hata → çözüm tablosu |
 
-Dersler birbirinin üstüne kurulur; sırayla ilerleyin. Dördü bittiğinde şunu
+Dersler birbirinin üstüne kurulur; sırayla ilerleyin. Beşi bittiğinde şunu
 kurabilir hale gelirsiniz: *"her sabah 8'de API'den siparişleri çek,
-bekleyenleri ayır, dosyaya yaz."*
+bekleyenleri ayır, bir AI ajanına özetlet, dosyaya yaz."*
 
 ## Ön koşullar
 
@@ -72,13 +73,15 @@ axet-flows-egitim/
 ├── 02-ilk-akis.md                     ilk çalışan akış
 ├── 03-http-dallanma.md                dış veri + koşullu dallanma
 ├── 04-zamanlayici-dosya.md            zamanlanmış akış + dosya yazma
+├── 05-axet-ai.md                      AI ajanı çalıştırma
 ├── SORUN-GIDERME.md                   hata → çözüm tablosu
-├── gorseller/                         ekran görüntüleri (10 adet)
+├── gorseller/                         ekran görüntüleri (11 adet)
 └── kaynaklar/
     ├── ornek-01-kurulum-dogrulama.json  Ders 1 akışı (import edilebilir)
     ├── ornek-02-ilk-akis.json           Ders 2 akışı
     ├── ornek-03-http-dallanma.json      Ders 3 akışı
     ├── ornek-04-zamanlayici-dosya.json  Ders 4 akışı
+    ├── ornek-05-axet-ai.json           Ders 5 akışı
     ├── ders01-ortam-raporu.js           Ders 1 function kodu
     ├── zamani-formatla.js               Ders 2 function kodu
     ├── ders03-tamamlandi-mesaji.js      Ders 3, "tamamlandı" dalı

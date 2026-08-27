@@ -1,0 +1,150 @@
+[
+  {
+    "id": "d5tab00000000001",
+    "type": "tab",
+    "label": "Ders 5 - aXet AI",
+    "disabled": false,
+    "info": "aXet AI ajani: gorev ver, yanit al.\nDers: 05-axet-ai.md"
+  },
+  {
+    "id": "d5_inject",
+    "type": "inject",
+    "z": "d5tab00000000001",
+    "name": "soruyu gonder",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "payload": "",
+    "payloadType": "date",
+    "x": 170,
+    "y": 240,
+    "wires": [
+      [
+        "d5_soru"
+      ]
+    ]
+  },
+  {
+    "id": "d5_soru",
+    "type": "function",
+    "z": "d5tab00000000001",
+    "name": "soruyu hazirla",
+    "func": "// Ajana verilecek gorev.\n// Ne kadar net ve detayli olursa sonuc o kadar iyi olur.\nmsg.payload = \"aXet.flows nedir? Bir cumleyle, Turkce acikla.\";\nmsg.topic   = \"ai-soru\";\nreturn msg;",
+    "outputs": 1,
+    "initialize": "",
+    "finalize": "",
+    "x": 380,
+    "y": 240,
+    "wires": [
+      [
+        "d5_agent"
+      ]
+    ]
+  },
+  {
+    "id": "d5_agent",
+    "type": "axet-agents-execute",
+    "z": "d5tab00000000001",
+    "name": "aXet AI ajani",
+    "agentId": "",
+    "agentName": "",
+    "description": "Ders 5 icin basit soru-cevap ajani",
+    "instructions": "Sen yardimci bir asistansin. Kisa ve net Turkce cevap ver.",
+    "model": "",
+    "input": "",
+    "mcpTools": "[]",
+    "coreTools": "",
+    "customTools": "[]",
+    "temperature": 0.7,
+    "maxRetries": 2,
+    "maxSteps": 15,
+    "timeout": 300000,
+    "stream": false,
+    "outputSchema": "",
+    "projectId": "",
+    "x": 610,
+    "y": 240,
+    "wires": [
+      [
+        "d5_yanit"
+      ],
+      [
+        "d5_hata"
+      ]
+    ]
+  },
+  {
+    "id": "d5_yanit",
+    "type": "function",
+    "z": "d5tab00000000001",
+    "name": "yaniti incele",
+    "func": "// Ajanin yaniti msg.payload icinde gelir.\n// Yapisi modele/ajana gore degisebilir, o yuzden once\n// ne geldigini gorup ondan sonra alan secmek gerekir.\nnode.warn([\"AJAN YANITI TIPI:\", typeof msg.payload]);\n\nmsg.topic = \"ai-yanit\";\nreturn msg;",
+    "outputs": 1,
+    "initialize": "",
+    "finalize": "",
+    "x": 850,
+    "y": 190,
+    "wires": [
+      [
+        "d5_dbg_ok"
+      ]
+    ]
+  },
+  {
+    "id": "d5_dbg_ok",
+    "type": "debug",
+    "z": "d5tab00000000001",
+    "name": "cikti: yanit",
+    "active": true,
+    "tosidebar": true,
+    "console": true,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 1080,
+    "y": 190,
+    "wires": []
+  },
+  {
+    "id": "d5_hata",
+    "type": "function",
+    "z": "d5tab00000000001",
+    "name": "hatayi yakala",
+    "func": "// 2. cikis: ajan hata verdiginde buraya duser.\n// Yapilandirma eksikse (proje/model secilmemis) burasi calisir.\nmsg.topic = \"ai-HATA\";\nnode.warn([\"AJAN HATASI:\", msg.error || msg.payload]);\nreturn msg;",
+    "outputs": 1,
+    "initialize": "",
+    "finalize": "",
+    "x": 850,
+    "y": 300,
+    "wires": [
+      [
+        "d5_dbg_err"
+      ]
+    ]
+  },
+  {
+    "id": "d5_dbg_err",
+    "type": "debug",
+    "z": "d5tab00000000001",
+    "name": "cikti: HATA",
+    "active": true,
+    "tosidebar": true,
+    "console": true,
+    "tostatus": false,
+    "complete": true,
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 1080,
+    "y": 300,
+    "wires": []
+  }
+]
