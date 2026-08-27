@@ -197,6 +197,13 @@ Kartta asma kilit simgesi ve kilidi tutan kişinin adı görünür.
 
 Tasarımcı konteyneri her açılışta **farklı bir port** kullanır.
 
+**En kolay yol — portaldan:** **Docker Dashboard** → *In Design* kutusu →
+**"Flows designer port"** satırı adresi doğrudan verir.
+
+![Docker Dashboard - designer port](gorseller/07-docker-dashboard.png)
+
+**Komut satırından:**
+
 ```powershell
 wsl.exe -d aXet-flows_WSL -- docker ps --format "{{.Names}} {{.Ports}}"
 ```

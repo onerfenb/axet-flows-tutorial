@@ -39,6 +39,8 @@ Her akış bu üç rolden oluşur — bazıları birden fazla, bazıları hiç o
 2. Çıkan düğümü tuvale sürükleyin
 3. Tuvalde **`timestamp`** adıyla görünür
 
+![Palette inject araması](gorseller/02-palet-arama.png)
+
 `inject`, akışı elle tetiklemenizi sağlar — sol tarafındaki küçük butona
 basınca mesaj üretir. Varsayılan olarak `msg.payload`'a o anki zaman
 damgasını (Unix milisaniye) koyar.
@@ -51,6 +53,11 @@ damgasını (Unix milisaniye) koyar.
 
 `debug`, `msg.payload`'ı sağ paneldeki debug sekmesine yazar. Akış
 geliştirirken en çok kullanacağınız düğüm budur.
+
+Bu noktada iki düğüm tuvalde ama **aralarında kablo yok** — henüz
+bağlantısızlar:
+
+![İki düğüm, bağlantısız](gorseller/03-dugumler-baglantisiz.png)
 
 ### Adım 3 — bağlayın
 
@@ -90,6 +97,8 @@ Debug panelinde şunu görmelisiniz:
 msg.payload : number
 1787832380279
 ```
+
+![İlk akış ve ham number çıktısı](gorseller/04-ilk-akis-number.png)
 
 **İlk akışınız çalıştı.** Ham bir zaman damgası, uçtan uca aktı.
 
@@ -146,6 +155,8 @@ return msg;
 **Name** alanına `zamani formatla` yazın — isimsiz düğümler büyük
 akışlarda okunmaz hale gelir. Sonra **Done**.
 
+![function düğümü editörü](gorseller/05-function-editoru.png)
+
 ### `return msg;` neden kritik?
 
 `function` düğümü, döndürdüğünüz mesajı çıkışına verir. `return msg;`
@@ -179,6 +190,8 @@ akis-testi : msg.payload : Object
     tarih: "27.08.2026", saat: "16:02:02",
     hamDamga: 1787835722616 }
 ```
+
+![Son akış ve Object çıktısı](gorseller/06-son-akis-object.png)
 
 Üç fark dikkat çekiyor:
 

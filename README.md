@@ -63,10 +63,14 @@ axet-flows-egitim/
 ├── 01-kurulum.md                 kurulum, adım adım
 ├── 02-ilk-akis.md                ilk çalışan akış
 ├── SORUN-GIDERME.md              hata → çözüm tablosu
+├── gorseller/                    ekran görüntüleri (8 adet)
 └── kaynaklar/
     ├── ornek-01-akis.json        hazır akış (import edilebilir)
     └── zamani-formatla.js        function düğümünün kodu
 ```
+
+> **Not:** Ekran görüntülerindeki kişisel bilgiler (kullanıcı adı, dosya
+> yolları) maskelenmiştir.
 
 ## Katkı
 

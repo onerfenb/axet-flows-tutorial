@@ -141,7 +141,11 @@ netstat -ano | Select-String ':2222'
    hesabınızla oturum açın"*)
 3. NTT kurumsal hesabınızla girin + MFA onayı
 
-Giriş sonrası **Catalog** ekranını görürsünüz. Sol menü:
+Giriş sonrası **Catalog** ekranını görürsünüz:
+
+![Catalog ekranı](gorseller/08-catalog.png)
+
+Sol menü:
 
 - **Catalog** — akışlarınız
 - **Shared subflows** — paylaşılan alt akışlar
@@ -152,6 +156,15 @@ Giriş sonrası **Catalog** ekranını görürsünüz. Sol menü:
 
 **Docker Dashboard**'a girin. İki kutu görmelisiniz: *In Design* ve
 *Production mode*, ikisi de **Not Running**.
+
+Tasarımcı çalışmaya başladığında bu ekran şöyle görünür:
+
+![Docker Dashboard - çalışan tasarımcı](gorseller/07-docker-dashboard.png)
+
+> 💡 **İpucu:** Bu ekrandaki **"Flows designer port"** satırı tasarımcının
+> adresini doğrudan verir (`http://localhost:16267` gibi). Port her açılışta
+> değiştiği için tasarımcıyı kaybederseniz buraya bakın — komut satırına
+> gerek yok.
 
 Bunun yerine kırmızı bir hata çıkarsa:
 
@@ -183,6 +196,8 @@ Bunun yerine kırmızı bir hata çıkarsa:
 
 Yeni sekmede Node-RED tabanlı editör açılmalı: solda düğüm paleti,
 ortada tuval, sağda debug paneli. Adres `http://127.0.0.1:<port>` biçiminde.
+
+![Tasarımcı arayüzü](gorseller/01-tasarimci-arayuz.png)
 
 Konteyneri komut satırından da görebilirsiniz:
 
