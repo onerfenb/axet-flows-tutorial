@@ -1,0 +1,155 @@
+[
+  {
+    "id": "c1c2d9a736f0b4c1",
+    "type": "tab",
+    "label": "Ders 3 - HTTP",
+    "disabled": false,
+    "info": ""
+  },
+  {
+    "id": "d3_inject",
+    "type": "inject",
+    "z": "c1c2d9a736f0b4c1",
+    "name": "todo iste",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "payload": "",
+    "payloadType": "date",
+    "x": 170,
+    "y": 240,
+    "wires": [
+      [
+        "d3_http"
+      ]
+    ]
+  },
+  {
+    "id": "d3_http",
+    "type": "http request",
+    "z": "c1c2d9a736f0b4c1",
+    "name": "API'den todo cek",
+    "method": "GET",
+    "ret": "obj",
+    "url": "https://jsonplaceholder.typicode.com/todos/1",
+    "tls": "",
+    "persist": false,
+    "proxy": "",
+    "insecureHTTPParser": false,
+    "authType": "",
+    "senderr": false,
+    "headers": [],
+    "x": 400,
+    "y": 240,
+    "wires": [
+      [
+        "d3_switch"
+      ]
+    ]
+  },
+  {
+    "id": "d3_switch",
+    "type": "switch",
+    "z": "c1c2d9a736f0b4c1",
+    "name": "tamamlandi mi?",
+    "property": "payload.completed",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "true"
+      },
+      {
+        "t": "false"
+      }
+    ],
+    "checkall": "false",
+    "repair": false,
+    "outputs": 2,
+    "x": 650,
+    "y": 240,
+    "wires": [
+      [
+        "d3_fn_ok"
+      ],
+      [
+        "d3_fn_bekle"
+      ]
+    ]
+  },
+  {
+    "id": "d3_fn_ok",
+    "type": "function",
+    "z": "c1c2d9a736f0b4c1",
+    "name": "tamamlandi mesaji",
+    "func": "msg.topic = \"TAMAMLANDI\";\nmsg.payload = {\n    durum: \"tamamlandi\",\n    baslik: msg.payload.title,\n    kayitNo: msg.payload.id\n};\nreturn msg;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 890,
+    "y": 180,
+    "wires": [
+      [
+        "d3_dbg_ok"
+      ]
+    ]
+  },
+  {
+    "id": "d3_dbg_ok",
+    "type": "debug",
+    "z": "c1c2d9a736f0b4c1",
+    "name": "cikti: tamamlandi",
+    "active": true,
+    "tosidebar": true,
+    "console": true,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 1140,
+    "y": 180,
+    "wires": []
+  },
+  {
+    "id": "d3_fn_bekle",
+    "type": "function",
+    "z": "c1c2d9a736f0b4c1",
+    "name": "beklemede mesaji",
+    "func": "msg.topic = \"BEKLEMEDE\";\n// Ayni alan adlarini kullaniyoruz ki iki dal ileride birlesebilsin\nmsg.payload = {\n    durum:   \"beklemede\",\n    baslik:  msg.payload.title,\n    kayitNo: msg.payload.id\n};\nreturn msg;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 890,
+    "y": 300,
+    "wires": [
+      [
+        "d3_dbg_bekle"
+      ]
+    ]
+  },
+  {
+    "id": "d3_dbg_bekle",
+    "type": "debug",
+    "z": "c1c2d9a736f0b4c1",
+    "name": "cikti: beklemede",
+    "active": true,
+    "tosidebar": true,
+    "console": true,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 1140,
+    "y": 300,
+    "wires": []
+  }
+]

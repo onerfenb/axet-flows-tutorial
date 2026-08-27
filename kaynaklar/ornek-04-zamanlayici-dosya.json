@@ -1,0 +1,88 @@
+[
+  {
+    "id": "d4tab00000000001",
+    "type": "tab",
+    "label": "Ders 4 - Zamanlayici",
+    "disabled": false,
+    "info": ""
+  },
+  {
+    "id": "d4_inject",
+    "type": "inject",
+    "z": "d4tab00000000001",
+    "name": "her 20 saniyede",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "payload": "",
+    "payloadType": "date",
+    "repeat": "20",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 180,
+    "y": 220,
+    "wires": [
+      [
+        "d4_fn"
+      ]
+    ]
+  },
+  {
+    "id": "d4_fn",
+    "type": "function",
+    "z": "d4tab00000000001",
+    "name": "rapor satiri uret",
+    "func": "const t = new Date();\n\n// Sayac: flow context akis yeniden baslayana kadar yasar\nlet sayac = flow.get(\"calismaSayisi\") || 0;\nsayac = sayac + 1;\nflow.set(\"calismaSayisi\", sayac);\n\nconst zaman = t.toLocaleString(\"tr-TR\");\n\n// file dugumu msg.payload icindeki METNI yazar\nmsg.payload = `${zaman} | calisma #${sayac} | durum: OK`;\nmsg.topic = \"rapor-satiri\";\n\nreturn msg;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 420,
+    "y": 220,
+    "wires": [
+      [
+        "d4_file",
+        "d4_dbg"
+      ]
+    ]
+  },
+  {
+    "id": "d4_file",
+    "type": "file",
+    "z": "d4tab00000000001",
+    "name": "rapora ekle",
+    "filename": "/internal-storage-files/files/akis-raporu.txt",
+    "filenameType": "str",
+    "appendNewline": true,
+    "createDir": true,
+    "overwriteFile": "false",
+    "encoding": "utf8",
+    "x": 680,
+    "y": 180,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "d4_dbg",
+    "type": "debug",
+    "z": "d4tab00000000001",
+    "name": "yazilan satir",
+    "active": true,
+    "tosidebar": true,
+    "console": true,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 680,
+    "y": 260,
+    "wires": []
+  }
+]

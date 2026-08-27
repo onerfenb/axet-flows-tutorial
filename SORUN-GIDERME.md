@@ -213,6 +213,185 @@ wsl.exe -d aXet-flows_WSL -- docker ps --format "{{.Names}} {{.Ports}}"
 
 ---
 
+## HTTP ve veri sorunları
+
+### `msg.payload.<alan>` undefined geliyor / switch hiçbir dala girmiyor
+
+**Belirti:** `http request` düğümü veri getiriyor, debug'da JSON gibi
+görünüyor, ama `payload.completed` gibi bir alana erişemiyorsunuz. `switch`
+düğümü de hiçbir mesaj geçirmiyor.
+
+**Sebep:** `http request` düğümünün **Return** ayarı "a UTF-8 string".
+Yanıt metin olarak geliyor, nesne olarak değil.
+
+**Kontrol:** Debug panelindeki tip etiketine bakın:
+
+```
+msg.payload : string[83]     <-- METIN (yanlis)
+msg.payload : Object         <-- NESNE (dogru)
+```
+
+**Çözüm:** `http request` düğümü → **Return** → **"a parsed JSON object"**.
+
+> Debug panelindeki tip etiketi, gözünüzle okuduğunuz içerikten daha
+> güvenilir bilgidir.
+
+---
+
+### `403 Forbidden` veya `504 Gateway Time-out`
+
+**Sebep:** Kurumsal proxy/güvenlik duvarı konteynerin dış erişimini engelliyor.
+
+**Kontrol:** Konteynerden doğrudan test edin:
+
+```powershell
+$k = wsl.exe -d aXet-flows_WSL -- docker ps --format "{{.Names}}"
+wsl.exe -d aXet-flows_WSL -- docker exec $k curl -s -o /dev/null -w "%{http_code}" https://jsonplaceholder.typicode.com/todos/1
+```
+
+`200` → erişim var, sorun akışta. `000`/`403`/`504` → ağ engeli.
+
+**Çözüm:** `http request` düğümünde **"Use proxy"** seçeneğini işaretleyip
+kurumunuzun proxy adresini girin. Adresi bilmiyorsanız IT'den isteyin.
+
+---
+
+### switch düğümü kuruldu ama mesaj kayboluyor
+
+**Sebep:** Hiçbir kural eşleşmedi. Node-RED bu durumda mesajı **sessizce
+düşürür** — hata vermez.
+
+**Çözüm:** Son kural olarak `otherwise` ekleyip bir debug'a bağlayın.
+Beklenmedik veriyi böyle yakalarsınız.
+
+---
+
+### function düğümünden sonraki düğüme bir şey gitmiyor
+
+Kodun sonunda `return msg;` var mı? Yoksa mesaj o düğümde ölür ve **hata
+vermez**. (Ders 2 ve 3'te aynı tuzak.)
+
+---
+
+## Dosya sorunları
+
+### Akış dosya yazdı ama Windows'ta bulamıyorum
+
+**Sebep:** Yanlış klasöre yazdınız. Konteynerin her klasörü Windows'la
+paylaşılmaz.
+
+**Kontrol — eşleşmeleri listeleyin:**
+
+```powershell
+$k = wsl.exe -d aXet-flows_WSL -- docker ps --format "{{.Names}}"
+wsl.exe -d aXet-flows_WSL -- docker inspect $k --format '{{range .Mounts}}{{.Source}} -> {{.Destination}}{{"`n"}}{{end}}'
+```
+
+| Konteyner içi | Windows'ta görünür mü |
+|---|---|
+| `/internal-storage-files/files/` | ✅ Evet |
+| `/external-repository-files/` | ✅ Evet |
+| `/data` | ❌ Docker volume |
+| `/tmp`, `/home`, diğerleri | ❌ Konteyner ölünce kaybolur |
+
+**Çözüm:** `file` düğümünde tam yol olarak
+`/internal-storage-files/files/dosya.txt` kullanın.
+
+**Windows'tan bulmak için:**
+
+```powershell
+Get-ChildItem "$env:LOCALAPPDATAxet-flows" -Recurse -Filter '*.txt' | Select-Object FullName, LastWriteTime
+```
+
+---
+
+### Dosyada sadece son satır var / her seferinde siliniyor
+
+`file` düğümünün **Action** ayarı "Overwrite file" olarak seçilmiş.
+Birikmesini istiyorsanız **"Append to file"** yapın.
+
+---
+
+### Dosyaya `[object Object]` yazılıyor
+
+`file` düğümü `msg.payload` içindeki **metni** yazar. Nesne verirseniz bunu
+görürsünüz.
+
+**Çözüm:** `function` düğümünde payload'ı metne çevirin:
+
+```javascript
+msg.payload = `${alan1} | ${alan2}`;        // metin
+// veya JSON olarak yazmak isterseniz:
+msg.payload = JSON.stringify(msg.payload);
+```
+
+---
+
+### Zamanlanmış akış durmuyor
+
+**Belirti:** `inject` düğümüne Repeat verdiniz, akış durmadan çalışıyor,
+dosya şişiyor.
+
+**Çözüm:** `inject` düğümü → **Repeat: none** → Done → **Deploy**.
+
+Doğrulama: 30 saniye bekleyip dosyanın büyümediğini kontrol edin.
+
+> Unutulmuş zamanlayıcı, günlerce dosya şişirir veya bir API'yi gereksiz
+> yere yorar. Test bitince kapatmayı alışkanlık haline getirin.
+
+---
+
+### Sayaç her çalışmada 1'de kalıyor
+
+`function` içinde normal değişken kullanmışsınız — her mesajda sıfırlanır.
+
+**Çözüm:** context kullanın:
+
+```javascript
+let sayac = flow.get("sayac") || 0;
+sayac = sayac + 1;
+flow.set("sayac", sayac);
+```
+
+> Context bellekte tutulur; konteyner yeniden başlarsa sıfırlanır.
+> Kalıcı olması gerekiyorsa dosyaya yazın.
+
+---
+
+## Tasarımcı / tarayıcı sorunları
+
+### Sekme kapanmıyor, "Bu siteden ayrılmak istiyor musunuz?" çıkıyor
+
+**Sebep:** Editörde deploy edilmemiş değişiklik var. Node-RED sayfadan
+ayrılmayı engelliyor.
+
+**Önemli:** Bu uyarı **editör taslağı** için geçerlidir, deploy edilmiş akış
+için değil. Deploy ettiyseniz akışınız konteynerde güvende — tarayıcıyı
+kapatmak ona dokunmaz.
+
+**Çözüm:** Deploy edin, ya da değişiklikleri gözden çıkarıp **Ayrıl / Leave**
+deyin. Gerekirse tarayıcı penceresini tamamen kapatıp yeniden açın; akışlar
+yerinde durur.
+
+**Doğrulama — motorda ne var:**
+
+```powershell
+Invoke-RestMethod -Uri 'http://127.0.0.1:<PORT>/flows' |
+  Where-Object { $_.type -notin 'tab','subflow' } |
+  Select-Object type, name
+```
+
+---
+
+### Tuval boş görünüyor ama düğümler kaybolmadı
+
+Görünüm kaymıştır. Alt ortadaki **○** (görünümü sıfırla) butonuna basın veya
+tuvalde boş bir yeri sürükleyin.
+
+Düğümlerin gerçekten durduğunu yukarıdaki `/flows` sorgusuyla doğrulayabilirsiniz.
+
+---
+
 ## Katkı
 
 Yeni bir hatayla karşılaştıysanız bu dosyaya şu şablonla ekleyin:
