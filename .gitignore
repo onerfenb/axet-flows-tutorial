@@ -1,0 +1,14 @@
+# Windows
+Thumbs.db
+desktop.ini
+*.lnk
+
+# Editör
+.vscode/
+.idea/
+*.swp
+
+# Geçici
+*.tmp
+*.bak
+~$*

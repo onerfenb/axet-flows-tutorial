@@ -1,0 +1,75 @@
+[
+  {
+    "id": "aa2905bf7ae20ebd",
+    "type": "tab",
+    "label": "Flow 1",
+    "disabled": false,
+    "info": "",
+    "env": []
+  },
+  {
+    "id": "bd69c0a53d2e360d",
+    "type": "inject",
+    "z": "aa2905bf7ae20ebd",
+    "name": "",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 300,
+    "y": 220,
+    "wires": [
+      [
+        "430b8899be6935d6"
+      ]
+    ]
+  },
+  {
+    "id": "a0677f306376ef2f",
+    "type": "debug",
+    "z": "aa2905bf7ae20ebd",
+    "name": "debug 1",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "false",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 660,
+    "y": 220,
+    "wires": []
+  },
+  {
+    "id": "430b8899be6935d6",
+    "type": "function",
+    "z": "aa2905bf7ae20ebd",
+    "name": "zamani formatla",
+    "func": "// Gelen zaman damgasini okunabilir parcalara ayir\nconst gelenZamanDamgasi = msg.payload;\nconst tarih = new Date(gelenZamanDamgasi);\n\n// Etiket: debug panelinde mesajlari ayirt etmeye yarar\nmsg.topic = \"akis-testi\";\n\n// Payload'i nesne olarak yeniden yaz.\n// Nesne sectik ki sonraki dugumler tek alana erisebilsin:\n//   msg.payload.saat  ->  \"15:06:20\"\nmsg.payload = {\n    mesaj: \"aXet.flows akisi calisti\",\n    tarih: tarih.toLocaleDateString(\"tr-TR\"),\n    saat: tarih.toLocaleTimeString(\"tr-TR\"),\n    hamDamga: gelenZamanDamgasi\n};\n\nreturn msg;\n",
+    "outputs": 1,
+    "setupErrors": 0,
+    "functionErrors": 0,
+    "closeErrors": 0,
+    "initialize": "// Code added here will be run once\n// whenever the node is started.\n\n// You can use require(..) in order to hot install NPM dependencies.\n// For example: const lowerCase = require('lower-case@1.1.3')\n\n// You can use importModule(..) in order to hot install ESM NPM dependencies.\n// For example: const chalkNs = await importModule('chalk')\n\n// You can use module.exports in order to use export mechanism, and use exports objects and functions in other function node.\n// For example: const fnNodeExports = require('@deptapps/function/<function_name>')\n",
+    "finalize": "// Code added here will be run when the\n// node is being stopped or re-deployed.\n\n// You can use require(..) in order to hot install NPM dependencies.\n// For example: const lowerCase = require('lower-case@1.1.3')\n\n// You can use importModule(..) in order to hot install ESM NPM dependencies.\n// For example: const chalkNs = await importModule('chalk')\n",
+    "x": 480,
+    "y": 380,
+    "wires": [
+      [
+        "a0677f306376ef2f"
+      ]
+    ]
+  }
+]
