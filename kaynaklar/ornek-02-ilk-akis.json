@@ -2,16 +2,16 @@
   {
     "id": "aa2905bf7ae20ebd",
     "type": "tab",
-    "label": "Flow 1",
+    "label": "Ders 2 - Ilk Akis",
     "disabled": false,
-    "info": "",
+    "info": "msg nesnesi, function dugumu, deploy.\nDers: 02-ilk-akis.md",
     "env": []
   },
   {
     "id": "bd69c0a53d2e360d",
     "type": "inject",
     "z": "aa2905bf7ae20ebd",
-    "name": "",
+    "name": "zaman uret",
     "props": [
       {
         "p": "payload"
@@ -40,12 +40,13 @@
     "id": "a0677f306376ef2f",
     "type": "debug",
     "z": "aa2905bf7ae20ebd",
-    "name": "debug 1",
+    "name": "cikti: zaman raporu",
     "active": true,
     "tosidebar": true,
-    "console": false,
+    "console": true,
     "tostatus": false,
-    "complete": "false",
+    "complete": "payload",
+    "targetType": "msg",
     "statusVal": "",
     "statusType": "auto",
     "x": 660,
@@ -57,7 +58,7 @@
     "type": "function",
     "z": "aa2905bf7ae20ebd",
     "name": "zamani formatla",
-    "func": "// Gelen zaman damgasini okunabilir parcalara ayir\nconst gelenZamanDamgasi = msg.payload;\nconst tarih = new Date(gelenZamanDamgasi);\n\n// Etiket: debug panelinde mesajlari ayirt etmeye yarar\nmsg.topic = \"akis-testi\";\n\n// Payload'i nesne olarak yeniden yaz.\n// Nesne sectik ki sonraki dugumler tek alana erisebilsin:\n//   msg.payload.saat  ->  \"15:06:20\"\nmsg.payload = {\n    mesaj: \"aXet.flows akisi calisti\",\n    tarih: tarih.toLocaleDateString(\"tr-TR\"),\n    saat: tarih.toLocaleTimeString(\"tr-TR\"),\n    hamDamga: gelenZamanDamgasi\n};\n\nreturn msg;\n",
+    "func": "// Gelen zaman damgasini okunabilir parcalara ayir\nconst gelenZamanDamgasi = msg.payload;\nconst tarih = new Date(gelenZamanDamgasi);\n\n// Etiket: debug panelinde mesajlari ayirt etmeye yarar\nmsg.topic = \"akis-testi\";\n\n// Payload'i nesne olarak yeniden yaz.\n// Nesne sectik ki sonraki dugumler tek alana erisebilsin:\n//   msg.payload.saat  ->  \"15:06:20\"\nmsg.payload = {\n    mesaj: \"aXet.flows akisi calisti\",\n    tarih: tarih.toLocaleDateString(\"tr-TR\"),\n    gun:   tarih.toLocaleDateString(\"tr-TR\", { weekday: \"long\" }),   // Alistirma 1\n    saat:  tarih.toLocaleTimeString(\"tr-TR\"),\n    hamDamga: gelenZamanDamgasi\n};\n\nreturn msg;",
     "outputs": 1,
     "setupErrors": 0,
     "functionErrors": 0,

@@ -11,7 +11,8 @@ msg.topic = "akis-testi";
 msg.payload = {
     mesaj: "aXet.flows akisi calisti",
     tarih: tarih.toLocaleDateString("tr-TR"),
-    saat: tarih.toLocaleTimeString("tr-TR"),
+    gun:   tarih.toLocaleDateString("tr-TR", { weekday: "long" }),   // Alistirma 1
+    saat:  tarih.toLocaleTimeString("tr-TR"),
     hamDamga: gelenZamanDamgasi
 };
 

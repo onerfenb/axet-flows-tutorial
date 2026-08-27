@@ -204,7 +204,7 @@ akis-testi : msg.payload : Object
 Bu akışı sıfırdan kurmak yerine hazır alabilirsiniz:
 
 1. Tasarımcıda sağ üst **☰ menü → Import**
-2. [`kaynaklar/ornek-01-akis.json`](kaynaklar/ornek-01-akis.json) dosyasının
+2. [`kaynaklar/ornek-02-ilk-akis.json`](kaynaklar/ornek-02-ilk-akis.json) dosyasının
    içeriğini yapıştırın
 3. **Import** → **Deploy**
 
@@ -238,8 +238,16 @@ Adım 3'teki tuzağa düşmüşsünüz demektir.
 
 Öğrendiğinizi pekiştirmek için:
 
-1. **Kolay** — `msg.payload`'a bir alan daha ekleyin: haftanın günü
-   (`tarih.toLocaleDateString("tr-TR", { weekday: "long" })`)
+1. **Kolay** — `msg.payload`'a bir alan daha ekleyin: haftanın günü.
+
+   ⚠️ **Dikkat, klasik tuzak:** `toLocaleDateString("tr-TR", { weekday: "long" })`
+   yazarsanız sonuç sadece `"Perşembe"` olur — **tarihi değiştirir, eklemez.**
+   İki ayrı alan istiyorsanız iki ayrı çağrı gerekir:
+
+   ```javascript
+   tarih: tarih.toLocaleDateString("tr-TR"),                          // "27.08.2026"
+   gun:   tarih.toLocaleDateString("tr-TR", { weekday: "long" }),     // "Perşembe"
+   ```
 2. **Orta** — `inject` düğümünü çift tıklayıp **Repeat** ayarını
    "interval / every 10 seconds" yapın. Akış artık kendi kendine çalışır.
    (Test bitince kapatmayı unutmayın!)

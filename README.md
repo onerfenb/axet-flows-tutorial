@@ -31,13 +31,15 @@ konteynerinde tasarlanır ve çalışır. Docker çalışmıyorsa portal de iş 
 
 ## İçindekiler
 
-| # | Doküman | Süre | Öğrenilen |
-|---|---|---|---|
-| 1 | [Kurulum](01-kurulum.md) | ~30 dk | WSL, Docker, portal, tasarımcı |
-| 2 | [İlk Akış](02-ilk-akis.md) | ~20 dk | `msg` nesnesi, inject/function/debug, deploy |
-| 3 | [HTTP ve Dallanma](03-http-dallanma.md) | ~25 dk | `http request`, JSON tipi, `switch` ile dallanma |
-| 4 | [Zamanlayıcı ve Dosya](04-zamanlayici-dosya.md) | ~20 dk | Zamanlanmış tetikleyici, `file`, context, volume |
-| — | [Sorun Giderme](SORUN-GIDERME.md) | başvuru | Hata → çözüm tablosu |
+Her dersin tasarımcıda karşılık gelen bir akış sekmesi vardır:
+
+| # | Doküman | Süre | Tasarımcıdaki sekme | Öğrenilen |
+|---|---|---|---|---|
+| 1 | [Kurulum](01-kurulum.md) | ~30 dk | `Ders 1 - Kurulum Dogrulama` | WSL, Docker, portal, sandbox |
+| 2 | [İlk Akış](02-ilk-akis.md) | ~20 dk | `Ders 2 - Ilk Akis` | `msg` nesnesi, function, deploy |
+| 3 | [HTTP ve Dallanma](03-http-dallanma.md) | ~25 dk | `Ders 3 - HTTP` | `http request`, JSON tipi, `switch` |
+| 4 | [Zamanlayıcı ve Dosya](04-zamanlayici-dosya.md) | ~20 dk | `Ders 4 - Zamanlayici` | Zamanlayıcı, `file`, context, volume |
+| — | [Sorun Giderme](SORUN-GIDERME.md) | başvuru | — | Hata → çözüm tablosu |
 
 Dersler birbirinin üstüne kurulur; sırayla ilerleyin. Dördü bittiğinde şunu
 kurabilir hale gelirsiniz: *"her sabah 8'de API'den siparişleri çek,
@@ -73,13 +75,15 @@ axet-flows-egitim/
 ├── SORUN-GIDERME.md                   hata → çözüm tablosu
 ├── gorseller/                         ekran görüntüleri (10 adet)
 └── kaynaklar/
-    ├── ornek-01-akis.json             Ders 2 akışı (import edilebilir)
-    ├── ornek-03-http-dallanma.json    Ders 3 akışı
-    ├── ornek-04-zamanlayici-dosya.json Ders 4 akışı
-    ├── zamani-formatla.js             Ders 2 function kodu
-    ├── ders03-tamamlandi-mesaji.js    Ders 3, "tamamlandı" dalı
-    ├── ders03-beklemede-mesaji.js     Ders 3, "beklemede" dalı
-    └── ders04-rapor-satiri.js         Ders 4 function kodu
+    ├── ornek-01-kurulum-dogrulama.json  Ders 1 akışı (import edilebilir)
+    ├── ornek-02-ilk-akis.json           Ders 2 akışı
+    ├── ornek-03-http-dallanma.json      Ders 3 akışı
+    ├── ornek-04-zamanlayici-dosya.json  Ders 4 akışı
+    ├── ders01-ortam-raporu.js           Ders 1 function kodu
+    ├── zamani-formatla.js               Ders 2 function kodu
+    ├── ders03-tamamlandi-mesaji.js      Ders 3, "tamamlandı" dalı
+    ├── ders03-beklemede-mesaji.js       Ders 3, "beklemede" dalı
+    └── ders04-rapor-satiri.js           Ders 4 function kodu
 ```
 
 > **Not:** Ekran görüntülerindeki kişisel bilgiler (kullanıcı adı, dosya

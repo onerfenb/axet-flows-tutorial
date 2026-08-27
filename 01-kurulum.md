@@ -210,7 +210,49 @@ konteyner ve `...->1880/tcp` port eşlemesi görmelisiniz.
 **1880, Node-RED'in standart portudur** — tasarımcının Node-RED olduğunu
 buradan anlarsınız.
 
-## 1.6 İşiniz bitince: kilidi bırakın
+## 1.6 Kurulumu bir akışla doğrulayın
+
+Ekran görüntüleri ve komutlar iyi, ama kurulumun *gerçekten* çalıştığını en
+iyi kanıtlayan şey çalışan bir akıştır.
+
+[`kaynaklar/ornek-01-kurulum-dogrulama.json`](kaynaklar/ornek-01-kurulum-dogrulama.json)
+dosyasını **☰ menü → Import** ile yükleyin, **Deploy** edin ve `inject`
+düğümüne basın.
+
+Görmeniz gereken:
+
+```
+[kurulum raporu]
+{ kontrol: 'aXet.flows ortam dogrulama',
+  sonuc: 'BASARILI - akis motoru calisiyor',
+  zaman: '27.08.2026 18:05:01',
+  kontrolNo: 1,
+  calismaModu: 'production' }
+```
+
+Bu çıktıyı aldıysanız **WSL → Docker → konteyner → tasarımcı** zincirinin
+tamamı sağlamdır.
+
+### function düğümü bir güvenlik sandbox'ıdır
+
+Bu akışı hazırlarken önce `process.version` ile Node.js sürümünü yazdırmayı
+denedik ve şu hatayı aldık:
+
+```
+ReferenceError: process is not defined (line 23, col 19)
+```
+
+`function` düğümü izole bir sandbox'ta çalışır: **`process`, `require`, `fs`
+gibi Node.js iç yapıları kapalıdır.** Kurumsal bir RPA platformunda bu doğru
+tasarımdır — akış yazan kişi sunucunun dosya sistemine keyfi erişemez.
+
+Ortam bilgisine izin verilen yoldan ulaşılır:
+
+```javascript
+env.get("NODE_ENV")      // "production"
+```
+
+## 1.7 İşiniz bitince: kilidi bırakın
 
 Tasarımı bitirdiğinizde **Catalog** → flow kartının `…` menüsü →
 **Unblock Flow**.

@@ -1,0 +1,70 @@
+[
+  {
+    "id": "d1tab00000000001",
+    "type": "tab",
+    "label": "Ders 1 - Kurulum Dogrulama",
+    "disabled": false,
+    "info": "Kurulumun calistigini kanitlayan en kucuk akis.\nDers: 01-kurulum.md"
+  },
+  {
+    "id": "d1_inject",
+    "type": "inject",
+    "z": "d1tab00000000001",
+    "name": "ortami kontrol et",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "payload": "",
+    "payloadType": "date",
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 200,
+    "y": 200,
+    "wires": [
+      [
+        "d1_fn"
+      ]
+    ]
+  },
+  {
+    "id": "d1_fn",
+    "type": "function",
+    "z": "d1tab00000000001",
+    "name": "ortam raporu uret",
+    "func": "// Ortamin calistigini kanitlayan en kucuk akis.\n// Ders 1 (kurulum) burada somutlasiyor: bu akis cikti\n// uretiyorsa WSL + Docker + tasarimci zinciri saglamdir.\n//\n// NOT: function dugumu bir guvenlik sandbox'inda calisir.\n// process, require, fs gibi Node.js ic yapilari KAPALIDIR.\n// (Denerseniz: \"ReferenceError: process is not defined\")\n// Ortam bilgisine env.get() ile ulasilir.\n\nconst simdi = new Date();\n\n// Sayac: kurulumu kac kez dogruladigimiz\nlet kontrolSayisi = flow.get(\"kontrolSayisi\") || 0;\nkontrolSayisi = kontrolSayisi + 1;\nflow.set(\"kontrolSayisi\", kontrolSayisi);\n\nmsg.topic = \"KURULUM-OK\";\nmsg.payload = {\n    kontrol:      \"aXet.flows ortam dogrulama\",\n    sonuc:        \"BASARILI - akis motoru calisiyor\",\n    zaman:        simdi.toLocaleString(\"tr-TR\"),\n    kontrolNo:    kontrolSayisi,\n    // env.get ile ortam degiskeni okunur (varsa)\n    calismaModu:  env.get(\"NODE_ENV\") || \"belirtilmemis\"\n};\n\n// node.warn debug paneline sari uyari olarak duser\nnode.warn(\"Kurulum dogrulama #\" + kontrolSayisi + \" tamamlandi\");\n\nreturn msg;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 460,
+    "y": 200,
+    "wires": [
+      [
+        "d1_dbg"
+      ]
+    ]
+  },
+  {
+    "id": "d1_dbg",
+    "type": "debug",
+    "z": "d1tab00000000001",
+    "name": "kurulum raporu",
+    "active": true,
+    "tosidebar": true,
+    "console": true,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 730,
+    "y": 200,
+    "wires": []
+  }
+]

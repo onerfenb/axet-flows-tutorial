@@ -266,6 +266,26 @@ Beklenmedik veriyi böyle yakalarsınız.
 
 ---
 
+### `ReferenceError: process is not defined` (veya require/fs)
+
+**Sebep:** `function` düğümü izole bir güvenlik sandbox'ında çalışır.
+`process`, `require`, `fs` gibi Node.js iç yapıları **bilerek kapatılmıştır** —
+akış yazan kişi sunucunun dosya sistemine keyfi erişemesin diye.
+
+**Çözüm:** İzin verilen yolları kullanın:
+
+| İhtiyaç | Yasak | İzinli |
+|---|---|---|
+| Ortam değişkeni | `process.env.X` | `env.get("X")` |
+| Dosya okuma/yazma | `fs.writeFile` | `file` / `file in` düğümleri |
+| HTTP isteği | `require('axios')` | `http request` düğümü |
+| Zaman | — | `new Date()` serbest |
+
+> Kural: **function düğümü veriyi dönüştürür, dış dünyaya erişmez.**
+> Dış dünya işleri için o işe özel düğümler vardır.
+
+---
+
 ### function düğümünden sonraki düğüme bir şey gitmiyor
 
 Kodun sonunda `return msg;` var mı? Yoksa mesaj o düğümde ölür ve **hata
