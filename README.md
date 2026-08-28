@@ -22,7 +22,7 @@ Teknik olarak:
 |---|---|
 | Tasarımcı | Node-RED tabanlı görsel akış editörü |
 | Çalışma ortamı | Docker konteyneri (senin makinende, WSL2 içinde) |
-| Portal | `axet.nttdata.com/flows` — katalog, versiyon ve dağıtım yönetimi |
+| Portal | `<axet-portal-adresiniz>/flows` — katalog, versiyon ve dağıtım yönetimi |
 | Kimlik | Okta (NTT kurumsal hesabı) |
 | Yetenekler | SikuliX (görsel GUI otomasyonu), Tesseract OCR, PDFBox, SSH/SFTP |
 
@@ -51,6 +51,15 @@ sizden bağımsız çalışır halde bırakabilirsiniz.
 > 💡 **Ders 6'yı atlamayın.** Akışlarınız tasarımcı konteynerinde yaşar;
 > versiyon kaydetmezseniz konteynerle birlikte kaybolurlar.
 
+## Adres yer tutucusu hakkında
+
+Dokümanlarda geçen `<axet-portal-adresiniz>` ifadesini **kendi kurumunuzun
+aXet.flows portal adresiyle** değiştirin. Adresi bilmiyorsanız aXet.flows
+Desktop uygulamasını açın veya kurumunuzun IT/platform ekibine sorun.
+
+Aynı şekilde AI ajanı derslerindeki proje ve model seçimleri de kuruma
+özgüdür; açılır menülerde kendi projelerinizi göreceksiniz.
+
 ## Ön koşullar
 
 - Windows 10/11, NTT kurumsal makinesi
@@ -63,7 +72,7 @@ sizden bağımsız çalışır halde bırakabilirsiniz.
 
 ```
 1. aXet.flows Desktop uygulamasını başlat, hazır olmasını bekle
-2. https://axet.nttdata.com/flows/frontend/ → Okta ile giriş
+2. https://<axet-portal-adresiniz>/flows/frontend/ → Okta ile giriş
 3. Catalog → flow seç → New Version → Regular Deployment
 4. Docker imajı iner (ilk seferde ~2.2 GB), tasarımcı yeni sekmede açılır
 5. kaynaklar/ornek-01-akis.json dosyasını import et

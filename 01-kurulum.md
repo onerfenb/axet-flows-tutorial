@@ -9,7 +9,7 @@ Kurulum sırasında ne olduğunu bilmezseniz hata mesajları anlamsız gelir.
 Zincir şöyle:
 
 ```
-Tarayıcı (portal)          → axet.nttdata.com/flows
+Tarayıcı (portal)          → <axet-portal-adresiniz>/flows
        │                     katalog, versiyon, dağıtım yönetimi
        ▼
 aXet.flows Desktop         → yerel ajan, https://localhost:65430
@@ -77,7 +77,7 @@ Bu, kurulumun en çok yanlış bilinen kısmı: WSL platformu zaten etkinse
 ### Portal erişilebilir mi?
 
 ```powershell
-(Invoke-WebRequest -Uri 'https://axet.nttdata.com/flows/frontend/' -UseBasicParsing).StatusCode
+(Invoke-WebRequest -Uri 'https://<axet-portal-adresiniz>/flows/frontend/' -UseBasicParsing).StatusCode
 ```
 
 `200` dönmeli. Dönmüyorsa VPN/ağ sorunudur.
@@ -136,7 +136,7 @@ netstat -ano | Select-String ':2222'
 
 ## 1.4 Portala giriş
 
-1. Tarayıcıda `https://axet.nttdata.com/flows/frontend/` açın
+1. Tarayıcıda `https://<axet-portal-adresiniz>/flows/frontend/` açın
 2. Okta giriş ekranına yönlendirilirsiniz (*"aXet Platform erişimi için
    hesabınızla oturum açın"*)
 3. NTT kurumsal hesabınızla girin + MFA onayı
