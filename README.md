@@ -40,11 +40,16 @@ Her dersin tasarımcıda karşılık gelen bir akış sekmesi vardır:
 | 3 | [HTTP ve Dallanma](03-http-dallanma.md) | ~25 dk | `Ders 3 - HTTP` | `http request`, JSON tipi, `switch` |
 | 4 | [Zamanlayıcı ve Dosya](04-zamanlayici-dosya.md) | ~20 dk | `Ders 4 - Zamanlayici` | Zamanlayıcı, `file`, context, volume |
 | 5 | [aXet AI Ajanı](05-axet-ai.md) | ~25 dk | `Ders 5 - aXet AI` | AI ajanı, model seçimi, hata dalı, MCP |
+| 6 | [Versiyon ve Canlıya Alma](06-versiyon-ve-canliya-alma.md) | ~30 dk | (portal) | Versiyon kaydetme, Production mode, kalıcılık |
 | — | [Sorun Giderme](SORUN-GIDERME.md) | başvuru | — | Hata → çözüm tablosu |
 
-Dersler birbirinin üstüne kurulur; sırayla ilerleyin. Beşi bittiğinde şunu
+Dersler birbirinin üstüne kurulur; sırayla ilerleyin. Altısı bittiğinde şunu
 kurabilir hale gelirsiniz: *"her sabah 8'de API'den siparişleri çek,
-bekleyenleri ayır, bir AI ajanına özetlet, dosyaya yaz."*
+bekleyenleri ayır, bir AI ajanına özetlet, dosyaya yaz"* — ve bunu **canlıda**,
+sizden bağımsız çalışır halde bırakabilirsiniz.
+
+> 💡 **Ders 6'yı atlamayın.** Akışlarınız tasarımcı konteynerinde yaşar;
+> versiyon kaydetmezseniz konteynerle birlikte kaybolurlar.
 
 ## Ön koşullar
 
@@ -74,8 +79,9 @@ axet-flows-egitim/
 ├── 03-http-dallanma.md                dış veri + koşullu dallanma
 ├── 04-zamanlayici-dosya.md            zamanlanmış akış + dosya yazma
 ├── 05-axet-ai.md                      AI ajanı çalıştırma
+├── 06-versiyon-ve-canliya-alma.md     versiyon + Production mode
 ├── SORUN-GIDERME.md                   hata → çözüm tablosu
-├── gorseller/                         ekran görüntüleri (11 adet)
+├── gorseller/                         ekran görüntüleri (13 adet)
 └── kaynaklar/
     ├── ornek-01-kurulum-dogrulama.json  Ders 1 akışı (import edilebilir)
     ├── ornek-02-ilk-akis.json           Ders 2 akışı

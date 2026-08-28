@@ -490,6 +490,42 @@ Düğümlerin gerçekten durduğunu yukarıdaki `/flows` sorgusuyla doğrulayabi
 
 ---
 
+### Tasarımcıdaki akışlarım kayboldu
+
+**Belirti:** Makineyi/uygulamayı kapatıp açtınız, tasarımcı açılıyor ama
+sekmeler ve akışlar yok.
+
+**Sebep:** Akışlar **tasarımcı konteynerinin içinde** yaşar. Uygulama
+kapandığında konteyner durur ve çoğu zaman silinir. Docker imajları diskte
+kalır (yeniden indirme olmaz) ama konteyner içeriği gider.
+
+**Kontrol:**
+
+```powershell
+wsl.exe -d aXet-flows_WSL -- docker ps -a     # konteyner var mi?
+wsl.exe -d aXet-flows_WSL -- docker images    # imajlar duruyor mu?
+```
+
+İmajlar duruyor + konteyner yok = akışlar silinmiş.
+
+**Çözüm:** Yedekten geri yükleyin (**☰ menü → Import**).
+
+> ⚠️ **Bu yüzden her dersin sonunda akışı dışa aktarın.**
+> **☰ menü → Export → Download** ile JSON olarak kaydedin.
+> Bu eğitimdeki tüm akışlar `kaynaklar/` klasöründe yedeklidir.
+
+**Kalıcı çözüm:** Akışı bir **versiyon** olarak kaydedin (Catalog → flow →
+versiyon listesi). Versiyonlar portalda saklanır, konteynerden bağımsızdır.
+
+---
+
+### Portal "Sayfa zaman aşımına uğradı" diyor (Okta)
+
+Oturum süresi dolmuş. Sayfayı yenileyin (F5) ve Okta girişini tekrar yapın.
+Uzun süre kullanılmayan oturumlar düşer.
+
+---
+
 ## Katkı
 
 Yeni bir hatayla karşılaştıysanız bu dosyaya şu şablonla ekleyin:
