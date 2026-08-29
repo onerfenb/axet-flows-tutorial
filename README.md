@@ -43,7 +43,7 @@ Her dersin tasarımcıda karşılık gelen bir akış sekmesi vardır:
 | 6 | [Versiyon ve Canlıya Alma](06-versiyon-ve-canliya-alma.md) | ~30 dk | (portal) | Versiyon kaydetme, Production mode, kalıcılık |
 | 7 | [Hata Yönetimi](07-hata-yonetimi.md) | ~25 dk | `Ders 7 - Hata Yonetimi` | `catch`, `status`, yeniden deneme, hata günlüğü |
 | 8 | [Ajan Zinciri](08-ajan-zinciri.md) | ~40 dk | `Ders 8 - Ajan Zinciri` | Çok ajanlı akış, denetim döngüsü, geçit sınırları |
-| 9 | [Form Arayüzü](09-form-arayuzu.md) | ~35 dk | `Ders 9 - Formlu Zincir` | Web uygulaması, form, ajan aktivasyonu, kalıcı dosya |
+| 9 | [Form Arayüzü](09-form-arayuzu.md) | ~45 dk | `Ders 9 - Formlu Zincir` | Web uygulaması, dosya eki, ajan aktivasyonu, kalıcı dosya, özel CSS |
 | — | [Sorun Giderme](SORUN-GIDERME.md) | başvuru | — | Hata → çözüm tablosu |
 
 Dersler birbirinin üstüne kurulur; sırayla ilerleyin. Yedisi bittiğinde şunu
@@ -55,6 +55,10 @@ bırakabilirsiniz.
 Ders 8 bunun üstüne bir katman koyar: **birbirini denetleyen ajanlardan
 oluşan bir zincir.** Bir ajanın ürettiğini bir başkası denetler, eksik
 bulursa geri gönderir, düzelmezse insana devreder.
+
+Ders 9 zinciri **kullanılabilir** hale getirir: iş arkadaşınız tarayıcıdan
+toplantı notlarını dosya olarak yükler, zincir çalışır. Arayüzün görünümünü
+de kendi kurumunuza uydurursunuz.
 
 > 💡 **Ders 6'yı atlamayın.** Akışlarınız tasarımcı konteynerinde yaşar;
 > versiyon kaydetmezseniz konteynerle birlikte kaybolurlar.
@@ -97,19 +101,36 @@ axet-flows-egitim/
 ├── 04-zamanlayici-dosya.md            zamanlanmış akış + dosya yazma
 ├── 05-axet-ai.md                      AI ajanı çalıştırma
 ├── 06-versiyon-ve-canliya-alma.md     versiyon + Production mode
+├── 07-hata-yonetimi.md                catch, yeniden deneme, hata günlüğü
+├── 08-ajan-zinciri.md                 birbirini denetleyen dört ajan
+├── 09-form-arayuzu.md                 web arayüzü, dosya eki, özel CSS
 ├── SORUN-GIDERME.md                   hata → çözüm tablosu
-├── gorseller/                         ekran görüntüleri (13 adet)
+├── gorseller/                         ekran görüntüleri (14 adet)
 └── kaynaklar/
     ├── ornek-01-kurulum-dogrulama.json  Ders 1 akışı (import edilebilir)
     ├── ornek-02-ilk-akis.json           Ders 2 akışı
     ├── ornek-03-http-dallanma.json      Ders 3 akışı
     ├── ornek-04-zamanlayici-dosya.json  Ders 4 akışı
-    ├── ornek-05-axet-ai.json           Ders 5 akışı
+    ├── ornek-05-axet-ai.json            Ders 5 akışı
+    ├── ornek-07-hata-yonetimi.json      Ders 7 akışı
+    ├── ornek-08-ajan-zinciri.json       Ders 8 akışı (4 ajan)
+    ├── ornek-09-form-zincir.json        Ders 9 akışı (form + zincir + CSS)
+    │
     ├── ders01-ortam-raporu.js           Ders 1 function kodu
     ├── zamani-formatla.js               Ders 2 function kodu
-    ├── ders03-tamamlandi-mesaji.js      Ders 3, "tamamlandı" dalı
-    ├── ders03-beklemede-mesaji.js       Ders 3, "beklemede" dalı
-    └── ders04-rapor-satiri.js           Ders 4 function kodu
+    ├── ders03-*.js                      Ders 3, iki dal
+    ├── ders04-rapor-satiri.js           Ders 4 function kodu
+    ├── ders07-*.js                      Ders 7, üç function
+    ├── ders08-*.js                      Ders 8, dokuz function (prompt + karar)
+    ├── ders09-formdan-dosya.js          Ders 9, dosya ekini çözen köprü
+    ├── ders09-ozel.css                  Ders 9, uygulamanın özel CSS'i
+    │
+    ├── demo-girdi/                      Ders 8-9 girdisi: 3 çelişkili belge
+    ├── demo-cikti/                      katı gözden geçiren → müdahale
+    ├── demo-cikti-onayli/               onaylı dal → 710 satır ABAP
+    ├── demo-cikti-formlu/               formdan metin ile tetiklenen koşu
+    ├── demo-cikti-ekli/                 formdan dosya eki ile tetiklenen koşu
+    └── demo-cikti-kalici/               kalıcı yol denemesinin çıktısı
 ```
 
 > **Not:** Ekran görüntülerindeki kişisel bilgiler (kullanıcı adı, dosya

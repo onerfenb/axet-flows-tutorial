@@ -711,6 +711,48 @@ Veri `msg.payload.<alan>` değil, **`msg.payload.data.<alan>`** altındadır.
 JSON import'unda `welcomePage` ve `menu` ayarları taşınmaz. `application`
 düğümünü açıp Welcome Page'i seçin, Deploy edin.
 
+### `The form '<ad>' does not exist between the flows of your application`
+
+Menü kaydındaki `pageId` doğru olsa bile çıkar. Sayfa çözümlemesi
+**menü etiketi ile `form` düğümünün `Name` alanının birebir eşleşmesi**
+üzerinden yapılır ve büyük/küçük harfe duyarlıdır.
+
+Formu yeniden adlandırdıysanız menü etiketini de aynı yapın.
+
+### Dosya eki akışa içerik yerine bir adres olarak geliyor
+
+`File` bileşeninin **Storage** ayarı `base64` değil. `url`, `s3`, `azure`,
+`dropbox` modlarında `url` alanında dosyanın içeriği değil bir HTTP
+adresi taşınır ve indirmek size kalır.
+
+Arka uç kurmadan çalışan tek mod `base64`'tür — içerik data-URI olarak
+gömülü gelir:
+
+```javascript
+const virgul = d.url.indexOf(",");
+const metin = Buffer.from(d.url.slice(virgul + 1), "base64").toString("utf8");
+```
+
+`atob` kullanmayın; UTF-8 Türkçe karakterleri bozar. `function` düğümü
+Node.js tarafında çalıştığı için `Buffer` doğrudan kullanılabilir.
+
+### Custom CSS yazdım ama uygulamada değişiklik yok
+
+Sırayla:
+
+1. **Deploy → Save in Cloud → Run Flow** üçlüsü tamamlanmadı; çalışan
+   konteyner hâlâ eski sürüm. Docker Dashboard'da konteyner ID'sinin
+   değiştiğini doğrulayın.
+2. Bootstrap kuralınızı eziyor — sayfa Bootstrap 4 + SB Admin 2 şablonu.
+   F12 → Elements → Computed'da kazanan kurala bakın, gerekiyorsa
+   `!important` ekleyin.
+3. Seçici tutmuyor. Tek bir alanı hedeflemek için `.formio-component-<key>`
+   kullanın; `<key>` bileşenin **Property Name** değeridir, etiketi değil.
+
+Metnin bir **parçasını** CSS ile silemezsiniz. Üst banttaki marka yazısı
+ve alt banttaki telif satırı tek metin düğümüdür; çözüm gizleyip `::after`
+ile yeniden yazmaktır.
+
 ### "Kill instance" çalışmıyor, eski sürüm dönmeye devam ediyor
 
 Portal düğmesi bazen konteyneri durdurmaz. Kesin çözüm:
@@ -729,7 +771,6 @@ Sonra portaldan **Run Flow**. Konteyner ID'sinin değiştiğini doğrulayın.
 |---|---|
 | `/internal-storage-files/` | `AppData\Local\axet-flows\.deptapps-instances\<id>\` |
 | `/external-repository-files/` | `AppData\Local\axet-flows\.deptapps-desktop\repository-files\` |
-epository-files\` |
 
 ## Katkı
 

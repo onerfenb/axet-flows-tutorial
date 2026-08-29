@@ -1,794 +1,786 @@
 [
-  {
-    "id": "6c227b9ea1f93285",
-    "type": "axetflows-app",
-    "z": "d8tab00000000001",
-    "name": "Sartname Zinciri",
-    "menu": [
-      {
-        "text": "Menu",
-        "icon": "fa fa-sitemap",
-        "data": {},
-        "children": [
-          {
-            "id": "j1_2",
-            "text": "Sartname",
-            "icon": "fa fa-folder-open-o",
-            "data": {},
-            "children": [
-              {
-                "id": "j1_form",
-                "text": "Notlari gir",
-                "icon": "fa fa-file-text-o",
+    {
+        "id": "6c227b9ea1f93285",
+        "type": "axetflows-app",
+        "z": "d8tab00000000001",
+        "name": "Sartname Zinciri",
+        "menu": [
+            {
+                "text": "Menu",
+                "icon": "fa fa-sitemap",
                 "data": {},
-                "children": [],
-                "type": "page",
-                "pageId": "41184de862981ff1"
-              }
-            ],
-            "type": "section"
-          }
+                "children": [
+                    {
+                        "id": "j1_2",
+                        "text": "Sartname",
+                        "icon": "fa fa-folder-open-o",
+                        "data": {},
+                        "children": [
+                            {
+                                "id": "j1_form",
+                                "text": "Belgeleri yukle",
+                                "icon": "fa fa-file-text-o",
+                                "data": {},
+                                "children": [],
+                                "type": "page",
+                                "pageId": "41184de862981ff1"
+                            }
+                        ],
+                        "type": "section"
+                    }
+                ],
+                "type": "root"
+            }
         ],
-        "type": "root"
-      }
-    ],
-    "welcomePage": "41184de862981ff1",
-    "sidebarMenuOrientation": "left",
-    "logoImage": "default",
-    "schemeColor": "",
-    "customCSS": "/* Include your custom CSS styles */",
-    "customCSSErrors": 0,
-    "authConfig": "authNone",
-    "sessionExpireTimeInMinutes": "",
-    "basicInternalDb": "",
-    "oktaDb": "",
-    "roles": [],
-    "__wellKnownRes": {},
-    "x": 160,
-    "y": 100,
-    "wires": []
-  },
-  {
-    "id": "41184de862981ff1",
-    "type": "axetflows-form",
-    "z": "d8tab00000000001",
-    "name": "toplanti notlarini gir",
-    "onDocumentReadyButtonAction": "",
-    "formStructure": {
-      "components": [
-        {
-          "label": "Toplanti Notlari",
-          "labelPosition": "top",
-          "placeholder": "",
-          "description": "",
-          "tooltip": "",
-          "prefix": "",
-          "suffix": "",
-          "widget": {
-            "type": "input"
-          },
-          "editor": "",
-          "autoExpand": false,
-          "customClass": "",
-          "tabindex": "",
-          "hidden": false,
-          "hideLabel": false,
-          "showWordCount": false,
-          "showCharCount": false,
-          "autofocus": false,
-          "spellcheck": true,
-          "disabled": false,
-          "tableView": true,
-          "modalEdit": false,
-          "multiple": false,
-          "persistent": true,
-          "inputFormat": "html",
-          "protected": false,
-          "dbIndex": false,
-          "case": "",
-          "encrypted": false,
-          "redrawOn": "",
-          "clearOnHide": true,
-          "customDefaultValue": "",
-          "calculateValue": "",
-          "allowCalculateOverride": false,
-          "validateOn": "change",
-          "validate": {
-            "required": false,
-            "pattern": "",
-            "customMessage": "",
-            "custom": "",
-            "customPrivate": false,
-            "json": "",
-            "minLength": "",
-            "maxLength": "",
-            "minWords": "",
-            "maxWords": "",
-            "strictDateValidation": false,
-            "unique": false,
-            "multiple": false
-          },
-          "unique": false,
-          "errorLabel": "",
-          "key": "notlar",
-          "tags": [],
-          "properties": {},
-          "conditional": {
-            "show": null,
-            "when": null,
-            "eq": "",
-            "json": ""
-          },
-          "customConditional": "",
-          "logic": [],
-          "attributes": {},
-          "overlay": {
-            "style": "",
-            "page": "",
-            "left": "",
-            "top": "",
-            "width": "",
-            "height": ""
-          },
-          "type": "textarea",
-          "rows": 3,
-          "wysiwyg": false,
-          "input": true,
-          "refreshOn": "",
-          "allowMultipleMasks": false,
-          "mask": false,
-          "inputType": "text",
-          "inputMask": "",
-          "id": "ehny8lm",
-          "defaultValue": ""
-        },
-        {
-          "type": "button",
-          "label": "Submit",
-          "key": "submit",
-          "size": "md",
-          "block": false,
-          "action": "submit",
-          "disableOnInvalid": true,
-          "theme": "primary",
-          "input": true,
-          "placeholder": "",
-          "prefix": "",
-          "customClass": "",
-          "suffix": "",
-          "multiple": false,
-          "defaultValue": null,
-          "protected": false,
-          "unique": false,
-          "persistent": false,
-          "hidden": false,
-          "clearOnHide": true,
-          "refreshOn": "",
-          "redrawOn": "",
-          "tableView": false,
-          "modalEdit": false,
-          "labelPosition": "top",
-          "description": "",
-          "errorLabel": "",
-          "tooltip": "",
-          "hideLabel": false,
-          "tabindex": "",
-          "disabled": false,
-          "autofocus": false,
-          "dbIndex": false,
-          "customDefaultValue": "",
-          "calculateValue": "",
-          "widget": {
-            "type": "input"
-          },
-          "attributes": {},
-          "validateOn": "change",
-          "validate": {
-            "required": false,
-            "custom": "",
-            "customPrivate": false,
-            "strictDateValidation": false,
-            "unique": false,
-            "multiple": false
-          },
-          "conditional": {
-            "show": null,
-            "when": null,
-            "eq": ""
-          },
-          "overlay": {
-            "style": "",
-            "left": "",
-            "top": "",
-            "width": "",
-            "height": ""
-          },
-          "allowCalculateOverride": false,
-          "encrypted": false,
-          "showCharCount": false,
-          "showWordCount": false,
-          "properties": {},
-          "allowMultipleMasks": false,
-          "leftIcon": "",
-          "rightIcon": "",
-          "dataGridLabel": true,
-          "id": "euini9q"
-        }
-      ]
+        "welcomePage": "41184de862981ff1",
+        "sidebarMenuOrientation": "left",
+        "logoImage": "default",
+        "schemeColor": "",
+        "customCSS": "/* ============================================================\n   Ders 9 -- application dugumu > Style > Custom CSS\n   ------------------------------------------------------------\n   Kabuk Bootstrap 4 + SB Admin 2, form kismi formio 4.8.1.\n   Yani hazir bir sablonu eziyoruz; bircok yerde !important\n   gerekiyor.\n\n   Alan hedeflemenin puf noktasi: formio her bileseni\n   .formio-component-<key> sinifiyla isaretliyor. Bizim dosya\n   alanimizin key'i \"belgeler\" oldugu icin\n   .formio-component-belgeler ile SADECE o alani hedefleyebiliyoruz.\n   ============================================================ */\n\n:root {\n  --kurumsal:      #0b3d5c;\n  --kurumsal-acik: #12628f;\n  --vurgu:         #00a3a1;\n  --zemin:         #f4f7f9;\n}\n\n/* ---------- 1. Ust bant ---------- */\n\nnav.navbar {\n  background: var(--kurumsal) !important;\n  box-shadow: 0 2px 8px rgba(0, 0, 0, .18);\n}\n\n/* Marka metni \"<Uygulama adi> |\" seklinde geliyor -- sondaki ayrac\n   asagida gizlenen logo icin. Logoyu gizleyince ayrac bosta kaliyor.\n   CSS bir metin dugumunun PARCASINI silemez; tumunu gizleyip ::after\n   ile yeniden yazmak gerekiyor. Ayni cozumu alt bantta da kullaniyoruz. */\nnav.navbar .navbar-brand {\n  font-size: 0 !important;\n}\n\nnav.navbar .navbar-brand:after {\n  content: \"Sartname Zinciri\";\n  color: #fff;\n  font-size: 1.25rem;\n  font-weight: 600;\n  letter-spacing: .3px;\n}\n\nnav.navbar #sidebarToggle,\nnav.navbar .nav-link {\n  color: rgba(255, 255, 255, .85) !important;\n}\n\n/* \"powered by aXet.flows\" logosu ust bantta bir <img>.\n   Kaldirmanin yolu yok, gizlemek var. */\n#poweredByDeptapps {\n  display: none !important;\n}\n\n/* ---------- 2. Yan menu ---------- */\n\nul.sidebar {\n  background: #fff !important;\n  border-right: 1px solid #dfe6ec;\n}\n\nul.sidebar .nav-link {\n  color: #2c3e50 !important;\n  border-left: 3px solid transparent;\n  border-radius: 0;\n}\n\nul.sidebar .nav-item.active .nav-link,\nul.sidebar .nav-link:hover {\n  background: var(--zemin) !important;\n  border-left-color: var(--vurgu);\n  color: var(--kurumsal) !important;\n}\n\n/* ---------- 3. Icerik alani ---------- */\n\nbody#page-top {\n  background: var(--zemin);\n}\n\n.formio-component-form {\n  background: #fff;\n  border: 1px solid #e3e9ee;\n  border-radius: 10px;\n  padding: 28px 32px;\n  max-width: 900px;\n  margin: 24px auto;\n}\n\n.col-form-label {\n  font-weight: 600;\n  color: var(--kurumsal);\n  font-size: 1.05rem;\n}\n\n/* Zorunlu alan yildizi Bootstrap'ta zor secilir; belirginlestir */\n.field-required:after {\n  color: #d64545 !important;\n  font-size: 1.1em;\n}\n\n/* ---------- 4. Dosya birakma alani ---------- */\n/* Sadece \"belgeler\" alanini hedefliyoruz. */\n\n.formio-component-belgeler .fileSelector {\n  border: 2px dashed #b6c6d3 !important;\n  border-radius: 10px;\n  background: #fbfdfe;\n  padding: 34px 16px !important;\n  text-align: center;\n  color: #5b7285;\n  font-size: 1.02rem;\n  transition: border-color .15s, background .15s;\n}\n\n.formio-component-belgeler .fileSelector:hover {\n  border-color: var(--vurgu) !important;\n  background: #f2fbfb;\n}\n\n.formio-component-belgeler .fileSelector .fa-cloud-upload {\n  display: block;\n  font-size: 2.2rem;\n  color: var(--vurgu);\n  margin-bottom: 10px;\n}\n\n.formio-component-belgeler .fileSelector a.browse {\n  color: var(--kurumsal-acik);\n  font-weight: 600;\n  text-decoration: underline;\n}\n\n/* ---------- 5. Yuklenen dosya listesi ---------- */\n\n.formio-component-belgeler ul.list-group {\n  border-radius: 8px;\n  overflow: hidden;\n  margin-bottom: 12px;\n}\n\n.formio-component-belgeler .list-group-header {\n  background: var(--kurumsal) !important;\n  color: #fff !important;\n  font-weight: 600;\n  text-transform: uppercase;\n  font-size: .78rem;\n  letter-spacing: .6px;\n}\n\n.formio-component-belgeler li.list-group-item {\n  border-color: #e8eef3;\n}\n\n.formio-component-belgeler li.list-group-item:hover {\n  background: #f7fbfc;\n}\n\n/* Silme carpisi -- varsayilan halde duz siyah metin gibi duruyor */\n.formio-component-belgeler li.list-group-item .col-md-1 i {\n  color: #b6c6d3;\n  cursor: pointer;\n}\n\n.formio-component-belgeler li.list-group-item .col-md-1 i:hover {\n  color: #d64545;\n}\n\n/* ---------- 6. Gonder dugmesi ---------- */\n\n.formio-component-button button.btn-primary {\n  background: var(--vurgu) !important;\n  border-color: var(--vurgu) !important;\n  padding: 11px 34px !important;\n  font-weight: 600;\n  font-size: 1.02rem;\n  border-radius: 7px;\n  box-shadow: 0 2px 6px rgba(0, 163, 161, .3);\n}\n\n.formio-component-button button.btn-primary:hover:not(:disabled) {\n  background: #008a88 !important;\n  border-color: #008a88 !important;\n}\n\n.formio-component-button button.btn-primary:disabled {\n  background: #b9c6ce !important;\n  border-color: #b9c6ce !important;\n  box-shadow: none;\n}\n\n/* ---------- 7. Alt bant ---------- */\n/* Telif satiri tek bir <span> icinde geliyor:\n     \"<Uygulama adi> Powered by aXet.flows (c) 2026 NTT Data...\"\n   Parcalayip sadece bir kismini silmek MUMKUN DEGIL. Ya tumunu\n   gizlersin ya da gizleyip yerine ::after ile kendi metnini koyarsin.\n   Asagida ikincisi yapiliyor. */\n\nfooter.sticky-footer {\n  background: #fff;\n  border-top: 1px solid #e3e9ee;\n}\n\nfooter.sticky-footer .copyright span {\n  display: none;\n}\n\nfooter.sticky-footer .copyright:after {\n  content: \"Sartname Zinciri -- ic kullanim\";\n  color: #8a9aa8;\n  font-size: .86rem;\n}\n",
+        "customCSSErrors": 0,
+        "authConfig": "authNone",
+        "sessionExpireTimeInMinutes": "",
+        "basicInternalDb": "",
+        "oktaDb": "",
+        "roles": [],
+        "__wellKnownRes": {},
+        "x": 160,
+        "y": 100,
+        "wires": []
     },
-    "associatedEntityMetamodel": null,
-    "associatedEntityFormType": null,
-    "associatedContractModelMetamodel": null,
-    "associatedPersistantFormId": null,
-    "associatedLocalStorageDatabaseId": null,
-    "buttons": [
-      {
-        "type": "button",
-        "label": "Submit",
-        "key": "submit",
-        "size": "md",
-        "block": false,
-        "action": "submit",
-        "disableOnInvalid": true,
-        "theme": "primary",
-        "input": true,
-        "placeholder": "",
-        "prefix": "",
-        "customClass": "",
-        "suffix": "",
-        "multiple": false,
-        "defaultValue": null,
-        "protected": false,
-        "unique": false,
-        "persistent": false,
-        "hidden": false,
-        "clearOnHide": true,
-        "refreshOn": "",
-        "redrawOn": "",
-        "tableView": false,
-        "modalEdit": false,
-        "labelPosition": "top",
-        "description": "",
-        "errorLabel": "",
-        "tooltip": "",
-        "hideLabel": false,
-        "tabindex": "",
+    {
+        "id": "41184de862981ff1",
+        "type": "axetflows-form",
+        "z": "d8tab00000000001",
+        "name": "Belgeleri yukle",
+        "onDocumentReadyButtonAction": "",
+        "formStructure": {
+            "components": [
+                {
+                    "input": true,
+                    "key": "belgeler",
+                    "placeholder": "",
+                    "prefix": "",
+                    "customClass": "",
+                    "suffix": "",
+                    "multiple": true,
+                    "defaultValue": null,
+                    "protected": false,
+                    "unique": false,
+                    "persistent": true,
+                    "hidden": false,
+                    "clearOnHide": true,
+                    "refreshOn": "",
+                    "redrawOn": "",
+                    "tableView": false,
+                    "modalEdit": false,
+                    "label": "Toplanti notlari ve dokumanlar",
+                    "labelPosition": "top",
+                    "description": "Birden fazla dosya secebilirsiniz. Kabul edilen turler: .md, .txt",
+                    "errorLabel": "",
+                    "tooltip": "",
+                    "hideLabel": false,
+                    "tabindex": "",
+                    "disabled": false,
+                    "autofocus": false,
+                    "dbIndex": false,
+                    "customDefaultValue": "",
+                    "calculateValue": "",
+                    "widget": null,
+                    "attributes": {},
+                    "validateOn": "change",
+                    "validate": {
+                        "required": true,
+                        "custom": "",
+                        "customPrivate": false,
+                        "strictDateValidation": false
+                    },
+                    "conditional": {
+                        "show": null,
+                        "when": null,
+                        "eq": ""
+                    },
+                    "overlay": {
+                        "style": "",
+                        "left": "",
+                        "top": "",
+                        "width": "",
+                        "height": ""
+                    },
+                    "allowCalculateOverride": false,
+                    "encrypted": false,
+                    "showCharCount": false,
+                    "showWordCount": false,
+                    "properties": {},
+                    "allowMultipleMasks": false,
+                    "type": "file",
+                    "storage": "base64",
+                    "url": "",
+                    "options": "",
+                    "fileKey": "file",
+                    "webcam": false,
+                    "fileTypes": [
+                        {
+                            "label": "",
+                            "value": ""
+                        }
+                    ],
+                    "image": false,
+                    "privateDownload": false,
+                    "imageSize": "200",
+                    "filePattern": ".md,.txt",
+                    "fileMinSize": "0KB",
+                    "fileMaxSize": "2MB",
+                    "uploadOnly": false,
+                    "id": "ekbelge1"
+                },
+                {
+                    "type": "button",
+                    "label": "Submit",
+                    "key": "submit",
+                    "size": "md",
+                    "block": false,
+                    "action": "submit",
+                    "disableOnInvalid": true,
+                    "theme": "primary",
+                    "input": true,
+                    "placeholder": "",
+                    "prefix": "",
+                    "customClass": "",
+                    "suffix": "",
+                    "multiple": false,
+                    "defaultValue": null,
+                    "protected": false,
+                    "unique": false,
+                    "persistent": false,
+                    "hidden": false,
+                    "clearOnHide": true,
+                    "refreshOn": "",
+                    "redrawOn": "",
+                    "tableView": false,
+                    "modalEdit": false,
+                    "labelPosition": "top",
+                    "description": "",
+                    "errorLabel": "",
+                    "tooltip": "",
+                    "hideLabel": false,
+                    "tabindex": "",
+                    "disabled": false,
+                    "autofocus": false,
+                    "dbIndex": false,
+                    "customDefaultValue": "",
+                    "calculateValue": "",
+                    "widget": {
+                        "type": "input"
+                    },
+                    "attributes": {},
+                    "validateOn": "change",
+                    "validate": {
+                        "required": false,
+                        "custom": "",
+                        "customPrivate": false,
+                        "strictDateValidation": false,
+                        "unique": false,
+                        "multiple": false
+                    },
+                    "conditional": {
+                        "show": null,
+                        "when": null,
+                        "eq": ""
+                    },
+                    "overlay": {
+                        "style": "",
+                        "left": "",
+                        "top": "",
+                        "width": "",
+                        "height": ""
+                    },
+                    "allowCalculateOverride": false,
+                    "encrypted": false,
+                    "showCharCount": false,
+                    "showWordCount": false,
+                    "properties": {},
+                    "allowMultipleMasks": false,
+                    "leftIcon": "",
+                    "rightIcon": "",
+                    "dataGridLabel": true,
+                    "id": "euini9q"
+                }
+            ]
+        },
+        "associatedEntityMetamodel": null,
+        "associatedEntityFormType": null,
+        "associatedContractModelMetamodel": null,
+        "associatedPersistantFormId": null,
+        "associatedLocalStorageDatabaseId": null,
+        "buttons": [
+            {
+                "type": "button",
+                "label": "Submit",
+                "key": "submit",
+                "size": "md",
+                "block": false,
+                "action": "submit",
+                "disableOnInvalid": true,
+                "theme": "primary",
+                "input": true,
+                "placeholder": "",
+                "prefix": "",
+                "customClass": "",
+                "suffix": "",
+                "multiple": false,
+                "defaultValue": null,
+                "protected": false,
+                "unique": false,
+                "persistent": false,
+                "hidden": false,
+                "clearOnHide": true,
+                "refreshOn": "",
+                "redrawOn": "",
+                "tableView": false,
+                "modalEdit": false,
+                "labelPosition": "top",
+                "description": "",
+                "errorLabel": "",
+                "tooltip": "",
+                "hideLabel": false,
+                "tabindex": "",
+                "disabled": false,
+                "autofocus": false,
+                "dbIndex": false,
+                "customDefaultValue": "",
+                "calculateValue": "",
+                "widget": {
+                    "type": "input"
+                },
+                "attributes": {},
+                "validateOn": "change",
+                "validate": {
+                    "required": false,
+                    "custom": "",
+                    "customPrivate": false,
+                    "strictDateValidation": false,
+                    "unique": false,
+                    "multiple": false
+                },
+                "conditional": {
+                    "show": null,
+                    "when": null,
+                    "eq": ""
+                },
+                "overlay": {
+                    "style": "",
+                    "left": "",
+                    "top": "",
+                    "width": "",
+                    "height": ""
+                },
+                "allowCalculateOverride": false,
+                "encrypted": false,
+                "showCharCount": false,
+                "showWordCount": false,
+                "properties": {},
+                "allowMultipleMasks": false,
+                "leftIcon": "",
+                "rightIcon": "",
+                "dataGridLabel": true,
+                "id": "euini9q"
+            }
+        ],
+        "outputs": 2,
+        "x": 160,
+        "y": 220,
+        "wires": [
+            [
+                "d9_formdan"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "d9_formdan",
+        "type": "function",
+        "z": "d8tab00000000001",
+        "name": "ekleri coz",
+        "func": "// Form ekinden gelen dosyalari tek bir metne cevirir.\n//\n// Formio'nun \"base64\" depolama modunda her dosya soyle gelir:\n//   {\n//     storage:      \"base64\",\n//     name:         \"01-toplanti.md\",\n//     originalName: \"01-toplanti.md\",\n//     type:         \"text/markdown\",\n//     size:         1234,\n//     url:          \"data:text/markdown;base64,IyBUb3BsYW50...\"\n//   }\n//\n// Icerik dosyanin KENDISINDE (url alaninda) tasiniyor -- diske hicbir sey\n// yazilmiyor, ayri bir depolama servisi gerekmiyor. Bedeli: dosya\n// tarayicidan sunucuya base64 olarak gidiyor, yani ~%33 sismis halde.\n\nconst veri = (msg.payload && msg.payload.data) || {};\nconst dosyalar = veri.belgeler;\n\nif (!Array.isArray(dosyalar) || dosyalar.length === 0) {\n  node.status({ fill: \"red\", shape: \"ring\", text: \"dosya yok\" });\n  node.error(\"Form dosya eklenmeden gonderildi\", msg);\n  return null;\n}\n\nconst NL = String.fromCharCode(10);\nconst parcalar = [];\n\nfor (const d of dosyalar) {\n  const url = d.url || \"\";\n  const virgul = url.indexOf(\",\");\n\n  // \"data:<mime>;base64,<icerik>\" bicimini bekliyoruz. Baska bir depolama\n  // modu secilirse (s3, url, azure) burada url yerine bir HTTP adresi\n  // gelir ve bu kontrol devreye girer.\n  if (virgul < 0 || url.indexOf(\"base64\") < 0) {\n    node.error(\"Dosya base64 degil, depolama modunu kontrol edin: \" + (d.name || \"?\"), msg);\n    return null;\n  }\n\n  const metin = Buffer.from(url.slice(virgul + 1), \"base64\").toString(\"utf8\");\n  parcalar.push(\"### DOSYA: \" + (d.originalName || d.name) + NL + metin);\n}\n\nmsg.dosyaSayisi = dosyalar.length;\nmsg.dosyaAdlari = dosyalar.map(d => d.originalName || d.name);\nmsg.payload = parcalar.join(NL + NL);\n\nnode.status({\n  fill: \"blue\",\n  shape: \"dot\",\n  text: msg.dosyaSayisi + \" dosya / \" + msg.payload.length + \" karakter\"\n});\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 220,
+        "wires": [
+            [
+                "d8_prep_fs"
+            ]
+        ]
+    },
+    {
+        "id": "d8tab00000000001",
+        "type": "tab",
+        "label": "Ders 9 - Formlu Zincir",
         "disabled": false,
-        "autofocus": false,
-        "dbIndex": false,
-        "customDefaultValue": "",
-        "calculateValue": "",
-        "widget": {
-          "type": "input"
-        },
-        "attributes": {},
-        "validateOn": "change",
-        "validate": {
-          "required": false,
-          "custom": "",
-          "customPrivate": false,
-          "strictDateValidation": false,
-          "unique": false,
-          "multiple": false
-        },
-        "conditional": {
-          "show": null,
-          "when": null,
-          "eq": ""
-        },
-        "overlay": {
-          "style": "",
-          "left": "",
-          "top": "",
-          "width": "",
-          "height": ""
-        },
-        "allowCalculateOverride": false,
-        "encrypted": false,
-        "showCharCount": false,
-        "showWordCount": false,
-        "properties": {},
-        "allowMultipleMasks": false,
-        "leftIcon": "",
-        "rightIcon": "",
-        "dataGridLabel": true,
-        "id": "euini9q"
-      }
-    ],
-    "outputs": 2,
-    "x": 160,
-    "y": 220,
-    "wires": [
-      [
-        "d9_formdan"
-      ],
-      []
-    ]
-  },
-  {
-    "id": "d9_formdan",
-    "type": "function",
-    "z": "d8tab00000000001",
-    "name": "formdan gelen notlar",
-    "func": "// KOPRU: form ciktisini zincirin bekledigi bicime cevirir.\n//\n// Form Submit'te msg.payload su yapida gelir:\n//   { data: { <PropertyName>: deger, submit: true },\n//     metadata: {...}, state: \"submitted\" }\n//\n// Ders 8'de bu noktaya UC DOSYANIN BIRLESIMI geliyordu.\n// Simdi tek bir metin alanindan geliyor -- gerisi ayni.\n\nconst veri = (msg.payload && msg.payload.data) || {};\nconst notlar = (veri.notlar || \"\").trim();\n\nif (!notlar) {\n  node.status({ fill: \"red\", shape: \"ring\", text: \"bos form\" });\n  node.error(\"Form bos gonderildi\", msg);\n  return null;\n}\n\nmsg.payload = notlar;\nnode.status({ fill: \"blue\", shape: \"dot\", text: notlar.length + \" karakter alindi\" });\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 450,
-    "y": 220,
-    "wires": [
-      [
-        "d8_prep_fs"
-      ]
-    ]
-  },
-  {
-    "id": "d8tab00000000001",
-    "type": "tab",
-    "label": "Ders 9 - Formlu Zincir",
-    "disabled": false,
-    "info": "Form -> FS -> TS -> Review dongusu -> kod.\nDers: 09-form-arayuzu.md"
-  },
-  {
-    "id": "d8_prep_fs",
-    "type": "function",
-    "z": "d8tab00000000001",
-    "name": "FS istegi hazirla",
-    "func": "// Uc dokuman join dugumunde tek metne birlestirildi.\n// Ajana gonderilen sey msg.payload'daki METINDIR.\n\nconst belgeler = msg.payload;\n\nmsg.tur = 0;              // TS duzeltme turu sayaci -- msg uzerinde tasinir\nmsg.belgeler = belgeler;  // sonraki adimlar icin sakla\n\nmsg.payload = `Asagida bir SAP gelistirme talebine ait toplanti notlari ve\nmevcut durum belgesi var.\n\nBunlardan bir FONKSIYONEL SARTNAME (FS) uret. Kurallar:\n\n1. Sadece belgelerde YAZAN bilgiyi kullan. Uydurma.\n2. Celiskili konusulmus bir konu varsa, son toplantidaki karari esas al.\n3. Belirsiz kalan konulari \"Acik Sorular\" basligi altinda ayri listele.\n4. KISA TUT: en fazla 120 satir. Gereksiz tekrar yapma.\n5. Ciktiyi Markdown olarak ver. Baslik yapisi:\n   # Fonksiyonel Sartname\n   ## 1. Amac\n   ## 2. Kapsam\n   ## 3. Is Kurallari\n   ## 4. Cikti ve Formatlar\n   ## 5. Acik Sorular\n\nBELGELER:\n---\n${belgeler}\n---`;\n\nnode.status({ fill: \"blue\", shape: \"dot\", text: \"FS uretiliyor...\" });\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 880,
-    "y": 200,
-    "wires": [
-      [
-        "d8_fs"
-      ]
-    ]
-  },
-  {
-    "id": "d8_fs",
-    "type": "axet-agents-execute",
-    "z": "d8tab00000000001",
-    "name": "1. FS Generator",
-    "agentId": "",
-    "agentName": "",
-    "description": "1. FS Generator",
-    "instructions": "Sen deneyimli bir SAP is analistisin. Toplanti notlarindan net, olculebilir fonksiyonel sartnameler yazarsin. Belgede olmayan bir sey uydurmazsin; eksikleri acik soru olarak isaretlersin.",
-    "model": "aws-anthropic/eu.anthropic.claude-sonnet-4-6",
-    "input": "",
-    "mcpTools": "[]",
-    "coreTools": "",
-    "customTools": "[]",
-    "temperature": 0.3,
-    "maxRetries": 2,
-    "maxSteps": 15,
-    "timeout": 300000,
-    "stream": false,
-    "outputSchema": "",
-    "projectId": "47fa6592-60f7-4ae2-b540-9234a0b211c0",
-    "x": 1110,
-    "y": 200,
-    "wires": [
-      [
-        "d8_fs_kaydet"
-      ],
-      [
-        "d8_hata"
-      ]
-    ]
-  },
-  {
-    "id": "d8_fs_kaydet",
-    "type": "function",
-    "z": "d8tab00000000001",
-    "name": "FS kaydet",
-    "func": "// Ajan cevabi { response: \"...\" } yapisinda gelir (outputSchema yoksa).\n// Metni hem dosyaya yazmak hem sonraki adimlara tasimak icin ayiriyoruz.\n\nmsg.fsMetni = msg.payload.response || msg.payload;\nmsg.payload = msg.fsMetni;   // file dugumu METIN bekler\nmsg.filename = \"/internal-storage-files/cikti/01-FS.md\";\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"FS yazildi\" });\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 190,
-    "y": 340,
-    "wires": [
-      [
-        "d8_fs_file",
-        "d8_prep_ts"
-      ]
-    ]
-  },
-  {
-    "id": "d8_fs_file",
-    "type": "file",
-    "z": "d8tab00000000001",
-    "name": "01-FS.md",
-    "filename": "filename",
-    "filenameType": "msg",
-    "appendNewline": false,
-    "createDir": true,
-    "overwriteFile": "true",
-    "encoding": "utf8",
-    "x": 400,
-    "y": 340,
-    "wires": [
-      []
-    ]
-  },
-  {
-    "id": "d8_prep_ts",
-    "type": "function",
-    "z": "d8tab00000000001",
-    "name": "TS istegi hazirla",
-    "func": "// Bu dugum iki yoldan gecilir:\n//   1. Ilk gelis  -> FS'ten gelir, msg.tur = 0\n//   2. Geri donus -> Reviewer'dan gelir, msg.tur artmistir ve\n//                    msg.bulgular doludur\n//\n// Ders 7'deki retry dongusunun aynisi: sayac msg uzerinde, ust sinir var.\n\nmsg.tur = (msg.tur || 0) + 1;\n\nconst NL = String.fromCharCode(10);   // kacis sorunu yasamamak icin\nconst fs = msg.fsMetni;\nconst oncekiTs = msg.tsMetni || \"\";\nconst bulgular = msg.bulgular || [];\n\nlet duzeltmeBolumu = \"\";\nif (bulgular.length > 0) {\n  const liste = bulgular\n    .map(b => \"- [\" + (b.onem || \"orta\") + \"] \" + b.madde)\n    .join(NL);\n\n  // ONEMLI: onceki TS'in TAMAMINI geri gondermiyoruz.\n  // Ilk denemede gonderdik ve platform gecidi zaman asimina ugradi\n  // (OriginTimeout). Sadece bolum basliklarini gonderiyoruz; yapi\n  // korunuyor ama girdi kucuk kaliyor.\n  const basliklar = oncekiTs\n    .split(NL)\n    .filter(l => l.charAt(0) === \"#\")\n    .join(NL);\n\n  duzeltmeBolumu = [\n    \"\",\n    \"BU BIR DUZELTME TURU (tur \" + msg.tur + \").\",\n    \"Asagidaki bulgulari giderecek sekilde belgeyi YENIDEN uret.\",\n    \"\",\n    \"BULGULAR:\",\n    liste,\n    \"\",\n    \"ONCEKI BELGENIN YAPISI (sadece basliklar -- bu yapiyi koru):\",\n    \"---\",\n    basliklar,\n    \"---\",\n    \"\"\n  ].join(NL);\n}\n\nmsg.payload = [\n  \"Asagidaki fonksiyonel sartnameden bir TEKNIK SARTNAME (TS) uret.\",\n  duzeltmeBolumu,\n  \"Kurallar:\",\n  \"\",\n  \"1. ABAP / SAP S4HANA hedefle.\",\n  \"2. Kullanilacak tablolari ve alanlari acikca yaz.\",\n  \"3. Program adi, tablo tipi, yapi adlarini naming convention'a uydur.\",\n  \"4. Performans kisitini goz ardi etme.\",\n  \"5. KISA TUT: en fazla 180 satir. Uzun belge uretme -- platform gecidi\",\n  \"   uzun cevaplarda zaman asimina ugruyor.\",\n  \"6. Ciktiyi Markdown olarak ver. Baslik yapisi:\",\n  \"   # Teknik Sartname\",\n  \"   ## 1. Genel Bakis\",\n  \"   ## 2. Veri Kaynaklari\",\n  \"   ## 3. Program Yapisi\",\n  \"   ## 4. Algoritma\",\n  \"   ## 5. Yetki ve Zamanlama\",\n  \"   ## 6. Test Senaryolari\",\n  \"\",\n  \"FONKSIYONEL SARTNAME:\",\n  \"---\",\n  fs,\n  \"---\"\n].join(NL);\n\nnode.status({ fill: \"blue\", shape: \"dot\", text: \"TS uretiliyor (tur \" + msg.tur + \")\" });\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 650,
-    "y": 340,
-    "wires": [
-      [
-        "d8_ts"
-      ]
-    ]
-  },
-  {
-    "id": "d8_ts",
-    "type": "axet-agents-execute",
-    "z": "d8tab00000000001",
-    "name": "2. TS Generator",
-    "agentId": "",
-    "agentName": "",
-    "description": "2. TS Generator",
-    "instructions": "Sen kidemli bir ABAP gelistiricisisin. Fonksiyonel sartnameyi uygulanabilir teknik tasarima cevirirsin: tablolar, alanlar, program yapisi, algoritma. Naming convention'a harfiyen uyarsin.",
-    "model": "aws-anthropic/eu.anthropic.claude-haiku-4-5-20251001-v1¬¬0",
-    "input": "",
-    "mcpTools": "[]",
-    "coreTools": "",
-    "customTools": "[]",
-    "temperature": 0.3,
-    "maxRetries": 2,
-    "maxSteps": 15,
-    "timeout": 300000,
-    "stream": false,
-    "outputSchema": "",
-    "projectId": "47fa6592-60f7-4ae2-b540-9234a0b211c0",
-    "x": 880,
-    "y": 340,
-    "wires": [
-      [
-        "d8_ts_kaydet"
-      ],
-      [
-        "d8_hata"
-      ]
-    ]
-  },
-  {
-    "id": "d8_ts_kaydet",
-    "type": "function",
-    "z": "d8tab00000000001",
-    "name": "TS kaydet",
-    "func": "// Her tur ayri dosyaya yazilir: 02-TS-tur1.md, 02-TS-tur2.md ...\n// Boylece \"ikinci turda ne degisti?\" sorusu somut olarak cevaplanabilir.\n\nmsg.tsMetni = msg.payload.response || msg.payload;\nmsg.payload = msg.tsMetni;\nmsg.filename = `/internal-storage-files/cikti/02-TS-tur${msg.tur}.md`;\n\nnode.status({ fill: \"green\", shape: \"dot\", text: `TS tur ${msg.tur} yazildi` });\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 1110,
-    "y": 340,
-    "wires": [
-      [
-        "d8_ts_file",
-        "d8_prep_rev"
-      ]
-    ]
-  },
-  {
-    "id": "d8_ts_file",
-    "type": "file",
-    "z": "d8tab00000000001",
-    "name": "02-TS-turN.md",
-    "filename": "filename",
-    "filenameType": "msg",
-    "appendNewline": false,
-    "createDir": true,
-    "overwriteFile": "true",
-    "encoding": "utf8",
-    "x": 1330,
-    "y": 340,
-    "wires": [
-      []
-    ]
-  },
-  {
-    "id": "d8_prep_rev",
-    "type": "function",
-    "z": "d8tab00000000001",
-    "name": "inceleme istegi",
-    "func": "// Reviewer'in cevabi outputSchema ile YAPILANDIRILMIS gelir:\n//   { onay: boolean, bulgular: [{madde, onem}], ozet: string }\n// Bu yuzden switch dugumu metin icinde arama yapmak zorunda kalmaz.\n\nmsg.tsMetni = msg.payload.response || msg.payload;\n\nmsg.payload = `Asagidaki teknik sartnameyi bir SAP kidemli gelistiricisi\ngozuyle incele.\n\nSorulacak sorular:\n- Fonksiyonel sartnamedeki her kural teknik olarak karsilanmis mi?\n- Tablo ve alan secimleri dogru mu?\n- Performans kisiti dikkate alinmis mi?\n- Gelistirici bu belgeyle kod yazmaya baslayabilir mi?\n\nEksik veya hatali bir sey bulursan onay verme; bulgulari maddeler halinde yaz.\nEN FAZLA 5 BULGU yaz -- sadece gelistirmeyi engelleyecek kadar onemli\nolanlari. Kucuk eksikleri gormezden gel.\nBelge yeterliyse onay ver.\n\nFONKSIYONEL SARTNAME:\n---\n${msg.fsMetni}\n---\n\nTEKNIK SARTNAME:\n---\n${msg.tsMetni}\n---`;\n\nnode.status({ fill: \"blue\", shape: \"dot\", text: \"inceleniyor...\" });\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 190,
-    "y": 480,
-    "wires": [
-      [
-        "d8_rev"
-      ]
-    ]
-  },
-  {
-    "id": "d8_rev",
-    "type": "axet-agents-execute",
-    "z": "d8tab00000000001",
-    "name": "3. TS Reviewer",
-    "agentId": "",
-    "agentName": "",
-    "description": "3. TS Reviewer",
-    "instructions": "Sen titiz bir SAP teknik lideri sin. Teknik sartnameleri gelistirmeye hazir olup olmadigi acisindan degerlendirirsin. Eksik varsa onay vermezsin. Degerlendirmeni istenen JSON yapisinda dondurursun.",
-    "model": "aws-anthropic/eu.anthropic.claude-haiku-4-5-20251001-v1¬¬0",
-    "input": "",
-    "mcpTools": "[]",
-    "coreTools": "",
-    "customTools": "[]",
-    "temperature": 0.3,
-    "maxRetries": 2,
-    "maxSteps": 15,
-    "timeout": 300000,
-    "stream": false,
-    "outputSchema": "{\"type\": \"object\", \"properties\": {\"onay\": {\"type\": \"boolean\", \"description\": \"TS gelistirmeye hazir mi\"}, \"bulgular\": {\"type\": \"array\", \"description\": \"Eksik veya hatali maddeler\", \"items\": {\"type\": \"object\", \"properties\": {\"madde\": {\"type\": \"string\"}, \"onem\": {\"type\": \"string\", \"description\": \"yuksek/orta/dusuk\"}}}}, \"ozet\": {\"type\": \"string\", \"description\": \"Tek paragraf degerlendirme\"}}, \"required\": [\"onay\", \"ozet\"]}",
-    "projectId": "47fa6592-60f7-4ae2-b540-9234a0b211c0",
-    "x": 420,
-    "y": 480,
-    "wires": [
-      [
-        "d8_karar"
-      ],
-      [
-        "d8_hata"
-      ]
-    ]
-  },
-  {
-    "id": "d8_karar",
-    "type": "function",
-    "z": "d8tab00000000001",
-    "name": "karari oku",
-    "func": "// Reviewer ciktisini oku ve karari msg'ye yaz.\n// switch dugumu bundan sonra sadece msg.karar alanina bakar.\n\nconst r = msg.payload;           // outputSchema sayesinde nesne\nconst ENUST_TUR = 2;             // duzeltme turu ust siniri\n\nmsg.onay = r.onay === true;\nmsg.bulgular = r.bulgular || [];\nmsg.ozet = r.ozet || \"\";\n\nif (msg.onay) {\n  msg.karar = \"gelistir\";\n  node.status({ fill: \"green\", shape: \"dot\", text: `onaylandi (tur ${msg.tur})` });\n} else if (msg.tur < ENUST_TUR) {\n  msg.karar = \"duzelt\";\n  node.status({ fill: \"yellow\", shape: \"ring\",\n                text: `duzeltme (${msg.bulgular.length} bulgu)` });\n} else {\n  msg.karar = \"mudahale\";\n  node.status({ fill: \"red\", shape: \"dot\", text: \"tur hakki bitti\" });\n}\n\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 650,
-    "y": 480,
-    "wires": [
-      [
-        "d8_switch"
-      ]
-    ]
-  },
-  {
-    "id": "d8_switch",
-    "type": "switch",
-    "z": "d8tab00000000001",
-    "name": "onay?",
-    "property": "karar",
-    "propertyType": "msg",
-    "rules": [
-      {
-        "t": "eq",
-        "v": "gelistir",
-        "vt": "str"
-      },
-      {
-        "t": "eq",
-        "v": "duzelt",
-        "vt": "str"
-      },
-      {
-        "t": "eq",
-        "v": "mudahale",
-        "vt": "str"
-      }
-    ],
-    "checkall": "false",
-    "repair": false,
-    "outputs": 3,
-    "x": 870,
-    "y": 480,
-    "wires": [
-      [
-        "d8_prep_dev"
-      ],
-      [
-        "d8_prep_ts"
-      ],
-      [
-        "d8_mudahale"
-      ]
-    ]
-  },
-  {
-    "id": "d8_prep_dev",
-    "type": "function",
-    "z": "d8tab00000000001",
-    "name": "kod istegi hazirla",
-    "func": "msg.payload = `Asagidaki teknik sartnameye gore ABAP kodunu yaz.\n\nKurallar:\n1. Calisir, eksiksiz bir program yaz -- sozde kod degil.\n2. Naming convention'a uy.\n3. Kodu yorumla; her ana blogun ne yaptigini kisaca acikla.\n4. Sadece kodu dondur, aciklama metni ekleme.\n\nTEKNIK SARTNAME:\n---\n${msg.tsMetni}\n---`;\n\nnode.status({ fill: \"blue\", shape: \"dot\", text: \"kod yaziliyor...\" });\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 190,
-    "y": 620,
-    "wires": [
-      [
-        "d8_dev"
-      ]
-    ]
-  },
-  {
-    "id": "d8_dev",
-    "type": "axet-agents-execute",
-    "z": "d8tab00000000001",
-    "name": "4. Developer",
-    "agentId": "",
-    "agentName": "",
-    "description": "4. Developer",
-    "instructions": "Sen ABAP gelistiricisisin. Teknik sartnameye birebir uyan, calisir ve yorumlu kod yazarsin. Sozde kod yazmazsin.",
-    "model": "aws-anthropic/eu.anthropic.claude-sonnet-4-6",
-    "input": "",
-    "mcpTools": "[]",
-    "coreTools": "",
-    "customTools": "[]",
-    "temperature": 0.3,
-    "maxRetries": 2,
-    "maxSteps": 15,
-    "timeout": 300000,
-    "stream": false,
-    "outputSchema": "",
-    "projectId": "47fa6592-60f7-4ae2-b540-9234a0b211c0",
-    "x": 420,
-    "y": 620,
-    "wires": [
-      [
-        "d8_kod_kaydet"
-      ],
-      [
-        "d8_hata"
-      ]
-    ]
-  },
-  {
-    "id": "d8_kod_kaydet",
-    "type": "function",
-    "z": "d8tab00000000001",
-    "name": "kodu kaydet",
-    "func": "const kod = msg.payload.response || msg.payload;\n\nmsg.payload = kod;\nmsg.filename = \"/internal-storage-files/cikti/03-kod.abap\";\n\nnode.status({ fill: \"green\", shape: \"dot\", text: `kod yazildi (tur ${msg.tur})` });\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 650,
-    "y": 620,
-    "wires": [
-      [
-        "d8_kod_file",
-        "d8_bitti"
-      ]
-    ]
-  },
-  {
-    "id": "d8_kod_file",
-    "type": "file",
-    "z": "d8tab00000000001",
-    "name": "03-kod.abap",
-    "filename": "filename",
-    "filenameType": "msg",
-    "appendNewline": false,
-    "createDir": true,
-    "overwriteFile": "true",
-    "encoding": "utf8",
-    "x": 870,
-    "y": 620,
-    "wires": [
-      []
-    ]
-  },
-  {
-    "id": "d8_bitti",
-    "type": "debug",
-    "z": "d8tab00000000001",
-    "name": "ZINCIR TAMAM",
-    "active": true,
-    "tosidebar": true,
-    "console": false,
-    "tostatus": false,
-    "complete": "tur",
-    "targetType": "msg",
-    "statusVal": "",
-    "statusType": "auto",
-    "x": 880,
-    "y": 680,
-    "wires": []
-  },
-  {
-    "id": "d8_mudahale",
-    "type": "function",
-    "z": "d8tab00000000001",
-    "name": "mudahale notu",
-    "func": "// Ust sinira ulasildi: zincir kendini toparlayamadi.\n// Ders 7'nin \"vazgec\" dali ile ayni felsefe -- sessizce durma, iz birak.\n\nconst satirlar = [\n  \"# Insan mudahalesi gerekli\",\n  \"\",\n  `Zincir ${msg.tur} turda onay alamadi.`,\n  \"\",\n  \"## Reviewer ozeti\",\n  msg.ozet || \"(ozet yok)\",\n  \"\",\n  \"## Kalan bulgular\",\n  ...(msg.bulgular || []).map(b => `- [${b.onem || \"orta\"}] ${b.madde}`),\n  \"\",\n  `Son teknik sartname: /internal-storage-files/cikti/02-TS-tur${msg.tur}.md`\n];\n\nmsg.payload = satirlar.join(\"\\n\");\nmsg.filename = \"/internal-storage-files/cikti/MUDAHALE-GEREKLI.md\";\n\nnode.warn([\"ZINCIR ONAY ALAMADI\", msg.ozet]);\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 1110,
-    "y": 540,
-    "wires": [
-      [
-        "d8_mud_file"
-      ]
-    ]
-  },
-  {
-    "id": "d8_mud_file",
-    "type": "file",
-    "z": "d8tab00000000001",
-    "name": "MUDAHALE-GEREKLI.md",
-    "filename": "filename",
-    "filenameType": "msg",
-    "appendNewline": false,
-    "createDir": true,
-    "overwriteFile": "true",
-    "encoding": "utf8",
-    "x": 1330,
-    "y": 540,
-    "wires": [
-      []
-    ]
-  },
-  {
-    "id": "d8_catch",
-    "type": "catch",
-    "z": "d8tab00000000001",
-    "name": "zincir hatalari",
-    "scope": null,
-    "uncaught": false,
-    "x": 190,
-    "y": 760,
-    "wires": [
-      [
-        "d8_hata"
-      ]
-    ]
-  },
-  {
-    "id": "d8_hata",
-    "type": "debug",
-    "z": "d8tab00000000001",
-    "name": "ZINCIR HATASI",
-    "active": true,
-    "tosidebar": true,
-    "console": true,
-    "tostatus": false,
-    "complete": "true",
-    "targetType": "full",
-    "statusVal": "",
-    "statusType": "auto",
-    "x": 430,
-    "y": 760,
-    "wires": []
-  }
+        "info": "Form -> FS -> TS -> Review dongusu -> kod.\nDers: 09-form-arayuzu.md"
+    },
+    {
+        "id": "d8_prep_fs",
+        "type": "function",
+        "z": "d8tab00000000001",
+        "name": "FS istegi hazirla",
+        "func": "// Uc dokuman join dugumunde tek metne birlestirildi.\n// Ajana gonderilen sey msg.payload'daki METINDIR.\n\nconst belgeler = msg.payload;\n\nmsg.tur = 0;              // TS duzeltme turu sayaci -- msg uzerinde tasinir\nmsg.belgeler = belgeler;  // sonraki adimlar icin sakla\n\nmsg.payload = `Asagida bir SAP gelistirme talebine ait toplanti notlari ve\nmevcut durum belgesi var.\n\nBunlardan bir FONKSIYONEL SARTNAME (FS) uret. Kurallar:\n\n1. Sadece belgelerde YAZAN bilgiyi kullan. Uydurma.\n2. Celiskili konusulmus bir konu varsa, son toplantidaki karari esas al.\n3. Belirsiz kalan konulari \"Acik Sorular\" basligi altinda ayri listele.\n4. KISA TUT: en fazla 120 satir. Gereksiz tekrar yapma.\n5. Ciktiyi Markdown olarak ver. Baslik yapisi:\n   # Fonksiyonel Sartname\n   ## 1. Amac\n   ## 2. Kapsam\n   ## 3. Is Kurallari\n   ## 4. Cikti ve Formatlar\n   ## 5. Acik Sorular\n\nBELGELER:\n---\n${belgeler}\n---`;\n\nnode.status({ fill: \"blue\", shape: \"dot\", text: \"FS uretiliyor...\" });\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 200,
+        "wires": [
+            [
+                "d8_fs"
+            ]
+        ]
+    },
+    {
+        "id": "d8_fs",
+        "type": "axet-agents-execute",
+        "z": "d8tab00000000001",
+        "name": "1. FS Generator",
+        "agentId": "",
+        "agentName": "",
+        "description": "1. FS Generator",
+        "instructions": "Sen deneyimli bir SAP is analistisin. Toplanti notlarindan net, olculebilir fonksiyonel sartnameler yazarsin. Belgede olmayan bir sey uydurmazsin; eksikleri acik soru olarak isaretlersin.",
+        "model": "aws-anthropic/eu.anthropic.claude-sonnet-4-6",
+        "input": "",
+        "mcpTools": "[]",
+        "coreTools": "",
+        "customTools": "[]",
+        "temperature": 0.3,
+        "maxRetries": 2,
+        "maxSteps": 15,
+        "timeout": 300000,
+        "stream": false,
+        "outputSchema": "",
+        "projectId": "47fa6592-60f7-4ae2-b540-9234a0b211c0",
+        "x": 1110,
+        "y": 200,
+        "wires": [
+            [
+                "d8_fs_kaydet"
+            ],
+            [
+                "d8_hata"
+            ]
+        ]
+    },
+    {
+        "id": "d8_fs_kaydet",
+        "type": "function",
+        "z": "d8tab00000000001",
+        "name": "FS kaydet",
+        "func": "// Ajan cevabi { response: \"...\" } yapisinda gelir (outputSchema yoksa).\n// Metni hem dosyaya yazmak hem sonraki adimlara tasimak icin ayiriyoruz.\n\nmsg.fsMetni = msg.payload.response || msg.payload;\nmsg.payload = msg.fsMetni;   // file dugumu METIN bekler\nmsg.filename = \"/internal-storage-files/cikti/01-FS.md\";\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"FS yazildi\" });\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 340,
+        "wires": [
+            [
+                "d8_fs_file",
+                "d8_prep_ts"
+            ]
+        ]
+    },
+    {
+        "id": "d8_fs_file",
+        "type": "file",
+        "z": "d8tab00000000001",
+        "name": "01-FS.md",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "utf8",
+        "x": 400,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d8_prep_ts",
+        "type": "function",
+        "z": "d8tab00000000001",
+        "name": "TS istegi hazirla",
+        "func": "// Bu dugum iki yoldan gecilir:\n//   1. Ilk gelis  -> FS'ten gelir, msg.tur = 0\n//   2. Geri donus -> Reviewer'dan gelir, msg.tur artmistir ve\n//                    msg.bulgular doludur\n//\n// Ders 7'deki retry dongusunun aynisi: sayac msg uzerinde, ust sinir var.\n\nmsg.tur = (msg.tur || 0) + 1;\n\nconst NL = String.fromCharCode(10);   // kacis sorunu yasamamak icin\nconst fs = msg.fsMetni;\nconst oncekiTs = msg.tsMetni || \"\";\nconst bulgular = msg.bulgular || [];\n\nlet duzeltmeBolumu = \"\";\nif (bulgular.length > 0) {\n  const liste = bulgular\n    .map(b => \"- [\" + (b.onem || \"orta\") + \"] \" + b.madde)\n    .join(NL);\n\n  // ONEMLI: onceki TS'in TAMAMINI geri gondermiyoruz.\n  // Ilk denemede gonderdik ve platform gecidi zaman asimina ugradi\n  // (OriginTimeout). Sadece bolum basliklarini gonderiyoruz; yapi\n  // korunuyor ama girdi kucuk kaliyor.\n  const basliklar = oncekiTs\n    .split(NL)\n    .filter(l => l.charAt(0) === \"#\")\n    .join(NL);\n\n  duzeltmeBolumu = [\n    \"\",\n    \"BU BIR DUZELTME TURU (tur \" + msg.tur + \").\",\n    \"Asagidaki bulgulari giderecek sekilde belgeyi YENIDEN uret.\",\n    \"\",\n    \"BULGULAR:\",\n    liste,\n    \"\",\n    \"ONCEKI BELGENIN YAPISI (sadece basliklar -- bu yapiyi koru):\",\n    \"---\",\n    basliklar,\n    \"---\",\n    \"\"\n  ].join(NL);\n}\n\nmsg.payload = [\n  \"Asagidaki fonksiyonel sartnameden bir TEKNIK SARTNAME (TS) uret.\",\n  duzeltmeBolumu,\n  \"Kurallar:\",\n  \"\",\n  \"1. ABAP / SAP S4HANA hedefle.\",\n  \"2. Kullanilacak tablolari ve alanlari acikca yaz.\",\n  \"3. Program adi, tablo tipi, yapi adlarini naming convention'a uydur.\",\n  \"4. Performans kisitini goz ardi etme.\",\n  \"5. KISA TUT: en fazla 180 satir. Uzun belge uretme -- platform gecidi\",\n  \"   uzun cevaplarda zaman asimina ugruyor.\",\n  \"6. Ciktiyi Markdown olarak ver. Baslik yapisi:\",\n  \"   # Teknik Sartname\",\n  \"   ## 1. Genel Bakis\",\n  \"   ## 2. Veri Kaynaklari\",\n  \"   ## 3. Program Yapisi\",\n  \"   ## 4. Algoritma\",\n  \"   ## 5. Yetki ve Zamanlama\",\n  \"   ## 6. Test Senaryolari\",\n  \"\",\n  \"FONKSIYONEL SARTNAME:\",\n  \"---\",\n  fs,\n  \"---\"\n].join(NL);\n\nnode.status({ fill: \"blue\", shape: \"dot\", text: \"TS uretiliyor (tur \" + msg.tur + \")\" });\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 340,
+        "wires": [
+            [
+                "d8_ts"
+            ]
+        ]
+    },
+    {
+        "id": "d8_ts",
+        "type": "axet-agents-execute",
+        "z": "d8tab00000000001",
+        "name": "2. TS Generator",
+        "agentId": "",
+        "agentName": "",
+        "description": "2. TS Generator",
+        "instructions": "Sen kidemli bir ABAP gelistiricisisin. Fonksiyonel sartnameyi uygulanabilir teknik tasarima cevirirsin: tablolar, alanlar, program yapisi, algoritma. Naming convention'a harfiyen uyarsin.",
+        "model": "aws-anthropic/eu.anthropic.claude-haiku-4-5-20251001-v1¬¬0",
+        "input": "",
+        "mcpTools": "[]",
+        "coreTools": "",
+        "customTools": "[]",
+        "temperature": 0.3,
+        "maxRetries": 2,
+        "maxSteps": 15,
+        "timeout": 300000,
+        "stream": false,
+        "outputSchema": "",
+        "projectId": "47fa6592-60f7-4ae2-b540-9234a0b211c0",
+        "x": 880,
+        "y": 340,
+        "wires": [
+            [
+                "d8_ts_kaydet"
+            ],
+            [
+                "d8_hata"
+            ]
+        ]
+    },
+    {
+        "id": "d8_ts_kaydet",
+        "type": "function",
+        "z": "d8tab00000000001",
+        "name": "TS kaydet",
+        "func": "// Her tur ayri dosyaya yazilir: 02-TS-tur1.md, 02-TS-tur2.md ...\n// Boylece \"ikinci turda ne degisti?\" sorusu somut olarak cevaplanabilir.\n\nmsg.tsMetni = msg.payload.response || msg.payload;\nmsg.payload = msg.tsMetni;\nmsg.filename = `/internal-storage-files/cikti/02-TS-tur${msg.tur}.md`;\n\nnode.status({ fill: \"green\", shape: \"dot\", text: `TS tur ${msg.tur} yazildi` });\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1110,
+        "y": 340,
+        "wires": [
+            [
+                "d8_ts_file",
+                "d8_prep_rev"
+            ]
+        ]
+    },
+    {
+        "id": "d8_ts_file",
+        "type": "file",
+        "z": "d8tab00000000001",
+        "name": "02-TS-turN.md",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "utf8",
+        "x": 1330,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d8_prep_rev",
+        "type": "function",
+        "z": "d8tab00000000001",
+        "name": "inceleme istegi",
+        "func": "// Reviewer'in cevabi outputSchema ile YAPILANDIRILMIS gelir:\n//   { onay: boolean, bulgular: [{madde, onem}], ozet: string }\n// Bu yuzden switch dugumu metin icinde arama yapmak zorunda kalmaz.\n\nmsg.tsMetni = msg.payload.response || msg.payload;\n\nmsg.payload = `Asagidaki teknik sartnameyi bir SAP kidemli gelistiricisi\ngozuyle incele.\n\nSorulacak sorular:\n- Fonksiyonel sartnamedeki her kural teknik olarak karsilanmis mi?\n- Tablo ve alan secimleri dogru mu?\n- Performans kisiti dikkate alinmis mi?\n- Gelistirici bu belgeyle kod yazmaya baslayabilir mi?\n\nEksik veya hatali bir sey bulursan onay verme; bulgulari maddeler halinde yaz.\nEN FAZLA 5 BULGU yaz -- sadece gelistirmeyi engelleyecek kadar onemli\nolanlari. Kucuk eksikleri gormezden gel.\nBelge yeterliyse onay ver.\n\nFONKSIYONEL SARTNAME:\n---\n${msg.fsMetni}\n---\n\nTEKNIK SARTNAME:\n---\n${msg.tsMetni}\n---`;\n\nnode.status({ fill: \"blue\", shape: \"dot\", text: \"inceleniyor...\" });\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 480,
+        "wires": [
+            [
+                "d8_rev"
+            ]
+        ]
+    },
+    {
+        "id": "d8_rev",
+        "type": "axet-agents-execute",
+        "z": "d8tab00000000001",
+        "name": "3. TS Reviewer",
+        "agentId": "",
+        "agentName": "",
+        "description": "3. TS Reviewer",
+        "instructions": "Sen titiz bir SAP teknik lideri sin. Teknik sartnameleri gelistirmeye hazir olup olmadigi acisindan degerlendirirsin. Eksik varsa onay vermezsin. Degerlendirmeni istenen JSON yapisinda dondurursun.",
+        "model": "aws-anthropic/eu.anthropic.claude-haiku-4-5-20251001-v1¬¬0",
+        "input": "",
+        "mcpTools": "[]",
+        "coreTools": "",
+        "customTools": "[]",
+        "temperature": 0.3,
+        "maxRetries": 2,
+        "maxSteps": 15,
+        "timeout": 300000,
+        "stream": false,
+        "outputSchema": "{\"type\": \"object\", \"properties\": {\"onay\": {\"type\": \"boolean\", \"description\": \"TS gelistirmeye hazir mi\"}, \"bulgular\": {\"type\": \"array\", \"description\": \"Eksik veya hatali maddeler\", \"items\": {\"type\": \"object\", \"properties\": {\"madde\": {\"type\": \"string\"}, \"onem\": {\"type\": \"string\", \"description\": \"yuksek/orta/dusuk\"}}}}, \"ozet\": {\"type\": \"string\", \"description\": \"Tek paragraf degerlendirme\"}}, \"required\": [\"onay\", \"ozet\"]}",
+        "projectId": "47fa6592-60f7-4ae2-b540-9234a0b211c0",
+        "x": 420,
+        "y": 480,
+        "wires": [
+            [
+                "d8_karar"
+            ],
+            [
+                "d8_hata"
+            ]
+        ]
+    },
+    {
+        "id": "d8_karar",
+        "type": "function",
+        "z": "d8tab00000000001",
+        "name": "karari oku",
+        "func": "// Reviewer ciktisini oku ve karari msg'ye yaz.\n// switch dugumu bundan sonra sadece msg.karar alanina bakar.\n\nconst r = msg.payload;           // outputSchema sayesinde nesne\nconst ENUST_TUR = 2;             // duzeltme turu ust siniri\n\nmsg.onay = r.onay === true;\nmsg.bulgular = r.bulgular || [];\nmsg.ozet = r.ozet || \"\";\n\nif (msg.onay) {\n  msg.karar = \"gelistir\";\n  node.status({ fill: \"green\", shape: \"dot\", text: `onaylandi (tur ${msg.tur})` });\n} else if (msg.tur < ENUST_TUR) {\n  msg.karar = \"duzelt\";\n  node.status({ fill: \"yellow\", shape: \"ring\",\n                text: `duzeltme (${msg.bulgular.length} bulgu)` });\n} else {\n  msg.karar = \"mudahale\";\n  node.status({ fill: \"red\", shape: \"dot\", text: \"tur hakki bitti\" });\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 480,
+        "wires": [
+            [
+                "d8_switch"
+            ]
+        ]
+    },
+    {
+        "id": "d8_switch",
+        "type": "switch",
+        "z": "d8tab00000000001",
+        "name": "onay?",
+        "property": "karar",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "gelistir",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "duzelt",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "mudahale",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 3,
+        "x": 870,
+        "y": 480,
+        "wires": [
+            [
+                "d8_prep_dev"
+            ],
+            [
+                "d8_prep_ts"
+            ],
+            [
+                "d8_mudahale"
+            ]
+        ]
+    },
+    {
+        "id": "d8_prep_dev",
+        "type": "function",
+        "z": "d8tab00000000001",
+        "name": "kod istegi hazirla",
+        "func": "msg.payload = `Asagidaki teknik sartnameye gore ABAP kodunu yaz.\n\nKurallar:\n1. Calisir, eksiksiz bir program yaz -- sozde kod degil.\n2. Naming convention'a uy.\n3. Kodu yorumla; her ana blogun ne yaptigini kisaca acikla.\n4. Sadece kodu dondur, aciklama metni ekleme.\n\nTEKNIK SARTNAME:\n---\n${msg.tsMetni}\n---`;\n\nnode.status({ fill: \"blue\", shape: \"dot\", text: \"kod yaziliyor...\" });\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 620,
+        "wires": [
+            [
+                "d8_dev"
+            ]
+        ]
+    },
+    {
+        "id": "d8_dev",
+        "type": "axet-agents-execute",
+        "z": "d8tab00000000001",
+        "name": "4. Developer",
+        "agentId": "",
+        "agentName": "",
+        "description": "4. Developer",
+        "instructions": "Sen ABAP gelistiricisisin. Teknik sartnameye birebir uyan, calisir ve yorumlu kod yazarsin. Sozde kod yazmazsin.",
+        "model": "aws-anthropic/eu.anthropic.claude-sonnet-4-6",
+        "input": "",
+        "mcpTools": "[]",
+        "coreTools": "",
+        "customTools": "[]",
+        "temperature": 0.3,
+        "maxRetries": 2,
+        "maxSteps": 15,
+        "timeout": 300000,
+        "stream": false,
+        "outputSchema": "",
+        "projectId": "47fa6592-60f7-4ae2-b540-9234a0b211c0",
+        "x": 420,
+        "y": 620,
+        "wires": [
+            [
+                "d8_kod_kaydet"
+            ],
+            [
+                "d8_hata"
+            ]
+        ]
+    },
+    {
+        "id": "d8_kod_kaydet",
+        "type": "function",
+        "z": "d8tab00000000001",
+        "name": "kodu kaydet",
+        "func": "const kod = msg.payload.response || msg.payload;\n\nmsg.payload = kod;\nmsg.filename = \"/internal-storage-files/cikti/03-kod.abap\";\n\nnode.status({ fill: \"green\", shape: \"dot\", text: `kod yazildi (tur ${msg.tur})` });\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 620,
+        "wires": [
+            [
+                "d8_kod_file",
+                "d8_bitti"
+            ]
+        ]
+    },
+    {
+        "id": "d8_kod_file",
+        "type": "file",
+        "z": "d8tab00000000001",
+        "name": "03-kod.abap",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "utf8",
+        "x": 870,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d8_bitti",
+        "type": "debug",
+        "z": "d8tab00000000001",
+        "name": "ZINCIR TAMAM",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "tur",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "d8_mudahale",
+        "type": "function",
+        "z": "d8tab00000000001",
+        "name": "mudahale notu",
+        "func": "// Ust sinira ulasildi: zincir kendini toparlayamadi.\n// Ders 7'nin \"vazgec\" dali ile ayni felsefe -- sessizce durma, iz birak.\n\nconst satirlar = [\n  \"# Insan mudahalesi gerekli\",\n  \"\",\n  `Zincir ${msg.tur} turda onay alamadi.`,\n  \"\",\n  \"## Reviewer ozeti\",\n  msg.ozet || \"(ozet yok)\",\n  \"\",\n  \"## Kalan bulgular\",\n  ...(msg.bulgular || []).map(b => `- [${b.onem || \"orta\"}] ${b.madde}`),\n  \"\",\n  `Son teknik sartname: /internal-storage-files/cikti/02-TS-tur${msg.tur}.md`\n];\n\nmsg.payload = satirlar.join(\"\\n\");\nmsg.filename = \"/internal-storage-files/cikti/MUDAHALE-GEREKLI.md\";\n\nnode.warn([\"ZINCIR ONAY ALAMADI\", msg.ozet]);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1110,
+        "y": 540,
+        "wires": [
+            [
+                "d8_mud_file"
+            ]
+        ]
+    },
+    {
+        "id": "d8_mud_file",
+        "type": "file",
+        "z": "d8tab00000000001",
+        "name": "MUDAHALE-GEREKLI.md",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "utf8",
+        "x": 1330,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d8_catch",
+        "type": "catch",
+        "z": "d8tab00000000001",
+        "name": "zincir hatalari",
+        "scope": null,
+        "uncaught": false,
+        "x": 190,
+        "y": 760,
+        "wires": [
+            [
+                "d8_hata"
+            ]
+        ]
+    },
+    {
+        "id": "d8_hata",
+        "type": "debug",
+        "z": "d8tab00000000001",
+        "name": "ZINCIR HATASI",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 430,
+        "y": 760,
+        "wires": []
+    }
 ]

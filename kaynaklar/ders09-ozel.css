@@ -1,0 +1,212 @@
+/* ============================================================
+   Ders 9 -- application dugumu > Style > Custom CSS
+   ------------------------------------------------------------
+   Kabuk Bootstrap 4 + SB Admin 2, form kismi formio 4.8.1.
+   Yani hazir bir sablonu eziyoruz; bircok yerde !important
+   gerekiyor.
+
+   Alan hedeflemenin puf noktasi: formio her bileseni
+   .formio-component-<key> sinifiyla isaretliyor. Bizim dosya
+   alanimizin key'i "belgeler" oldugu icin
+   .formio-component-belgeler ile SADECE o alani hedefleyebiliyoruz.
+   ============================================================ */
+
+:root {
+  --kurumsal:      #0b3d5c;
+  --kurumsal-acik: #12628f;
+  --vurgu:         #00a3a1;
+  --zemin:         #f4f7f9;
+}
+
+/* ---------- 1. Ust bant ---------- */
+
+nav.navbar {
+  background: var(--kurumsal) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .18);
+}
+
+/* Marka metni "<Uygulama adi> |" seklinde geliyor -- sondaki ayrac
+   asagida gizlenen logo icin. Logoyu gizleyince ayrac bosta kaliyor.
+   CSS bir metin dugumunun PARCASINI silemez; tumunu gizleyip ::after
+   ile yeniden yazmak gerekiyor. Ayni cozumu alt bantta da kullaniyoruz. */
+nav.navbar .navbar-brand {
+  font-size: 0 !important;
+}
+
+nav.navbar .navbar-brand:after {
+  content: "Sartname Zinciri";
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: .3px;
+}
+
+nav.navbar #sidebarToggle,
+nav.navbar .nav-link {
+  color: rgba(255, 255, 255, .85) !important;
+}
+
+/* "powered by aXet.flows" logosu ust bantta bir <img>.
+   Kaldirmanin yolu yok, gizlemek var. */
+#poweredByDeptapps {
+  display: none !important;
+}
+
+/* ---------- 2. Yan menu ---------- */
+
+ul.sidebar {
+  background: #fff !important;
+  border-right: 1px solid #dfe6ec;
+}
+
+ul.sidebar .nav-link {
+  color: #2c3e50 !important;
+  border-left: 3px solid transparent;
+  border-radius: 0;
+}
+
+ul.sidebar .nav-item.active .nav-link,
+ul.sidebar .nav-link:hover {
+  background: var(--zemin) !important;
+  border-left-color: var(--vurgu);
+  color: var(--kurumsal) !important;
+}
+
+/* ---------- 3. Icerik alani ---------- */
+
+body#page-top {
+  background: var(--zemin);
+}
+
+.formio-component-form {
+  background: #fff;
+  border: 1px solid #e3e9ee;
+  border-radius: 10px;
+  padding: 28px 32px;
+  max-width: 900px;
+  margin: 24px auto;
+}
+
+.col-form-label {
+  font-weight: 600;
+  color: var(--kurumsal);
+  font-size: 1.05rem;
+}
+
+/* Zorunlu alan yildizi Bootstrap'ta zor secilir; belirginlestir */
+.field-required:after {
+  color: #d64545 !important;
+  font-size: 1.1em;
+}
+
+/* ---------- 4. Dosya birakma alani ---------- */
+/* Sadece "belgeler" alanini hedefliyoruz. */
+
+.formio-component-belgeler .fileSelector {
+  border: 2px dashed #b6c6d3 !important;
+  border-radius: 10px;
+  background: #fbfdfe;
+  padding: 34px 16px !important;
+  text-align: center;
+  color: #5b7285;
+  font-size: 1.02rem;
+  transition: border-color .15s, background .15s;
+}
+
+.formio-component-belgeler .fileSelector:hover {
+  border-color: var(--vurgu) !important;
+  background: #f2fbfb;
+}
+
+.formio-component-belgeler .fileSelector .fa-cloud-upload {
+  display: block;
+  font-size: 2.2rem;
+  color: var(--vurgu);
+  margin-bottom: 10px;
+}
+
+.formio-component-belgeler .fileSelector a.browse {
+  color: var(--kurumsal-acik);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* ---------- 5. Yuklenen dosya listesi ---------- */
+
+.formio-component-belgeler ul.list-group {
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.formio-component-belgeler .list-group-header {
+  background: var(--kurumsal) !important;
+  color: #fff !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: .78rem;
+  letter-spacing: .6px;
+}
+
+.formio-component-belgeler li.list-group-item {
+  border-color: #e8eef3;
+}
+
+.formio-component-belgeler li.list-group-item:hover {
+  background: #f7fbfc;
+}
+
+/* Silme carpisi -- varsayilan halde duz siyah metin gibi duruyor */
+.formio-component-belgeler li.list-group-item .col-md-1 i {
+  color: #b6c6d3;
+  cursor: pointer;
+}
+
+.formio-component-belgeler li.list-group-item .col-md-1 i:hover {
+  color: #d64545;
+}
+
+/* ---------- 6. Gonder dugmesi ---------- */
+
+.formio-component-button button.btn-primary {
+  background: var(--vurgu) !important;
+  border-color: var(--vurgu) !important;
+  padding: 11px 34px !important;
+  font-weight: 600;
+  font-size: 1.02rem;
+  border-radius: 7px;
+  box-shadow: 0 2px 6px rgba(0, 163, 161, .3);
+}
+
+.formio-component-button button.btn-primary:hover:not(:disabled) {
+  background: #008a88 !important;
+  border-color: #008a88 !important;
+}
+
+.formio-component-button button.btn-primary:disabled {
+  background: #b9c6ce !important;
+  border-color: #b9c6ce !important;
+  box-shadow: none;
+}
+
+/* ---------- 7. Alt bant ---------- */
+/* Telif satiri tek bir <span> icinde geliyor:
+     "<Uygulama adi> Powered by aXet.flows (c) 2026 NTT Data..."
+   Parcalayip sadece bir kismini silmek MUMKUN DEGIL. Ya tumunu
+   gizlersin ya da gizleyip yerine ::after ile kendi metnini koyarsin.
+   Asagida ikincisi yapiliyor. */
+
+footer.sticky-footer {
+  background: #fff;
+  border-top: 1px solid #e3e9ee;
+}
+
+footer.sticky-footer .copyright span {
+  display: none;
+}
+
+footer.sticky-footer .copyright:after {
+  content: "Sartname Zinciri -- ic kullanim";
+  color: #8a9aa8;
+  font-size: .86rem;
+}
