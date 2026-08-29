@@ -1,36 +1,36 @@
-// Koşu kaydini SQL'e yazacak sorguyu hazirlar.
+// Her kosuyu tek satirlik bir JSON olarak gecmis dosyasina ekler.
 //
-// sql-query dugumu sorguyu Mustache ile isler: '{{payload.x}}' yazarsaniz
-// msg.payload.x degeriyle degistirir. Bu KOLAY ama TEHLIKELIDIR --
-// parametre baglama degil, metin birlestirmedir. Kullanicidan gelen bir
-// degeri dogrudan koyarsaniz SQL enjeksiyonuna acik olursunuz.
+// Neden veritabani degil: aXet'te sql-query dugumu var ve akis basina
+// bir veritabani vaat ediyor, ama o veritabaninin platform tarafinda
+// ACILMIS olmasi gerekiyor. Acilmamissa dugum sunu der:
 //
-// Bu yuzden degerleri burada temizleyip msg.query'yi kendimiz kuruyoruz.
+//   No database password found for flowId: <id> in environment: dev.
+//   Check Key Vault secret 'flow-context-database-sql-dev-<id>'
+//
+// Bu, dugum ayariyla cozulmez -- platform ekibinden istenir. Veritabani
+// olmadan da kosu gecmisi tutulabilir: JSONL (her satir bir JSON).
+// Sonradan veritabanina gecmek isterseniz bu dugumun yerine sql-query
+// koymaniz yeter; akisin geri kalani degismez.
 
 const s = msg.ozet || { KRITIK: 0, UYARI: 0, IZLE: 0 };
-
-// Sayilari sayi oldugundan emin olarak gecirmek en ucuz savunma
-const sayi = n => {
-  const v = parseInt(n, 10);
-  return Number.isFinite(v) ? v : 0;
-};
-
-// Metin icin: tek tirnaklari ikile ve uzunlugu sinirla
-const metin = t => "'" + String(t || "").replace(/'/g, "''").slice(0, 200) + "'";
 
 const g = new Date();
 const iki = n => (n < 10 ? "0" : "") + n;
 const tarih = g.getFullYear() + "-" + iki(g.getMonth() + 1) + "-" + iki(g.getDate())
             + " " + iki(g.getHours()) + ":" + iki(g.getMinutes());
 
-msg.query = "INSERT INTO stok_kosu (tarih, kritik, uyari, izle, satir, kaynak) VALUES ("
-  + metin(tarih) + ", "
-  + sayi(s.KRITIK) + ", "
-  + sayi(s.UYARI) + ", "
-  + sayi(s.IZLE) + ", "
-  + sayi(msg.satirSayisi) + ", "
-  + metin(msg.kaynak || "elle")
-  + ")";
+// JSONL'in tek kurali var: satirda YENI SATIR OLMAYACAK.
+// JSON.stringify'i girintisiz cagirmak bunu garanti eder.
+msg.payload = JSON.stringify({
+  tarih: tarih,
+  kaynak: msg.kaynak || "elle",
+  kritik: s.KRITIK,
+  uyari: s.UYARI,
+  izle: s.IZLE,
+  satir: msg.satirSayisi || 0
+});
 
-node.status({ fill: "grey", shape: "dot", text: "kayit: " + tarih });
+msg.filename = "/internal-storage-files/rapor/kosu-gecmisi.jsonl";
+
+node.status({ fill: "grey", shape: "dot", text: tarih });
 return msg;

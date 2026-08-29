@@ -51,9 +51,10 @@ Her dersin tasarımcıda karşılık gelen bir akış sekmesi vardır:
 | 7 | [Hata Yönetimi](07-hata-yonetimi.md) | ~25 dk | `Ders 7 - Hata Yonetimi` | `catch`, `status`, yeniden deneme, hata günlüğü |
 | 8 | [Ajan Zinciri](08-ajan-zinciri.md) | ~40 dk | `Ders 8 - Ajan Zinciri` | Çok ajanlı akış, denetim döngüsü, geçit sınırları |
 | 9 | [Form Arayüzü](09-form-arayuzu.md) | ~45 dk | `Ders 9 - Formlu Zincir` | Web uygulaması, dosya eki, ajan aktivasyonu, kalıcı dosya, özel CSS |
+| 10 | [Sonucu Teslim Etmek](10-sonucu-teslim.md) | ~40 dk | `Ders 10 - Teslim` | Excel üretimi, koşu geçmişi, sır yönetimi, e-posta, cron |
 | — | [Sorun Giderme](SORUN-GIDERME.md) | başvuru | — | Hata → çözüm tablosu |
 
-Dersler birbirinin üstüne kurulur; sırayla ilerleyin. Yedisi bittiğinde şunu
+Dersler birbirinin üstüne kurulur; sırayla ilerleyin. İlk yedisi bittiğinde şunu
 kurabilir hale gelirsiniz: *"her sabah 8'de API'den siparişleri çek,
 bekleyenleri ayır, bir AI ajanına özetlet, dosyaya yaz"* — ve bunu **canlıda**,
 sizden bağımsız, **hata verdiğinde kendini toparlayarak** çalışır halde
@@ -66,6 +67,10 @@ bulursa geri gönderir, düzelmezse insana devreder.
 Ders 9 zinciri **kullanılabilir** hale getirir: iş arkadaşınız tarayıcıdan
 toplantı notlarını dosya olarak yükler, zincir çalışır. Arayüzün görünümünü
 de kendi kurumunuza uydurursunuz.
+
+Ders 10 döngüyü kapatır: çıktı artık kimsenin bakmadığı bir dosyada değil,
+biçimlendirilmiş bir Excel'de — arşivlenmiş, geçmişi tutulmuş ve alıcısına
+gönderilmiş halde.
 
 > 💡 **Ders 6'yı atlamayın.** Akışlarınız tasarımcı konteynerinde yaşar;
 > versiyon kaydetmezseniz konteynerle birlikte kaybolurlar.
@@ -111,6 +116,7 @@ axet-flows-egitim/
 ├── 07-hata-yonetimi.md                catch, yeniden deneme, hata günlüğü
 ├── 08-ajan-zinciri.md                 birbirini denetleyen dört ajan
 ├── 09-form-arayuzu.md                 web arayüzü, dosya eki, özel CSS
+├── 10-sonucu-teslim.md                Excel, koşu geçmişi, e-posta
 ├── SORUN-GIDERME.md                   hata → çözüm tablosu
 ├── gorseller/                         ekran görüntüleri (14 adet)
 └── kaynaklar/
@@ -122,6 +128,7 @@ axet-flows-egitim/
     ├── ornek-07-hata-yonetimi.json      Ders 7 akışı
     ├── ornek-08-ajan-zinciri.json       Ders 8 akışı (4 ajan)
     ├── ornek-09-form-zincir.json        Ders 9 akışı (form + zincir + CSS)
+    ├── ornek-10-teslim.json             Ders 10 akışı (Excel + geçmiş + posta)
     │
     ├── ders01-ortam-raporu.js           Ders 1 function kodu
     ├── zamani-formatla.js               Ders 2 function kodu
@@ -131,13 +138,15 @@ axet-flows-egitim/
     ├── ders08-*.js                      Ders 8, dokuz function (prompt + karar)
     ├── ders09-formdan-dosya.js          Ders 9, dosya ekini çözen köprü
     ├── ders09-ozel.css                  Ders 9, uygulamanın özel CSS'i
+    ├── ders10-*.js                      Ders 10, dört function
     │
     ├── demo-girdi/                      Ders 8-9 girdisi: 3 çelişkili belge
     ├── demo-cikti/                      katı gözden geçiren → müdahale
     ├── demo-cikti-onayli/               onaylı dal → 710 satır ABAP
     ├── demo-cikti-formlu/               formdan metin ile tetiklenen koşu
     ├── demo-cikti-ekli/                 formdan dosya eki ile tetiklenen koşu
-    └── demo-cikti-kalici/               kalıcı yol denemesinin çıktısı
+    ├── demo-cikti-kalici/               kalıcı yol denemesinin çıktısı
+    └── demo-cikti-rapor/                Ders 10: üretilen Excel + koşu geçmişi
 ```
 
 > **Not:** Ekran görüntülerindeki kişisel bilgiler (kullanıcı adı, dosya

@@ -772,6 +772,161 @@ Sonra portaldan **Run Flow**. Konteyner ID'sinin değiştiğini doğrulayın.
 | `/internal-storage-files/` | `AppData\Local\axet-flows\.deptapps-instances\<id>\` |
 | `/external-repository-files/` | `AppData\Local\axet-flows\.deptapps-desktop\repository-files\` |
 
+### Tasarımcıda ansızın `401` — AI ajanı da SQL de çalışmıyor
+
+**Belirti:** Saatlerdir sorunsuz çalışan tasarımcıda platform düğümleri
+birden bozulur:
+
+```
+sql-query           → Request failed with status code 401
+axet-agents-execute → OKTA token not returned from ai-config endpoint
+```
+
+**Sebep:** Konteyner platform kimliklerini **açılışta** alır ve
+yenilemez. Konteyner günlüğü bunu açıkça gösterir:
+
+```
+[mysql-proxy] Backend config resolved:
+[mysql-proxy]   JWT Token:  eyJhbGciOiJIUzUxMiJ9...
+```
+
+Bu satırın saatine bakın; token o anda alınmıştır ve ömrü doldu.
+
+**`/credentials/activate.html` bunu ÇÖZMEZ.** Konteyner "zaten aktif"
+sayar, Okta'ya hiç gitmeden `done.html`'e yönlendirir ve size
+"Congratulations" gösterir. Hiçbir şey yenilenmez.
+
+**Çözüm — konteyneri yenilemek:**
+
+1. Tasarımcıda **Save in Cloud** — *bunu atlarsanız çalışmanızı
+   kaybedersiniz*
+2. Docker Dashboard → In Design → kill instance → Confirm
+3. Catalog → flow adına tıkla → **New Version → Regular Deployment**
+4. "Designer running successfully!" mesajını bekleyin
+5. Yeni port Docker Dashboard'da yazar; **her yeniden başlatmada değişir**
+
+Yeni tasarımcıda aktivasyon gerekmez. Sayfa bunu kendi söyler:
+
+> *It is not necessary to activate the nodes in design mode*
+
+Aktivasyon yalnızca **Production** konteynerleri için gereklidir.
+
+### Tarayıcı olmadan akış çalıştırmak (Node-RED admin API)
+
+Tasarımcı arayüzü açılmıyorsa veya betikle çalışmak istiyorsanız
+Node-RED'in HTTP API'si iş görür:
+
+```bash
+curl -s http://127.0.0.1:<PORT>/flows -o flows.json
+```
+
+Değiştirip geri yüklemek:
+
+```bash
+curl -X POST http://127.0.0.1:<PORT>/flows -H "Content-Type: application/json" -H "Node-RED-Deployment-Type: full" --data-binary @flows.json
+```
+
+Bir `inject` düğümünü tetiklemek:
+
+```bash
+curl -X POST http://127.0.0.1:<PORT>/inject/<DUGUM-ID>
+```
+
+> **Dikkat:** import edilen akışlarda düğüm ID'leri **yeniden üretilir.**
+> JSON dosyanızdaki ID ile `POST /inject/` çağırırsanız `404` alırsınız.
+> Gerçek ID'yi önce `GET /flows` ile bulun.
+
+Debug paneli bu yolla okunamaz. Çıktıyı görmek için akışın sonuna bir
+`file` düğümü ekleyip kalıcı bir yola yazın, sonra dosyayı okuyun.
+
+
+## Excel ve teslim sorunları
+
+### `_Style.style: '<ad>' is not a valid style`
+
+`json-to-excel` düğümünün stil anahtarları alttaki **`xlsx-populate`**
+kütüphanesinden gelir. En sık yapılan hata arka plan içindir:
+
+| Yanlış | Doğru |
+|---|---|
+| `backgroundColor` | **`fill`** |
+
+Geçerli anahtarlardan bazıları: `bold`, `italic`, `underline`,
+`fontSize`, `fontColor`, `fill`, `numberFormat`, `horizontalAlignment`.
+Renkler `#` olmadan, altı haneli hex: `"FFC7CE"`.
+
+### Üretilen .xlsx bozuk açılıyor
+
+`file` düğümünün **Encoding** alanı `none` olmalı. Başka bir değerde
+buffer metne çevrilir ve dosya bozulur.
+
+### Excel formülü hücrede metin olarak duruyor
+
+Formül **parametresiz bir fonksiyon** olmalı, metin değil:
+
+```javascript
+"Fark": () => "=D2-E2"     // dogru
+"Fark": "=D2-E2"           // hucreye bu metin yazilir
+```
+
+Bunun bir sonucu var: formüllü tabloyu akış JSON'una sabit veri olarak
+gömemezsiniz, bir `function` düğümünde kurmanız gerekir.
+
+Formül adları İngilizce, argüman ayracı virgül, ondalık ayracı nokta
+olmalıdır.
+
+### Excel formülü yanlış satıra bakıyor
+
+Excel satır numarası 1'den başlar ve başlık satırı 1'i işgal eder.
+Dizinin `i`. elemanı Excel'in **`i + 2`.** satırıdır.
+
+### `No database password found for flowId: ... in environment: dev`
+
+Tam metin:
+
+```
+Check Key Vault secret 'flow-context-database-sql-dev-<id>' or
+FLOWS_CONTEXT_SQL_DEV_DATABASES environment variable.
+```
+
+`sql-query` düğümü "her akışın kendi veritabanı vardır" der ama o
+veritabanının **platform tarafında açılmış olması** gerekir. Düğüm
+ayarıyla çözülmez; platform/IT ekibinden istenir.
+
+Veritabanı yoksa koşu geçmişini JSONL dosyasında tutabilirsiniz —
+bkz. Ders 10.2.
+
+### `Please select the tenant within your config node...`
+
+`ms-graph-mail-config` düğümünde **Tenant** seçilmemiş. Bu alan düğümün
+`defaults` tanımında zorunlu görünmez ama çalışma anında zorunludur.
+Liste dinamik dolar: düğümü açın, seçenekler yüklensin, sonra seçin.
+
+### MS Graph posta düğümü tuvalde uyarı üçgeni gösteriyor
+
+`ms-graph-mail-config` düğümünde **From mail** boş. Bu alan boşken hem
+config hem `send` düğümü geçersiz sayılır.
+
+### `An error occurred trying to retrieve the token.` (MS Graph)
+
+DELEGATED modda platform, MS Graph token'ı üretemiyor. Konteyner günlüğü
+isteğin başladığını gösterir ama ayrıntı bırakmaz:
+
+```
+[ms-graph-mail-config:...] Setting up MS Graph - Mail client for <adres>
+```
+
+Sırayla kontrol edin:
+
+1. Tenant seçili mi (yukarıdaki madde)
+2. Hesabınıza platform tarafında **MS Graph Mail izni** tanımlı mı —
+   IT/platform ekibine sorun
+3. Azure AD app kaydınız varsa **MANUAL** moda geçip `clientId` /
+   `tenantId` / `clientSecret` girin
+4. Alternatif: `email-output` kategorisindeki düz **SMTP** `e-mail`
+   düğümü (kurumsal relay adresi ve kimlik ister)
+
+
 ## Katkı
 
 Yeni bir hatayla karşılaştıysanız bu dosyaya şu şablonla ekleyin:
