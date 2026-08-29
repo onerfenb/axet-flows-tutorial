@@ -526,6 +526,55 @@ Uzun süre kullanılmayan oturumlar düşer.
 
 ---
 
+## Hata yakalama sorunları
+
+### `catch` düğümü hiç tetiklenmiyor
+
+| Sebep | Kontrol |
+|---|---|
+| `node.error("metin")` yazılmış, `msg` verilmemiş | `node.error("metin", msg)` olmalı — en sık sebep |
+| `catch` başka sekmede | `catch` sadece kendi sekmesini dinler |
+| Düğümün kendi hata çıkışı var | Hata oraya gitti, `catch`'e düşmez (ör. AI ajanı) |
+| Scope `selected nodes` ve düğüm seçilmemiş | `all nodes` yapıp tekrar deneyin |
+
+Ayrıntı: [Ders 7 §7.5](07-hata-yonetimi.md)
+
+### Akış sonsuz döngüde, durmuyor
+
+Yeniden deneme döngüsünde üst sınır yok ya da sayaç `msg` yerine context'te
+tutuluyor.
+
+**Acil durdurma:** Döngüdeki düğümlerden birini seçin → sağ tık →
+**Enable/Disable** → **Deploy**. Döngü kırılır.
+
+Kalıcı çözüm: sayacı `msg.deneme` üzerinde taşıyın ve
+`if (deneme < ENUST_DENEME)` kontrolü ekleyin — [Ders 7 §7.6](07-hata-yonetimi.md)
+
+### Hata günlüğü dosyası boş kalıyor
+
+| Sebep | Çözüm |
+|---|---|
+| `Action` = `Overwrite file` | `Append to file` seçin |
+| `msg.payload` nesne | `file` metin bekler — önce string'e çevirin |
+| Yol `/data` dışında | Konteyner silinince gider; `/data/...` kullanın |
+
+### Debug panelinde hiç mesaj görünmüyor
+
+Sağ panelde **iki ayrı sekme** vardır ve karıştırmak kolaydır:
+
+| Sekme | İkon | Ne gösterir |
+|---|---|---|
+| `debugger` | ⛛ | Adım adım hata ayıklayıcı (breakpoint) — mesaj listesi değil |
+| `debug` | 🐞 böcek | **Debug düğümlerinin ürettiği mesajlar** |
+
+Mesajları göremiyorsanız böcek ikonuna tıklayın. `debugger` sekmesindeki
+`Enabled` anahtarı mesaj listesini etkilemez.
+
+### `status` düğümünden mesaj gelmiyor
+
+`node.status({...})` çağrısı yapılmıyordur. Rozet sadece `node.status()` ile
+değişir; `node.log()` veya `node.warn()` rozeti değiştirmez.
+
 ## Katkı
 
 Yeni bir hatayla karşılaştıysanız bu dosyaya şu şablonla ekleyin:

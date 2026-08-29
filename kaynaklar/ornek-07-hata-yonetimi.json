@@ -1,0 +1,246 @@
+[
+  {
+    "id": "d7tab00000000001",
+    "type": "tab",
+    "label": "Ders 7 - Hata Yonetimi",
+    "disabled": false,
+    "info": "Hatayi yakalama, siniflandirma, yeniden deneme ve kalici gunluk.\nDers: 07-hata-yonetimi.md"
+  },
+  {
+    "id": "d7_inject",
+    "type": "inject",
+    "z": "d7tab00000000001",
+    "name": "islemi baslat",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "payload": "",
+    "payloadType": "date",
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 190,
+    "y": 160,
+    "wires": [
+      [
+        "d7_riskli"
+      ]
+    ]
+  },
+  {
+    "id": "d7_riskli",
+    "type": "function",
+    "z": "d7tab00000000001",
+    "name": "riskli islem",
+    "func": "// Disaridan gelen her cagri bazen basarisiz olur: servis kapalidir,\n// dosya kilitlidir, kota dolmustur. Bu dugum onu taklit eder.\n//\n// Deneme sayaci msg uzerinde tasinir, context'te DEGIL.\n// Sebep: her tetikleme kendi sayacini tasimali. flow.set() kullansak\n// bir onceki tetiklemenin sayaci yenisine sizardi.\n\nmsg.deneme = (msg.deneme || 0) + 1;\n\n// Ilk iki deneme kasitli olarak patlar, ucuncusu gecer.\n// Gercek hayatta bu kosul yerine bir API cagrisi olur.\nconst gecmesiGerekenDeneme = 3;\n\nif (msg.deneme < gecmesiGerekenDeneme) {\n  // node.status(): dugumun altindaki kucuk rozet. Sadece gorseldir,\n  // akisa mesaj GONDERMEZ. status dugumu bunu yakalar.\n  node.status({ fill: \"red\", shape: \"ring\", text: `deneme ${msg.deneme} basarisiz` });\n\n  // KRITIK FARK:\n  //   throw new Error(...)  -> akis durur, catch dugumu yakalar\n  //   node.error(metin)     -> sadece log'a yazar, catch YAKALAMAZ\n  //   node.error(metin, msg) -> catch YAKALAR (msg parametresi sart)\n  //\n  // Ikinci parametreyi unutmak en sik yapilan hatadir.\n  node.error(`Servis yanit vermedi (deneme ${msg.deneme})`, msg);\n  return null; // mesaji burada durdur; catch dali devrali\n}\n\nnode.status({ fill: \"green\", shape: \"dot\", text: `deneme ${msg.deneme} OK` });\n\nmsg.payload = {\n  sonuc: \"islem tamamlandi\",\n  kacinciDenemede: msg.deneme\n};\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 400,
+    "y": 160,
+    "wires": [
+      [
+        "d7_ok"
+      ]
+    ]
+  },
+  {
+    "id": "d7_ok",
+    "type": "debug",
+    "z": "d7tab00000000001",
+    "name": "BASARILI",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 620,
+    "y": 160,
+    "wires": []
+  },
+  {
+    "id": "d7_catch",
+    "type": "catch",
+    "z": "d7tab00000000001",
+    "name": "tum hatalari yakala",
+    "scope": null,
+    "uncaught": false,
+    "x": 190,
+    "y": 300,
+    "wires": [
+      [
+        "d7_siniflandir"
+      ]
+    ]
+  },
+  {
+    "id": "d7_siniflandir",
+    "type": "function",
+    "z": "d7tab00000000001",
+    "name": "hatayi siniflandir",
+    "func": "// catch dugumu, yakaladigi hatayi msg.error icine koyar.\n// Sozlesme (Node-RED standardi):\n//   msg.error.message      -> hata metni\n//   msg.error.source.id    -> hatayi ureten dugumun ID'si\n//   msg.error.source.type  -> dugum tipi (function, http request, file...)\n//   msg.error.source.name  -> dugumun adi\n//\n// Orijinal msg'nin diger alanlari KORUNUR. msg.deneme bu yuzden\n// hala elimizde -- yeniden deneme sayacini oradan okuyabiliyoruz.\n\nconst hata = msg.error || {};\nconst kaynak = hata.source || {};\n\nconst ENUST_DENEME = 3;\nconst deneme = msg.deneme || 0;\n\n// Her hata yeniden denenmeye degmez. Kalici hatalari (yetki, gecersiz\n// veri) tekrar denemek sadece zaman kaybidir; sadece gecici olanlari\n// yeniden deneyin.\nconst metin = String(hata.message || \"\");\nconst geciciMi = /timeout|ECONNREFUSED|yanit vermedi|503|502|429/i.test(metin);\n\nmsg.hataOzeti = {\n  mesaj: metin,\n  dugum: kaynak.name || kaynak.type || \"bilinmiyor\",\n  dugumTipi: kaynak.type || \"-\",\n  deneme: deneme,\n  gecici: geciciMi\n};\n\nif (geciciMi && deneme < ENUST_DENEME) {\n  msg.karar = \"yeniden-dene\";\n  node.status({ fill: \"yellow\", shape: \"ring\", text: `yeniden deneniyor (${deneme}/${ENUST_DENEME})` });\n} else {\n  msg.karar = \"vazgec\";\n  node.status({ fill: \"red\", shape: \"dot\", text: geciciMi ? \"deneme hakki bitti\" : \"kalici hata\" });\n}\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 410,
+    "y": 300,
+    "wires": [
+      [
+        "d7_switch"
+      ]
+    ]
+  },
+  {
+    "id": "d7_switch",
+    "type": "switch",
+    "z": "d7tab00000000001",
+    "name": "yeniden dene?",
+    "property": "karar",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "yeniden-dene",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "vazgec",
+        "vt": "str"
+      }
+    ],
+    "checkall": "false",
+    "repair": false,
+    "outputs": 2,
+    "x": 640,
+    "y": 300,
+    "wires": [
+      [
+        "d7_bekle"
+      ],
+      [
+        "d7_gunluk",
+        "d7_hata_debug"
+      ]
+    ]
+  },
+  {
+    "id": "d7_bekle",
+    "type": "delay",
+    "z": "d7tab00000000001",
+    "name": "2 sn bekle",
+    "pauseType": "delay",
+    "timeout": "2",
+    "timeoutUnits": "seconds",
+    "rate": "1",
+    "nbRateUnits": "1",
+    "rateUnits": "second",
+    "randomFirst": "1",
+    "randomLast": "5",
+    "randomUnits": "seconds",
+    "drop": false,
+    "allowrate": false,
+    "outputs": 1,
+    "x": 400,
+    "y": 230,
+    "wires": [
+      [
+        "d7_riskli"
+      ]
+    ]
+  },
+  {
+    "id": "d7_gunluk",
+    "type": "function",
+    "z": "d7tab00000000001",
+    "name": "gunluk satiri uret",
+    "func": "// Production mode'da editor kapalidir: debug panelini goremezsiniz.\n// Hatanin tek kalici izi bu dosyadir. Ders 4'teki file dugumunun\n// gercek bir ise yaradigi yer burasi.\n\nconst o = msg.hataOzeti || {};\nconst zaman = new Date().toLocaleString(\"tr-TR\");\n\n// Tek satir, ayrilmis alanlar: sonradan grep/Excel ile okunabilsin.\nmsg.payload = [\n  zaman,\n  o.gecici ? \"GECICI\" : \"KALICI\",\n  `deneme=${o.deneme}`,\n  `dugum=${o.dugum}`,\n  `mesaj=${o.mesaj}`\n].join(\" | \");\n\nmsg.topic = \"hata-gunlugu\";\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 430,
+    "y": 380,
+    "wires": [
+      [
+        "d7_file"
+      ]
+    ]
+  },
+  {
+    "id": "d7_file",
+    "type": "file",
+    "z": "d7tab00000000001",
+    "name": "hata gunlugune yaz",
+    "filename": "/data/hata-gunlugu.log",
+    "filenameType": "str",
+    "appendNewline": true,
+    "createDir": true,
+    "overwriteFile": "false",
+    "encoding": "utf8",
+    "x": 680,
+    "y": 380,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "d7_hata_debug",
+    "type": "debug",
+    "z": "d7tab00000000001",
+    "name": "HATA OZETI",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "hataOzeti",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 660,
+    "y": 440,
+    "wires": []
+  },
+  {
+    "id": "d7_status",
+    "type": "status",
+    "z": "d7tab00000000001",
+    "name": "durum degisikliklerini izle",
+    "scope": null,
+    "x": 220,
+    "y": 520,
+    "wires": [
+      [
+        "d7_status_debug"
+      ]
+    ]
+  },
+  {
+    "id": "d7_status_debug",
+    "type": "debug",
+    "z": "d7tab00000000001",
+    "name": "DURUM",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "status.text",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 520,
+    "y": 520,
+    "wires": []
+  }
+]

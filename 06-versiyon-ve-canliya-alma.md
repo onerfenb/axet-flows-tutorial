@@ -200,4 +200,6 @@ hazırlarken tam olarak bu oldu.
 
 ---
 
+**Sonraki:** [7. Hata Yönetimi ve Dayanıklılık](07-hata-yonetimi.md) — canlıdaki akış patlarsa ne olacak?
+
 **Takıldınız mı?** → [Sorun Giderme](SORUN-GIDERME.md)
