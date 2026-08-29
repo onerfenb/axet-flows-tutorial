@@ -24,7 +24,14 @@ Teknik olarak:
 | Çalışma ortamı | Docker konteyneri (senin makinende, WSL2 içinde) |
 | Portal | `<axet-portal-adresiniz>/flows` — katalog, versiyon ve dağıtım yönetimi |
 | Kimlik | Okta (NTT kurumsal hesabı) |
-| Yetenekler | SikuliX (görsel GUI otomasyonu), Tesseract OCR, PDFBox, SSH/SFTP |
+| Yetenekler | AI ajanları, Excel üretimi/okuma, SQL, MS Graph (posta + SharePoint), HTTP, SSH/kabuk, Python & Node.js çalıştırma |
+
+> **Palet kuruluma göre değişir.** Yukarıdaki liste bu eğitimin yazıldığı
+> kurulumda **doğrulanmış** kategorilerdir. Sizde farklı düğümler
+> olabilir; ne olduğunu görmek için tasarımcıda sol paneldeki kategori
+> listesine bakın. Örneğin ekran otomasyonu (SikuliX) ve OCR bu kurulumda
+> **yoktu** — pazarlama malzemesinde geçse bile paletinizde olduğunu
+> varsaymayın.
 
 **Önemli:** Portal sadece arayüzdür. Akışlar **senin bilgisayarındaki** Docker
 konteynerinde tasarlanır ve çalışır. Docker çalışmıyorsa portal de iş göremez.

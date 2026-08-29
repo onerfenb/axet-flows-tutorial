@@ -1,0 +1,435 @@
+[
+    {
+        "id": "d10tab0000000001",
+        "type": "tab",
+        "label": "Ders 10 - Teslim",
+        "disabled": false,
+        "info": "Excel uret -> arsivle -> SQL kaydet -> e-posta gonder. Ders: 10-sonucu-teslim.md"
+    },
+    {
+        "id": "d10_kur",
+        "type": "inject",
+        "z": "d10tab0000000001",
+        "name": "1) tabloyu kur",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 80,
+        "wires": [
+            [
+                "d10_create"
+            ]
+        ]
+    },
+    {
+        "id": "d10_create",
+        "type": "sql-query",
+        "z": "d10tab0000000001",
+        "name": "CREATE TABLE",
+        "query": "CREATE TABLE IF NOT EXISTS stok_kosu (id INTEGER PRIMARY KEY AUTOINCREMENT, tarih TEXT, kritik INTEGER, uyari INTEGER, izle INTEGER, satir INTEGER, kaynak TEXT)",
+        "x": 390,
+        "y": 80,
+        "wires": [
+            [
+                "d10_kur_dbg"
+            ]
+        ]
+    },
+    {
+        "id": "d10_kur_dbg",
+        "type": "debug",
+        "z": "d10tab0000000001",
+        "name": "tablo hazir",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 610,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "d10_elle",
+        "type": "inject",
+        "z": "d10tab0000000001",
+        "name": "elle calistir",
+        "props": [
+            {
+                "p": "kaynak",
+                "v": "elle",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 180,
+        "wires": [
+            [
+                "d10_tablo"
+            ]
+        ]
+    },
+    {
+        "id": "d10_cron",
+        "type": "inject",
+        "z": "d10tab0000000001",
+        "name": "her is gunu 07:30",
+        "props": [
+            {
+                "p": "kaynak",
+                "v": "zamanlayici",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "30 7 * * 1-5",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 240,
+        "wires": [
+            [
+                "d10_tablo"
+            ]
+        ]
+    },
+    {
+        "id": "d10_tablo",
+        "type": "function",
+        "z": "d10tab0000000001",
+        "name": "stok tablosu",
+        "func": "// Ders 8'de ajanlarin yazdigi sartnamenin tarif ettigi raporu uretir.\n//\n// Gercek hayatta bu veri SAP'tan gelir (MARD.LABST, MARC.MINBE, MAKT).\n// Burada onu temsil eden sabit bir liste var; amac Excel'in\n// sozlesmesini ogrenmek, SAP baglantisi kurmak degil.\n\nconst BUGUN = new Date(msg.zaman || Date.now());\n\nconst ham = [\n  { kod: \"M-1001\", tanim: \"Rulman 6204-2RS\", depo: \"1000\", stok: 0,  min: 20, sonSiparis: \"2026-08-11\" },\n  { kod: \"M-1002\", tanim: \"Conta NBR 40mm\",  depo: \"1000\", stok: 8,  min: 15, sonSiparis: \"2026-08-24\" },\n  { kod: \"M-1003\", tanim: \"V-Kayis A-90\",    depo: \"1200\", stok: 18, min: 15, sonSiparis: \"2026-08-02\" },\n  { kod: \"M-1004\", tanim: \"Hidrolik yag 20L\",depo: \"1200\", stok: 3,  min: 12, sonSiparis: \"2026-08-27\" },\n  { kod: \"M-1005\", tanim: \"Filtre elemani\",  depo: \"1000\", stok: 62, min: 30, sonSiparis: \"2026-07-19\" }\n];\n// M-1005 bilerek bol stoklu: 62 > 30 x 1,5 = 45. Rapora GIRMEMELI.\n// Filtrenin calistigini gormenin en kolay yolu, elenmesi gereken\n// bir satiri veriye koymaktir.\n\n// Sartnamedeki uc seviye:\n//   KRITIK  stok = 0\n//   UYARI   stok < min\n//   IZLE    stok < min * 1,5\nconst IZLE_CARPANI = 1.5;\n\nfunction seviye(stok, min) {\n  if (stok === 0) return \"KRITIK\";\n  if (stok < min) return \"UYARI\";\n  if (stok < min * IZLE_CARPANI) return \"IZLE\";\n  return null;   // raporda yeri yok\n}\n\n// Stil anahtarlari xlsx-populate kutuphanesinden gelir.\n// Arka plan \"backgroundColor\" DEGIL, \"fill\" adini tasir --\n// yanlis anahtar verdiginizde dugum net soyluyor:\n//   _Style.style: 'backgroundColor' is not a valid style\nconst RENK = {\n  KRITIK: { yazi: \"9C0006\", zemin: \"FFC7CE\" },\n  UYARI:  { yazi: \"9C6500\", zemin: \"FFEB9C\" },\n  IZLE:   { yazi: \"006100\", zemin: \"C6EFCE\" }\n};\n\nconst satirlar = [];\nconst sayac = { KRITIK: 0, UYARI: 0, IZLE: 0 };\n\nham.forEach((m, i) => {\n  const s = seviye(m.stok, m.min);\n  if (!s) return;\n  sayac[s]++;\n\n  // Excel satir numarasi: 1 baslik + o ana kadar eklenen satirlar\n  const satirNo = satirlar.length + 2;\n\n  satirlar.push({\n    \"Malzeme\": m.kod,\n    \"Tanim\": m.tanim,\n    \"Depo\": m.depo,\n    \"Stok\": m.stok,\n    \"Minimum\": m.min,\n\n    // FORMUL: parametresiz bir fonksiyon, Ingilizce formul metni dondurur.\n    // Bu yuzden tabloyu bir function dugumunde kurmak zorundasiniz --\n    // JSON bir fonksiyon tasiyamaz.\n    \"Fark\": () => \"=D\" + satirNo + \"-E\" + satirNo,\n\n    // Hucreye stil vermek icin duz deger yerine {value, style} nesnesi\n    \"Durum\": {\n      value: s,\n      style: { bold: true, fontColor: RENK[s].yazi, fill: RENK[s].zemin }\n    },\n\n    \"Son siparis\": {\n      value: new Date(m.sonSiparis),\n      style: { numberFormat: \"dd.MM.yyyy\" }\n    }\n  });\n});\n\nmsg.payload = {\n  data: {\n    \"Kritik Stok\": satirlar,\n    \"Ozet\": [\n      { \"Olcut\": \"Rapor tarihi\", \"Deger\": { value: BUGUN, style: { numberFormat: \"dd.MM.yyyy HH:mm\" } } },\n      { \"Olcut\": \"Taranan malzeme\", \"Deger\": ham.length },\n      { \"Olcut\": \"KRITIK\", \"Deger\": sayac.KRITIK },\n      { \"Olcut\": \"UYARI\",  \"Deger\": sayac.UYARI },\n      { \"Olcut\": \"IZLE\",   \"Deger\": sayac.IZLE }\n    ]\n  }\n};\n\nmsg.ozet = sayac;\nmsg.satirSayisi = satirlar.length;\n\nnode.status({\n  fill: sayac.KRITIK > 0 ? \"red\" : \"yellow\",\n  shape: \"dot\",\n  text: satirlar.length + \" satir / \" + sayac.KRITIK + \" kritik\"\n});\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 210,
+        "wires": [
+            [
+                "d10_xls",
+                "d10_kayit"
+            ]
+        ]
+    },
+    {
+        "id": "d10_xls",
+        "type": "json-to-excel",
+        "z": "d10tab0000000001",
+        "name": "excel uret",
+        "kind": "auto",
+        "bufferProp": "payload",
+        "payloadProp": "payload",
+        "x": 620,
+        "y": 160,
+        "wires": [
+            [
+                "d10_arsiv_ad",
+                "d10_gizli"
+            ]
+        ]
+    },
+    {
+        "id": "d10_arsiv_ad",
+        "type": "function",
+        "z": "d10tab0000000001",
+        "name": "arsiv adi",
+        "func": "const g = new Date();\nconst iki = n => (n < 10 ? '0' : '') + n;\nconst damga = g.getFullYear() + iki(g.getMonth()+1) + iki(g.getDate());\nmsg.filename = '/internal-storage-files/rapor/' + 'kritik-stok-' + damga + '.xlsx';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 120,
+        "wires": [
+            [
+                "d10_arsiv"
+            ]
+        ]
+    },
+    {
+        "id": "d10_arsiv",
+        "type": "file",
+        "z": "d10tab0000000001",
+        "name": "arsive yaz",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1030,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d10_gizli",
+        "type": "secret",
+        "z": "d10tab0000000001",
+        "name": "alicilar",
+        "property": "alicilar",
+        "propertyType": "msg",
+        "x": 840,
+        "y": 200,
+        "wires": [
+            [
+                "d10_posta_hz"
+            ]
+        ]
+    },
+    {
+        "id": "d10_posta_hz",
+        "type": "function",
+        "z": "d10tab0000000001",
+        "name": "e-posta hazirla",
+        "func": "// Excel buffer'ini e-posta ekine cevirir.\n//\n// json-to-excel dugumu msg.payload'a bir Buffer birakir. MS Graph ise\n// eki BASE64 metin olarak ister. Ders 9'da base64 formdan ICERI\n// geliyordu; burada aynı bicim DISARI gidiyor.\n\nconst buf = msg.payload;\n\nif (!Buffer.isBuffer(buf)) {\n  node.error(\"Beklenen Excel buffer'i gelmedi, gelen tip: \" + typeof buf, msg);\n  return null;\n}\n\nconst s = msg.ozet || { KRITIK: 0, UYARI: 0, IZLE: 0 };\nconst NL = String.fromCharCode(10);\n\n// Dosya adina tarih koymak, gelen kutusunda ayni adli 30 dosya\n// birikmesini onler.\nconst g = new Date();\nconst iki = n => (n < 10 ? \"0\" : \"\") + n;\nconst damga = g.getFullYear() + iki(g.getMonth() + 1) + iki(g.getDate());\nconst dosyaAdi = \"kritik-stok-\" + damga + \".xlsx\";\n\nconst govde = [\n  \"<p>Gunluk kritik stok raporu ektedir.</p>\",\n  \"<table cellpadding='6' style='border-collapse:collapse'>\",\n  \"<tr><td style='background:#FFC7CE'><b>KRITIK</b></td><td><b>\" + s.KRITIK + \"</b></td></tr>\",\n  \"<tr><td style='background:#FFEB9C'><b>UYARI</b></td><td><b>\" + s.UYARI + \"</b></td></tr>\",\n  \"<tr><td style='background:#C6EFCE'><b>IZLE</b></td><td><b>\" + s.IZLE + \"</b></td></tr>\",\n  \"</table>\",\n  \"<p style='color:#888;font-size:12px'>Bu ileti aXet.flows tarafindan otomatik uretildi.</p>\"\n].join(NL);\n\nmsg.payload = {\n  subject: \"Kritik stok raporu -- \" + iki(g.getDate()) + \".\" + iki(g.getMonth() + 1) + \".\" + g.getFullYear(),\n\n  // Alicilar koda GOMULU DEGIL: secret dugumu msg.alicilar'i dolduruyor.\n  // Ders 8'in sartnamesi de \"e-posta listesi konfigurasyondan okunacak,\n  // koda gomulmeyecek\" diyordu -- burada onu uyguluyoruz.\n  // secret tek bir metin tasidigi icin virgulle ayrilmis liste kabul ediyoruz.\n  toRecipients: String(msg.alicilar || \"\")\n    .split(\",\")\n    .map(a => a.trim())\n    .filter(Boolean)\n    .map(a => ({ emailAddress: { address: a } })),\n\n  // KRITIK varsa e-posta yuksek onemle gitsin\n  importance: s.KRITIK > 0 ? \"high\" : \"normal\",\n\n  body: { contentType: \"html\", content: govde },\n\n  attachments: [{\n    \"@odata.type\": \"#microsoft.graph.fileAttachment\",\n    name: dosyaAdi,\n    contentType: \"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\",\n    contentBytes: buf.toString(\"base64\")\n  }]\n};\n\nnode.status({\n  fill: \"blue\", shape: \"dot\",\n  text: dosyaAdi + \" / \" + Math.round(buf.length / 1024) + \" KB\"\n});\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1030,
+        "y": 200,
+        "wires": [
+            [
+                "d10_posta"
+            ]
+        ]
+    },
+    {
+        "id": "d10_posta",
+        "type": "ms-graph-mail-send",
+        "z": "d10tab0000000001",
+        "name": "gonder",
+        "config": "",
+        "to": "",
+        "subject": "",
+        "saveToSentItems": true,
+        "x": 1240,
+        "y": 200,
+        "wires": [
+            [
+                "d10_posta_dbg"
+            ]
+        ]
+    },
+    {
+        "id": "d10_posta_dbg",
+        "type": "debug",
+        "z": "d10tab0000000001",
+        "name": "POSTA GITTI",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1420,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "d10_kayit",
+        "type": "function",
+        "z": "d10tab0000000001",
+        "name": "kosu kaydi",
+        "func": "// Koşu kaydini SQL'e yazacak sorguyu hazirlar.\n//\n// sql-query dugumu sorguyu Mustache ile isler: '{{payload.x}}' yazarsaniz\n// msg.payload.x degeriyle degistirir. Bu KOLAY ama TEHLIKELIDIR --\n// parametre baglama degil, metin birlestirmedir. Kullanicidan gelen bir\n// degeri dogrudan koyarsaniz SQL enjeksiyonuna acik olursunuz.\n//\n// Bu yuzden degerleri burada temizleyip msg.query'yi kendimiz kuruyoruz.\n\nconst s = msg.ozet || { KRITIK: 0, UYARI: 0, IZLE: 0 };\n\n// Sayilari sayi oldugundan emin olarak gecirmek en ucuz savunma\nconst sayi = n => {\n  const v = parseInt(n, 10);\n  return Number.isFinite(v) ? v : 0;\n};\n\n// Metin icin: tek tirnaklari ikile ve uzunlugu sinirla\nconst metin = t => \"'\" + String(t || \"\").replace(/'/g, \"''\").slice(0, 200) + \"'\";\n\nconst g = new Date();\nconst iki = n => (n < 10 ? \"0\" : \"\") + n;\nconst tarih = g.getFullYear() + \"-\" + iki(g.getMonth() + 1) + \"-\" + iki(g.getDate())\n            + \" \" + iki(g.getHours()) + \":\" + iki(g.getMinutes());\n\nmsg.query = \"INSERT INTO stok_kosu (tarih, kritik, uyari, izle, satir, kaynak) VALUES (\"\n  + metin(tarih) + \", \"\n  + sayi(s.KRITIK) + \", \"\n  + sayi(s.UYARI) + \", \"\n  + sayi(s.IZLE) + \", \"\n  + sayi(msg.satirSayisi) + \", \"\n  + metin(msg.kaynak || \"elle\")\n  + \")\";\n\nnode.status({ fill: \"grey\", shape: \"dot\", text: \"kayit: \" + tarih });\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 280,
+        "wires": [
+            [
+                "d10_ins"
+            ]
+        ]
+    },
+    {
+        "id": "d10_ins",
+        "type": "sql-query",
+        "z": "d10tab0000000001",
+        "name": "INSERT",
+        "query": "",
+        "x": 840,
+        "y": 280,
+        "wires": [
+            [
+                "d10_ins_dbg"
+            ]
+        ]
+    },
+    {
+        "id": "d10_ins_dbg",
+        "type": "debug",
+        "z": "d10tab0000000001",
+        "name": "kayit yazildi",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1030,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "d10_gec_i",
+        "type": "inject",
+        "z": "d10tab0000000001",
+        "name": "gecmisi oku",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 380,
+        "wires": [
+            [
+                "d10_gec_q"
+            ]
+        ]
+    },
+    {
+        "id": "d10_gec_q",
+        "type": "sql-query",
+        "z": "d10tab0000000001",
+        "name": "son 10 kosu",
+        "query": "SELECT * FROM stok_kosu ORDER BY id DESC LIMIT 10",
+        "x": 400,
+        "y": 380,
+        "wires": [
+            [
+                "d10_gec_dbg"
+            ]
+        ]
+    },
+    {
+        "id": "d10_gec_dbg",
+        "type": "debug",
+        "z": "d10tab0000000001",
+        "name": "KOSU GECMISI",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "d10_catch",
+        "type": "catch",
+        "z": "d10tab0000000001",
+        "name": "teslim hatalari",
+        "scope": null,
+        "uncaught": false,
+        "x": 160,
+        "y": 470,
+        "wires": [
+            [
+                "d10_hata_f"
+            ]
+        ]
+    },
+    {
+        "id": "d10_hata_f",
+        "type": "function",
+        "z": "d10tab0000000001",
+        "name": "hata satiri",
+        "func": "const e = msg.error || {};\nconst s = e.source || {};\nmsg.payload = new Date().toISOString() + ' | ' + (s.name || s.type) + ' | ' + e.message;\nmsg.filename = '/internal-storage-files/rapor/' + 'hatalar.log';\nnode.status({ fill: 'red', shape: 'ring', text: e.message.slice(0, 40) });\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 470,
+        "wires": [
+            [
+                "d10_hata_w",
+                "d10_hata_dbg"
+            ]
+        ]
+    },
+    {
+        "id": "d10_hata_w",
+        "type": "file",
+        "z": "d10tab0000000001",
+        "name": "hatalar.log",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "utf8",
+        "x": 620,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d10_hata_dbg",
+        "type": "debug",
+        "z": "d10tab0000000001",
+        "name": "TESLIM HATASI",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 500,
+        "wires": []
+    }
+]
