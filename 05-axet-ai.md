@@ -205,16 +205,21 @@ atar, süre uzar.
 > Dosyadaki `projectId` ve `model` alanları **bilerek boş** bırakılmıştır.
 > Paylaşılan akışlardan kurum içi kimlik bilgilerini temizlemek şarttır.
 
-> ⚠️ **Aynı kontrolü versiyondan geri yüklemede de yapın.** Ajan düğümünün
-> `Project` ve `Model` alanları yalnızca import edilen dosyalarda değil,
-> **portaldan geri yüklenen bir versiyonda da boş gelebilir.** Konteyner
-> silinip tasarımcı bir versiyondan yeniden açıldığında akış eksiksiz
-> görünür — düğümler yerinde, bağlantılar sağlam — ama ajan çalıştırıldığında
-> `Project ID not configured` hatası verir.
+**Versiyon, `projectId` alanını taşır.** Bu deneyle doğrulandı: proje seçili
+haldeyken versiyon kaydedildi, konteyner tamamen silindi, tasarımcı o
+versiyondan sıfırdan açıldı — proje seçimi yerindeydi.
+
+Yani bir versiyondan geri yüklediğinizde `Project` boş geliyorsa, sebebi
+şudur: **o versiyon kaydedilirken zaten boştu.** Versiyon, kaydedildiği
+andaki son deploy'un birebir kopyasıdır.
+
+> ⚠️ **Açılır listeler geç dolar — boş sanmayın.** Düğümü açtığınızda
+> `Project` alanı birkaç saniye **boş görünür**; liste arka planda yüklenir
+> ("Downloading options...") ve ancak sonra seçili değer belirir.
 >
-> **Kural:** Tasarımcıyı bir versiyondan her açtığınızda, ajanı ilk kez
-> çalıştırmadan önce düğümü açıp `Project` alanının dolu olduğunu doğrulayın.
-> Bu, akış görünürde sağlamken çalışmayan sinsi bir durumdur.
+> Bu aralıkta "seçim kaybolmuş" sanıp yeniden seçmeyin. Emin olmak için
+> birkaç saniye bekleyin. Alan gerçekten boşsa, akış çalıştırıldığında
+> `Project ID not configured` hatası verir — asıl kanıt budur.
 
 ## 5.9 Alıştırmalar
 

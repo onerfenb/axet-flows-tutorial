@@ -433,19 +433,28 @@ veriyi okuyan bir MCP aracı kullanın.
 
 ---
 
-### Versiyondan geri yüklenen akış "eksiksiz görünüyor ama çalışmıyor"
+### Düğümü açtım, açılır liste boş görünüyor
 
-Konteyner silindikten sonra tasarımcıyı bir versiyondan açtığınızda akış
-tam görünür: düğümler yerinde, bağlantılar sağlam. Ancak bazı alanlar boş
-gelebilir ve düğüm ilk çalıştırmada hata verir.
+`Project`, `Model` gibi açılır listeler değerlerini **portaldan yükler**.
+Düğümü açtığınız ilk birkaç saniye alan boş görünür; liste geldiğinde
+seçili değer belirir.
 
-| Düğüm | Boş gelebilen alan | Hata |
-|---|---|---|
-| aXet AI ajanı | `Project`, `Model` | `Project ID not configured` |
+**Boş sanıp yeniden seçmeyin** — birkaç saniye bekleyin.
 
-**Kural:** Tasarımcıyı bir versiyondan her açtığınızda, dış sistemle konuşan
-düğümleri (AI ajanı, kimlik gerektiren `http request`) çalıştırmadan önce
-açıp ayarlarını doğrulayın. Bkz. [Ders 5 §5.8](05-axet-ai.md)
+Alan gerçekten boşsa akış çalıştırıldığında `Project ID not configured`
+hatası verir. Asıl kanıt hata mesajıdır, alanın ilk görüntüsü değil.
+
+### Versiyondan geri yüklenen akışta proje/model boş
+
+**Versiyon bu alanları taşır** — deneyle doğrulandı: proje seçili halde
+versiyon kaydedildi, konteyner tamamen silindi, tasarımcı o versiyondan
+sıfırdan açıldı ve seçim yerindeydi.
+
+Boş geliyorsa sebep şudur: **o versiyon kaydedilirken zaten boştu.**
+Versiyon, kaydedildiği andaki son deploy'un birebir kopyasıdır — eksik
+kaydedilen bir ayar sonradan kendiliğinden dolmaz.
+
+Çözüm: alanı doldurun → **Deploy** → **yeni versiyon kaydedin.**
 
 ## Tasarımcı / tarayıcı sorunları
 
