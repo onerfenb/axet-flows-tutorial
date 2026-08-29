@@ -526,6 +526,35 @@ Uzun süre kullanılmayan oturumlar düşer.
 
 ---
 
+## Import edilen akış sorunları
+
+### Düğümde turuncu uyarı üçgeni var, deploy uyarı veriyor
+
+Deploy sırasında şu pencere çıkıyorsa:
+
+> The workspace contains some nodes that are not properly configured:
+> [Ders 3 - HTTP] todo iste (inject)
+
+Düğüm **çalışmaz** — butonuna bassanız da hiçbir şey olmaz, hata da vermez.
+Sessizdir; bu yüzden fark etmesi zordur.
+
+**En sık sebep — import edilen JSON'da eksik alan.** `inject` düğümünde
+`repeat`, `crontab`, `once`, `onceDelay` alanlarından biri yoksa tasarımcı
+`Repeat` kutusunu `interval`'a düşürür, `every:` alanı boş kalır ve düğüm
+geçersiz olur.
+
+**Çözüm:** Düğümü açın → **Repeat** listesini **none** yapın → **Done** →
+**Deploy**. Turuncu üçgen kaybolur.
+
+Kendi JSON'unuzu yazıyorsanız bu dört alanı her zaman yazın:
+
+```json
+"repeat": "", "crontab": "", "once": false, "onceDelay": 0.1
+```
+
+> Bu tuzağı bu eğitimin kendi Ders 3 dosyasında yaşadık: akış aylarca
+> "çalışmıyor" göründü, sebebi eksik `repeat` alanıydı.
+
 ## Hata yakalama sorunları
 
 ### `catch` düğümü hiç tetiklenmiyor

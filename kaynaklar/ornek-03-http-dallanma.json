@@ -18,6 +18,10 @@
     ],
     "payload": "",
     "payloadType": "date",
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
     "x": 170,
     "y": 240,
     "wires": [
