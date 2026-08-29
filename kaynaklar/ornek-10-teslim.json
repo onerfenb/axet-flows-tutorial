@@ -228,7 +228,7 @@
         "type": "ms-graph-mail-send",
         "z": "d10tab0000000001",
         "name": "gonder",
-        "config": "",
+        "config": "d10_mailcfg",
         "to": "",
         "subject": "",
         "saveToSentItems": true,
@@ -431,5 +431,14 @@
         "x": 620,
         "y": 500,
         "wires": []
+    },
+    {
+        "id": "d10_mailcfg",
+        "type": "ms-graph-mail-config",
+        "name": "delegated posta",
+        "authType": "DELEGATED",
+        "optionalScopes": "no",
+        "fromMail": "<kendi-kurumsal-adresiniz>",
+        "tenant": ""
     }
 ]
