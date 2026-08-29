@@ -3,7 +3,7 @@
 
 msg.tsMetni = msg.payload.response || msg.payload;
 msg.payload = msg.tsMetni;
-msg.filename = `/data/cikti/02-TS-tur${msg.tur}.md`;
+msg.filename = `/internal-storage-files/cikti/02-TS-tur${msg.tur}.md`;
 
 node.status({ fill: "green", shape: "dot", text: `TS tur ${msg.tur} yazildi` });
 return msg;

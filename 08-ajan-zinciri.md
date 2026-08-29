@@ -282,4 +282,6 @@ wsl.exe -d aXet-flows_WSL -- docker cp "<yol>/01-toplanti-2026-08-12.md" "${k}:/
 ---
 
 **Önceki:** [7. Hata Yönetimi](07-hata-yonetimi.md) ·
+**Sonraki:** [9. Form Arayüzü](09-form-arayuzu.md) — bu zinciri bir web
+uygulamasına bağlıyoruz ·
 **Takıldınız mı?** → [Sorun Giderme](SORUN-GIDERME.md)

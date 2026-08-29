@@ -12,11 +12,11 @@ const satirlar = [
   "## Kalan bulgular",
   ...(msg.bulgular || []).map(b => `- [${b.onem || "orta"}] ${b.madde}`),
   "",
-  `Son teknik sartname: /data/cikti/02-TS-tur${msg.tur}.md`
+  `Son teknik sartname: /internal-storage-files/cikti/02-TS-tur${msg.tur}.md`
 ];
 
 msg.payload = satirlar.join("\n");
-msg.filename = "/data/cikti/MUDAHALE-GEREKLI.md";
+msg.filename = "/internal-storage-files/cikti/MUDAHALE-GEREKLI.md";
 
 node.warn(["ZINCIR ONAY ALAMADI", msg.ozet]);
 return msg;

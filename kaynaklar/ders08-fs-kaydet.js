@@ -3,7 +3,7 @@
 
 msg.fsMetni = msg.payload.response || msg.payload;
 msg.payload = msg.fsMetni;   // file dugumu METIN bekler
-msg.filename = "/data/cikti/01-FS.md";
+msg.filename = "/internal-storage-files/cikti/01-FS.md";
 
 node.status({ fill: "green", shape: "dot", text: "FS yazildi" });
 return msg;

@@ -677,6 +677,60 @@ Mesajları göremiyorsanız böcek ikonuna tıklayın. `debugger` sekmesindeki
 `node.status({...})` çağrısı yapılmıyordur. Rozet sadece `node.status()` ile
 değişir; `node.log()` veya `node.warn()` rozeti değiştirmez.
 
+## Arayüz ve dağıtım sorunları
+
+### Uygulama açılmıyor — tasarımcı portunda her yol 404
+
+**Arayüz sadece Production mode'da yayınlanır.** Tasarımcı konteynerinde
+hiçbir yolda yoktur.
+
+URL'yi portal söyler: **Docker Dashboard → Production mode → Local access URL**
+
+Bkz. [Ders 9 §9.1](09-form-arayuzu.md)
+
+### `OKTA token not returned from ai-config endpoint`
+
+AI ajanları production'da **aktive edilmemiş.** Tasarımcıda sizin
+oturumunuz var, production konteynerinde yok.
+
+Çözüm — bu adresi tarayıcıdan açın:
+
+```
+http://localhost:<production-portu>/credentials/activate.html
+```
+
+Okta ile doğrulanır, model seçtirir, "activated successfully" der.
+**Production her yeniden başlatıldığında tekrarlanmalıdır.**
+
+### Form gönderiliyor ama akışa boş veri geliyor
+
+Veri `msg.payload.<alan>` değil, **`msg.payload.data.<alan>`** altındadır.
+
+### Uygulama açılıyor ama form menüde yok
+
+JSON import'unda `welcomePage` ve `menu` ayarları taşınmaz. `application`
+düğümünü açıp Welcome Page'i seçin, Deploy edin.
+
+### "Kill instance" çalışmıyor, eski sürüm dönmeye devam ediyor
+
+Portal düğmesi bazen konteyneri durdurmaz. Kesin çözüm:
+
+```powershell
+wsl.exe -d aXet-flows_WSL -- docker stop $(wsl.exe -d aXet-flows_WSL -- docker ps -qf "name=runner")
+```
+
+Sonra portaldan **Run Flow**. Konteyner ID'sinin değiştiğini doğrulayın.
+
+### Üretilen dosyalar kayboldu
+
+`/data/` altındakiler konteynerle birlikte silinir. Kalıcı yollar:
+
+| Konteyner yolu | Windows karşılığı |
+|---|---|
+| `/internal-storage-files/` | `AppData\Local\axet-flows\.deptapps-instances\<id>\` |
+| `/external-repository-files/` | `AppData\Local\axet-flows\.deptapps-desktop\repository-files\` |
+epository-files\` |
+
 ## Katkı
 
 Yeni bir hatayla karşılaştıysanız bu dosyaya şu şablonla ekleyin:
