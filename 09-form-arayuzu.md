@@ -185,8 +185,27 @@ wsl.exe -d aXet-flows_WSL -- docker inspect <konteyner> --format '{{range .Mount
 msg.filename = "/internal-storage-files/cikti/01-FS.md";
 ```
 
-Belgeler o zaman doğrudan Windows tarafında birikir ve Explorer'dan
-açılabilir.
+### Bu deneyle doğrulandı
+
+Zinciri kalıcı yolla çalıştırdık, sonra production konteynerini
+**tamamen sildik** (`docker stop` + `docker rm`):
+
+| Adım | Sonuç |
+|---|---|
+| Formdan tetiklendi | FS + iki TS turu + müdahale notu üretildi |
+| Windows'ta kontrol | Dört dosya `\.deptapps-instances\25708\cikti\` altında |
+| Konteyner **silindi** | `runner TAMAMEN SILINDI` |
+| Dosyalar tekrar kontrol | **Dördü de yerinde** |
+
+```
+01-FS.md              2.710 bayt
+02-TS-tur1.md         4.350 bayt
+02-TS-tur2.md         6.035 bayt
+MUDAHALE-GEREKLI.md   2.059 bayt
+```
+
+Aynı deneyi `/data/cikti/` ile yaparsanız dosyalar konteynerle birlikte
+yok olur — bu oturumda üç kez yaşandı.
 
 > **Ders 6'nın uyarısı burada da geçerli.** `/data` altına yazılan her şey
 > "Kill instance" ile silinir. Bu eğitimi hazırlarken üç kez production
@@ -296,10 +315,10 @@ değiştiğini doğrulayın — değişmediyse eski sürüm hâlâ ayaktadır.
    sekmesinden en az 200 karakter zorunluluğu koyun. Kullanıcı yetersiz
    metin girdiğinde ne oluyor — akış hiç tetikleniyor mu?
 
-4. **Kalıcılığı sınayın.** Çıktı yolunu `/internal-storage-files/cikti/`
-   yapın, zinciri çalıştırın, sonra production'ı "Kill instance" ile
-   durdurun. Belgeler Windows klasöründe duruyor mu? Aynı denemeyi
-   `/data/cikti/` ile tekrarlayıp farkı görün.
+4. **Kaybı kendiniz yaşayın.** Çıktı yolunu `/data/cikti/` yapıp zinciri
+   çalıştırın, sonra production'ı durdurun. Belgeler gitti mi? 9.5'teki
+   kalıcı yol denemesinin tersini görmek, kuralı kalıcı olarak
+   öğretir — çünkü bunu gerçek bir işte yaşamak pahalıdır.
 
 ---
 
