@@ -555,6 +555,38 @@ Kendi JSON'unuzu yazıyorsanız bu dört alanı her zaman yazın:
 > Bu tuzağı bu eğitimin kendi Ders 3 dosyasında yaşadık: akış aylarca
 > "çalışmıyor" göründü, sebebi eksik `repeat` alanıydı.
 
+### Debug panelinde sahipsiz `504 Gateway Time-out` beliriyor
+
+Hiçbir akışı çalıştırmadığınız halde debug panelinde şuna benzer bir nesne
+görebilirsiniz:
+
+```
+msg : Object
+{ status: 504, statusText: "Gateway Time-out", headers: …, config: …, data: "<!DOCTYPE html…" }
+```
+
+**Bu sizin akışınızdan gelmiyor.** `config.url` alanını açarsanız kaynağı
+görürsünüz:
+
+```
+https://<axet-portal-adresiniz>/flows/backend/api/deptapps-flows-shared-subflow/list
+```
+
+Tasarımcının **Shared subflows** listesini çekerken yaptığı arka plan
+isteğidir; portal tarafında zaman aşımına uğrar ve gateway JSON yerine HTML
+hata sayfası döndürür (`data` alanının `<!DOCTYPE html` ile başlaması bunun
+işaretidir).
+
+| | |
+|---|---|
+| Akışlarınızı etkiler mi | Hayır |
+| Siz düzeltebilir misiniz | Hayır — platform tarafı |
+| Ne yapmalı | Yok sayın; sürekli tekrarlıyorsa platform ekibine bildirin |
+
+> **Teşhis yöntemi olarak akılda tutun:** Sahibi belirsiz bir hata
+> gördüğünüzde debug mesajını genişletip `config.url` alanına bakın. Hangi
+> adrese gidildiğini görmek, hatanın kime ait olduğunu anında söyler.
+
 ## Hata yakalama sorunları
 
 ### `catch` düğümü hiç tetiklenmiyor
