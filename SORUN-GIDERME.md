@@ -433,6 +433,20 @@ veriyi okuyan bir MCP aracı kullanın.
 
 ---
 
+### Versiyondan geri yüklenen akış "eksiksiz görünüyor ama çalışmıyor"
+
+Konteyner silindikten sonra tasarımcıyı bir versiyondan açtığınızda akış
+tam görünür: düğümler yerinde, bağlantılar sağlam. Ancak bazı alanlar boş
+gelebilir ve düğüm ilk çalıştırmada hata verir.
+
+| Düğüm | Boş gelebilen alan | Hata |
+|---|---|---|
+| aXet AI ajanı | `Project`, `Model` | `Project ID not configured` |
+
+**Kural:** Tasarımcıyı bir versiyondan her açtığınızda, dış sistemle konuşan
+düğümleri (AI ajanı, kimlik gerektiren `http request`) çalıştırmadan önce
+açıp ayarlarını doğrulayın. Bkz. [Ders 5 §5.8](05-axet-ai.md)
+
 ## Tasarımcı / tarayıcı sorunları
 
 ### Sekme kapanmıyor, "Bu siteden ayrılmak istiyor musunuz?" çıkıyor

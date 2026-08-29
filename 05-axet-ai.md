@@ -167,6 +167,9 @@ dallanabilir, Ders 4'teki `file` düğümüyle diske yazabilirsiniz.
 Proje seçilmemiş. Ajan düğümünü açıp **Project** seçin. Klavyeyle seçtiyseniz
 kaydedilmemiş olabilir — 5.4'e bakın.
 
+Akışı **import ettiyseniz veya bir versiyondan geri yüklediyseniz** bu hata
+beklenendir: `projectId` alanı taşınmamıştır. Ayrıntı için 5.8'e bakın.
+
 ### `Budget exhausted or billing disabled for this project`
 
 **Bu bir kod hatası değil, bütçe/yetki sorunudur.** Seçtiğiniz projenin AI
@@ -201,6 +204,17 @@ atar, süre uzar.
 
 > Dosyadaki `projectId` ve `model` alanları **bilerek boş** bırakılmıştır.
 > Paylaşılan akışlardan kurum içi kimlik bilgilerini temizlemek şarttır.
+
+> ⚠️ **Aynı kontrolü versiyondan geri yüklemede de yapın.** Ajan düğümünün
+> `Project` ve `Model` alanları yalnızca import edilen dosyalarda değil,
+> **portaldan geri yüklenen bir versiyonda da boş gelebilir.** Konteyner
+> silinip tasarımcı bir versiyondan yeniden açıldığında akış eksiksiz
+> görünür — düğümler yerinde, bağlantılar sağlam — ama ajan çalıştırıldığında
+> `Project ID not configured` hatası verir.
+>
+> **Kural:** Tasarımcıyı bir versiyondan her açtığınızda, ajanı ilk kez
+> çalıştırmadan önce düğümü açıp `Project` alanının dolu olduğunu doğrulayın.
+> Bu, akış görünürde sağlamken çalışmayan sinsi bir durumdur.
 
 ## 5.9 Alıştırmalar
 
