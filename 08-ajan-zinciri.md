@@ -126,6 +126,37 @@ Diğer bulgular da gerçek eksiklere işaret etti: kolon listesinin hiç
 gelmemiş olması, kritik malzeme tablosunu kimin dolduracağının
 belirsizliği, e-posta hata yönetiminin tanımsızlığı.
 
+### Aynı zincir, gevşetilmiş denetçiyle
+
+Reviewer'ın `Instructions` alanını tek cümleyle değiştirdik:
+
+```
+MUKEMMELLIK ARAMA: belge genel yapisiyla makul duzeydeyse ve gelistirici
+koda baslayabilecekse ONAY VER. Sadece koda baslamayi gercekten IMKANSIZ
+kilan eksiklerde onay verme.
+```
+
+Sonuç tamamen değişti:
+
+| Tur | Katı denetçi | Gevşek denetçi |
+|---|---|---|
+| 1 | 5 bulgu, onay yok | 5 bulgu, onay yok |
+| 2 | onay yok → **müdahale** | **onaylandı** → Developer |
+| Çıktı | `MUDAHALE-GEREKLI.md` | `03-kod.abap` (22 KB, 710 satır) |
+
+İkinci senaryoda üretilen kod, teknik şartnameye uygun çıktı: program adı
+`ZMM_R_STOK_KRITIK`, doğru tablolar (`MARD`, `MARC`, `MAKT`, `EKET`),
+üç uyarı seviyesi, ALV ve e-posta blokları.
+
+> **Buradaki asıl ders teknik değil.** Zincirin çıktısını belirleyen şey
+> düğüm bağlantıları değil, **denetçinin ne kadar titiz olacağına dair
+> verdiğiniz talimattı.** Aynı akış, aynı girdi, tek cümle fark — biri
+> insana devretti, diğeri kod üretti.
+>
+> Çok ajanlı sistemlerde kalite eşiğini siz belirlersiniz. Eşiği yüksek
+> tutarsanız zincir sık sık insana döner; düşük tutarsanız eksik belgeyle
+> kod yazılır. Doğru ayar işin riskine bağlıdır.
+
 ## 8.5 Ara çıktıları saklamak neden önemli
 
 Her tur ayrı dosyaya yazılır: `02-TS-tur1.md`, `02-TS-tur2.md`. Böylece
@@ -225,13 +256,15 @@ wsl.exe -d aXet-flows_WSL -- docker cp "<yol>/01-toplanti-2026-08-12.md" "${k}:/
 | Klasör | İçerik |
 |---|---|
 | [`kaynaklar/demo-girdi/`](kaynaklar/demo-girdi/) | Üç kaynak belge |
-| [`kaynaklar/demo-cikti/`](kaynaklar/demo-cikti/) | Zincirin gerçek çıktıları |
+| [`kaynaklar/demo-cikti/`](kaynaklar/demo-cikti/) | Katı denetçi — müdahale ile biten çalıştırma |
+| [`kaynaklar/demo-cikti-onayli/`](kaynaklar/demo-cikti-onayli/) | Gevşek denetçi — kod üretilen çalıştırma |
 
 ## 8.10 Alıştırmalar
 
-1. **Onay dalını görün.** Reviewer'ın `Instructions` alanına "belge makul
-   düzeydeyse onay ver, mükemmellik arama" ekleyin. Zincir bu kez
-   Developer'a ulaşmalı ve `03-kod.abap` üretilmeli.
+1. **Denetçi eşiğini kendiniz ayarlayın.** 8.4'teki iki senaryoyu kendi
+   belgelerinizle tekrarlayın. Sizin işinizde hangi eşik doğru — zincir ne
+   zaman insana dönmeli, ne zaman ilerlemeli? Bu sorunun cevabı akışın
+   değil, işin özelliğidir.
 
 2. **Tur sınırını değiştirin.** `karari oku` düğümündeki `ENUST_TUR`
    değerini 3 yapın. Üçüncü turda bulgu sayısı azalıyor mu, yoksa ajan
