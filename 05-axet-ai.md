@@ -95,16 +95,46 @@ Instructions: Sen yardimci bir asistansin. Kisa ve net Turkce cevap ver.
 Model:        (projenizde açık olan bir model)
 ```
 
+### İki ajan kipi: geçici ve kayıtlı
+
+`Agent ID` alanını boş bırakırsanız düğüm **geçici ajan** (*ephemeral
+agent*) kipinde çalışır: ajan, o anda düğümdeki `Instructions` + `Model`
+ile tanımlanır ve çağrı bitince kaybolur. Bu ders bu kipi kullanıyor.
+
+`Agent ID` doldurulursa portalda kayıtlı bir ajan çağrılır. Aynı ajanı
+birden çok akışta kullanacaksanız ikinci kip daha uygundur.
+
+### ⚠️ Model seçmek zorunludur
+
+Geçici ajan kipinde `Model` boş bırakılamaz. Boşsa ajan **hiç çalışmaz**:
+
+```
+Mastra API error 400: Request validation failed - Invalid ephemeral agent config:
+  "message": "Model is required and cannot be empty", "path": ["model"]
+```
+
+Proje seçilmiş olması yetmez — proje ve model **ayrı iki zorunlu alandır.**
+
 ### Model havuzu
 
-Proje seçtiğinizde NTT'nin model havuzu listelenir — GPT ve Claude
-ailelerinden birden fazla seçenek. Model adları
-`saglayici/model-adi` biçiminde saklanır, örneğin:
+Proje seçtiğinizde NTT'nin model havuzu listelenir. Test ettiğimiz
+ortamda **on model** vardı, iki sağlayıcıdan:
+
+| Sağlayıcı | Modeller |
+|---|---|
+| `ntt/` | GPT-5.6 Terra · GPT-5.6 Luna · GPT-5.4 · GPT-5.4-mini · GPT-5.4-nano · GPT-5.3 Codex · GPT-5.2 Thinking |
+| `aws-anthropic/` | Claude Sonnet 5 · Claude Sonnet 4.6 · Claude Haiku 4.5 |
+
+Model adları `saglayici/model-adi` biçiminde saklanır:
 
 ```
 ntt/gpt-5.4-mini
 aws-anthropic/eu.anthropic.claude-sonnet-5
 ```
+
+> **Sağlayıcı, bütçe hatası aldığınızda önemli hale gelir.** Bütçe
+> sağlayıcı bazında ayrı tanımlanmış olabilir — `ntt/` modelinde kotanız
+> dolmuşsa `aws-anthropic/` bir modelle deneyin (veya tersi).
 
 ### ⚠️ Açılır menüleri fareyle seçin
 
@@ -160,7 +190,49 @@ const metin = msg.payload.response;
 Buradan sonrası artık bildiğiniz şeyler: Ders 3'teki `switch` ile yanıta göre
 dallanabilir, Ders 4'teki `file` düğümüyle diske yazabilirsiniz.
 
-## 5.7 Sık karşılaşılan hatalar
+## 5.7 Yapılandırılmış çıktı (Output Schema)
+
+Şimdiye kadar ajan serbest metin döndürdü. Yanıtı **akışın karar vermesi
+için** kullanacaksanız bu yeterli değildir: `switch` düğümü metin içinde
+"onaylıyorum" mu yazıyor diye aramak zorunda kalır ve er geç yanılır.
+
+Çözüm ajan düğümünün **Input/Output** sekmesindedir: `Output Schema`.
+
+| Mod | Ne zaman |
+|---|---|
+| **Simple** | Alanları tablodan tek tek eklemek (Name / Type / Req / Description) |
+| **Advanced (JSON)** | Hazır bir JSON Schema yapıştırmak |
+| **Validate** | Şemanın geçerliliğini kontrol eder — kaydetmeden önce basın |
+
+Örnek şema:
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "onay":  { "type": "boolean", "description": "Iddia dogru mu" },
+    "sebep": { "type": "string",  "description": "Tek cumlelik gerekce" }
+  },
+  "required": ["onay", "sebep"]
+}
+```
+
+**Validate** basıldığında yeşil `outputSchema: Schema is valid.` bildirimi
+çıkar. Deploy edip çalıştırdığınızda çıktının yapısı değişir:
+
+| | `msg.payload` |
+|---|---|
+| Şemasız | `{ response: "aXet.flows, blockchain tabanlı…" }` |
+| Şemalı | `{ onay: false, sebep: "aXet.flows hakkında bilgi sahi…" }` |
+
+Artık `switch` düğümü doğrudan `payload.onay` alanına bakabilir. Ajanın
+kararı akışın kararı haline gelir.
+
+> **Bu, çok ajanlı akışların temelidir.** Bir ajanın çıktısını başka bir
+> ajana veya bir `switch`'e güvenle bağlamak istiyorsanız, aradaki
+> sözleşmeyi şema kurar — serbest metin değil.
+
+## 5.8 Sık karşılaşılan hatalar
 
 ### `Project ID not configured` (`VALIDATION_ERROR`)
 
@@ -168,15 +240,39 @@ Proje seçilmemiş. Ajan düğümünü açıp **Project** seçin. Klavyeyle seç
 kaydedilmemiş olabilir — 5.4'e bakın.
 
 Akışı **import ettiyseniz veya bir versiyondan geri yüklediyseniz** bu hata
-beklenendir: `projectId` alanı taşınmamıştır. Ayrıntı için 5.8'e bakın.
+beklenendir: `projectId` alanı taşınmamıştır. Ayrıntı için 5.9'a bakın.
 
-### `Budget exhausted or billing disabled for this project`
+### `Invalid ephemeral agent config` (`VALIDATION_ERROR`, 400)
+
+`Model` alanı boş. Mesajın içinde tam sebep yazar:
+
+```
+"message": "Model is required and cannot be empty", "path": ["model"]
+```
+
+Ajan düğümünü açıp **Model** seçin — 5.4'e bakın.
+
+### `Budget exhausted or billing disabled for this project` (500)
 
 **Bu bir kod hatası değil, bütçe/yetki sorunudur.** Seçtiğiniz projenin AI
-kredisi kapalı.
+kredisi kapalı. Mesaj hangi model grubunun reddedildiğini de söyler:
 
-**Çözüm:** Başka bir proje deneyin. Hepsi kapalıysa proje sahibinden veya
-IT'den AI bütçesi talep edin.
+```
+Budget exhausted or billing disabled for this project.
+Received Model Group=openai/gpt-5.4-mini
+Available Model Group Fallbacks=None
+```
+
+`Fallbacks=None` satırı önemli: platform sizin için otomatik olarak başka
+bir modele geçmez, çağrı doğrudan düşer.
+
+**Çözüm sırası:**
+
+1. **Başka bir proje deneyin.** Bütçe proje bazındadır — eğitimi hazırlarken
+   bir projede kapalı, diğerinde açıktı.
+2. **Başka bir sağlayıcı deneyin.** `ntt/` kapalıysa `aws-anthropic/` bir
+   model açık olabilir.
+3. Hepsi kapalıysa proje sahibinden veya IT'den AI bütçesi talep edin.
 
 Hata mesajının tam zinciri mimariyi de gösterir:
 
@@ -188,13 +284,34 @@ Mastra API error 500  ->  litellm.APIError  ->  OpenAIException
 Kurumsal AI platformları modeli doğrudan çağırmaz; araya **bütçe, kota ve
 model yönlendirme** katmanları koyar. Bu hata o katmandan gelir.
 
+### Hata mesajı yarıda kesiliyor — tam metni nasıl görürsünüz
+
+Debug paneli uzun hataları kırpar. Şunu görürsünüz:
+
+```
+message: "Mastra API error 400: {"error":"Request validation failed - Invalid ephemeral ag..."
+```
+
+Asıl sebep tam da kesilen yerdedir. **Tam metin konteyner log'undadır:**
+
+```powershell
+wsl.exe -d aXet-flows_WSL -- docker logs --tail 40 $(wsl.exe -d aXet-flows_WSL -- docker ps -q)
+```
+
+Bu komut eğitimi hazırlarken iki hatanın da sebebini ortaya çıkardı; debug
+paneline bakarak ikisini de bulmak mümkün değildi.
+
+> **Alışkanlık edinin:** Ajan hatası aldığınızda önce log'a bakın. Ajan
+> katmanı (Mastra), model yönlendirici (litellm) ve sağlayıcı ayrı ayrı
+> mesaj üretir — hangisinin konuştuğunu ancak tam metin söyler.
+
 ### Yanıt çok uzun sürüyor / zaman aşımı
 
 **Advanced** sekmesinden `timeout` (varsayılan 300000 ms = 5 dk) ve
 `maxSteps` (15) ayarlarına bakın. Ajan araç kullanıyorsa birden fazla adım
 atar, süre uzar.
 
-## 5.8 Hazır akışı import etmek
+## 5.9 Hazır akışı import etmek
 
 1. **☰ menü → Import**
 2. [`kaynaklar/ornek-05-axet-ai.json`](kaynaklar/ornek-05-axet-ai.json)
@@ -221,7 +338,7 @@ andaki son deploy'un birebir kopyasıdır.
 > birkaç saniye bekleyin. Alan gerçekten boşsa, akış çalıştırıldığında
 > `Project ID not configured` hatası verir — asıl kanıt budur.
 
-## 5.9 Alıştırmalar
+## 5.10 Alıştırmalar
 
 1. **Kolay** — `Instructions` alanını değiştirin: "Sadece madde madde cevap
    ver" deyin ve farkı gözleyin. Sistem talimatının gücünü görün.

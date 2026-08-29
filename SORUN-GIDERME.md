@@ -380,6 +380,24 @@ flow.set("sayac", sayac);
 
 ## AI ajanı sorunları
 
+### Ajan hiç çalışmıyor — `Invalid ephemeral agent config`
+
+`Model` alanı boş. Proje seçmek yetmez; **proje ve model ayrı iki zorunlu
+alandır.** Düğümü açıp Model seçin.
+
+### Ajan hatasının tam metnini görmek
+
+Debug paneli uzun hataları kırpar (`...Invalid ephemeral ag...`) ve asıl
+sebep tam da kesilen yerde kalır. Tam metin konteyner log'undadır:
+
+```powershell
+wsl.exe -d aXet-flows_WSL -- docker logs --tail 40 $(wsl.exe -d aXet-flows_WSL -- docker ps -q)
+```
+
+Ajan hatalarında **önce buraya bakın.** Mastra (ajan katmanı), litellm
+(model yönlendirici) ve sağlayıcı ayrı ayrı mesaj üretir; hangisinin
+konuştuğunu ancak tam metin söyler.
+
 ### `Project ID not configured` (VALIDATION_ERROR)
 
 Ajan düğümünde proje seçilmemiş. Düğümü açıp **Project** seçin.

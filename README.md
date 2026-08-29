@@ -39,7 +39,7 @@ Her dersin tasarımcıda karşılık gelen bir akış sekmesi vardır:
 | 2 | [İlk Akış](02-ilk-akis.md) | ~20 dk | `Ders 2 - Ilk Akis` | `msg` nesnesi, function, deploy |
 | 3 | [HTTP ve Dallanma](03-http-dallanma.md) | ~25 dk | `Ders 3 - HTTP` | `http request`, JSON tipi, `switch` |
 | 4 | [Zamanlayıcı ve Dosya](04-zamanlayici-dosya.md) | ~20 dk | `Ders 4 - Zamanlayici` | Zamanlayıcı, `file`, context, volume |
-| 5 | [aXet AI Ajanı](05-axet-ai.md) | ~25 dk | `Ders 5 - aXet AI` | AI ajanı, model seçimi, hata dalı, MCP |
+| 5 | [aXet AI Ajanı](05-axet-ai.md) | ~30 dk | `Ders 5 - aXet AI` | AI ajanı, model seçimi, **yapılandırılmış çıktı**, hata dalı |
 | 6 | [Versiyon ve Canlıya Alma](06-versiyon-ve-canliya-alma.md) | ~30 dk | (portal) | Versiyon kaydetme, Production mode, kalıcılık |
 | 7 | [Hata Yönetimi](07-hata-yonetimi.md) | ~25 dk | `Ders 7 - Hata Yonetimi` | `catch`, `status`, yeniden deneme, hata günlüğü |
 | — | [Sorun Giderme](SORUN-GIDERME.md) | başvuru | — | Hata → çözüm tablosu |
