@@ -306,4 +306,6 @@ Function kodları ayrı ayrı da okunabilir:
 ---
 
 **Önceki:** [6. Versiyon ve Canlıya Alma](06-versiyon-ve-canliya-alma.md) ·
+**Sonraki:** [8. Ajan Zinciri](08-ajan-zinciri.md) — bu dersteki döngü deseni
+dört ajanlı bir iş akışında ·
 **Başvuru:** [Sorun Giderme](SORUN-GIDERME.md)

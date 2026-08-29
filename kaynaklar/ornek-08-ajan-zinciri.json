@@ -1,0 +1,579 @@
+[
+  {
+    "id": "d8tab00000000001",
+    "type": "tab",
+    "label": "Ders 8 - Ajan Zinciri",
+    "disabled": false,
+    "info": "Toplanti notlari -> FS -> TS -> review dongusu -> kod.\nDers: 08-ajan-zinciri.md"
+  },
+  {
+    "id": "d8_inject",
+    "type": "inject",
+    "z": "d8tab00000000001",
+    "name": "zinciri baslat",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "payload": "",
+    "payloadType": "date",
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 160,
+    "y": 200,
+    "wires": [
+      [
+        "d8_f1",
+        "d8_f2",
+        "d8_f3"
+      ]
+    ]
+  },
+  {
+    "id": "d8_f1",
+    "type": "file in",
+    "z": "d8tab00000000001",
+    "name": "01-toplanti-2026-08-12.md",
+    "filename": "/data/girdi/01-toplanti-2026-08-12.md",
+    "filenameType": "str",
+    "format": "utf8",
+    "chunk": false,
+    "sendError": false,
+    "encoding": "utf8",
+    "allProps": false,
+    "x": 400,
+    "y": 140,
+    "wires": [
+      [
+        "d8_join"
+      ]
+    ]
+  },
+  {
+    "id": "d8_f2",
+    "type": "file in",
+    "z": "d8tab00000000001",
+    "name": "02-toplanti-2026-08-19.md",
+    "filename": "/data/girdi/02-toplanti-2026-08-19.md",
+    "filenameType": "str",
+    "format": "utf8",
+    "chunk": false,
+    "sendError": false,
+    "encoding": "utf8",
+    "allProps": false,
+    "x": 400,
+    "y": 200,
+    "wires": [
+      [
+        "d8_join"
+      ]
+    ]
+  },
+  {
+    "id": "d8_f3",
+    "type": "file in",
+    "z": "d8tab00000000001",
+    "name": "03-mevcut-durum.md",
+    "filename": "/data/girdi/03-mevcut-durum.md",
+    "filenameType": "str",
+    "format": "utf8",
+    "chunk": false,
+    "sendError": false,
+    "encoding": "utf8",
+    "allProps": false,
+    "x": 400,
+    "y": 260,
+    "wires": [
+      [
+        "d8_join"
+      ]
+    ]
+  },
+  {
+    "id": "d8_join",
+    "type": "join",
+    "z": "d8tab00000000001",
+    "name": "belgeleri birlestir",
+    "mode": "custom",
+    "build": "string",
+    "property": "payload",
+    "propertyType": "msg",
+    "key": "topic",
+    "joiner": "\n\n---\n\n",
+    "joinerType": "str",
+    "accumulate": false,
+    "timeout": "",
+    "count": "3",
+    "reduceRight": false,
+    "x": 650,
+    "y": 200,
+    "wires": [
+      [
+        "d8_prep_fs"
+      ]
+    ]
+  },
+  {
+    "id": "d8_prep_fs",
+    "type": "function",
+    "z": "d8tab00000000001",
+    "name": "FS istegi hazirla",
+    "func": "// Uc dokuman join dugumunde tek metne birlestirildi.\n// Ajana gonderilen sey msg.payload'daki METINDIR.\n\nconst belgeler = msg.payload;\n\nmsg.tur = 0;              // TS duzeltme turu sayaci -- msg uzerinde tasinir\nmsg.belgeler = belgeler;  // sonraki adimlar icin sakla\n\nmsg.payload = `Asagida bir SAP gelistirme talebine ait toplanti notlari ve\nmevcut durum belgesi var.\n\nBunlardan bir FONKSIYONEL SARTNAME (FS) uret. Kurallar:\n\n1. Sadece belgelerde YAZAN bilgiyi kullan. Uydurma.\n2. Celiskili konusulmus bir konu varsa, son toplantidaki karari esas al.\n3. Belirsiz kalan konulari \"Acik Sorular\" basligi altinda ayri listele.\n4. KISA TUT: en fazla 120 satir. Gereksiz tekrar yapma.\n5. Ciktiyi Markdown olarak ver. Baslik yapisi:\n   # Fonksiyonel Sartname\n   ## 1. Amac\n   ## 2. Kapsam\n   ## 3. Is Kurallari\n   ## 4. Cikti ve Formatlar\n   ## 5. Acik Sorular\n\nBELGELER:\n---\n${belgeler}\n---`;\n\nnode.status({ fill: \"blue\", shape: \"dot\", text: \"FS uretiliyor...\" });\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 880,
+    "y": 200,
+    "wires": [
+      [
+        "d8_fs"
+      ]
+    ]
+  },
+  {
+    "id": "d8_fs",
+    "type": "axet-agents-execute",
+    "z": "d8tab00000000001",
+    "name": "1. FS Generator",
+    "agentId": "",
+    "agentName": "",
+    "description": "1. FS Generator",
+    "instructions": "Sen deneyimli bir SAP is analistisin. Toplanti notlarindan net, olculebilir fonksiyonel sartnameler yazarsin. Belgede olmayan bir sey uydurmazsin; eksikleri acik soru olarak isaretlersin.",
+    "model": "aws-anthropic/eu.anthropic.claude-sonnet-4-6",
+    "input": "",
+    "mcpTools": "[]",
+    "coreTools": "",
+    "customTools": "[]",
+    "temperature": 0.3,
+    "maxRetries": 2,
+    "maxSteps": 15,
+    "timeout": 300000,
+    "stream": false,
+    "outputSchema": "",
+    "projectId": "47fa6592-60f7-4ae2-b540-9234a0b211c0",
+    "x": 1110,
+    "y": 200,
+    "wires": [
+      [
+        "d8_fs_kaydet"
+      ],
+      [
+        "d8_hata"
+      ]
+    ]
+  },
+  {
+    "id": "d8_fs_kaydet",
+    "type": "function",
+    "z": "d8tab00000000001",
+    "name": "FS kaydet",
+    "func": "// Ajan cevabi { response: \"...\" } yapisinda gelir (outputSchema yoksa).\n// Metni hem dosyaya yazmak hem sonraki adimlara tasimak icin ayiriyoruz.\n\nmsg.fsMetni = msg.payload.response || msg.payload;\nmsg.payload = msg.fsMetni;   // file dugumu METIN bekler\nmsg.filename = \"/data/cikti/01-FS.md\";\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"FS yazildi\" });\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 190,
+    "y": 340,
+    "wires": [
+      [
+        "d8_fs_file",
+        "d8_prep_ts"
+      ]
+    ]
+  },
+  {
+    "id": "d8_fs_file",
+    "type": "file",
+    "z": "d8tab00000000001",
+    "name": "01-FS.md",
+    "filename": "filename",
+    "filenameType": "msg",
+    "appendNewline": false,
+    "createDir": true,
+    "overwriteFile": "true",
+    "encoding": "utf8",
+    "x": 400,
+    "y": 340,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "d8_prep_ts",
+    "type": "function",
+    "z": "d8tab00000000001",
+    "name": "TS istegi hazirla",
+    "func": "// Bu dugum iki yoldan gecilir:\n//   1. Ilk gelis  -> FS'ten gelir, msg.tur = 0\n//   2. Geri donus -> Reviewer'dan gelir, msg.tur artmistir ve\n//                    msg.bulgular doludur\n//\n// Ders 7'deki retry dongusunun aynisi: sayac msg uzerinde, ust sinir var.\n\nmsg.tur = (msg.tur || 0) + 1;\n\nconst NL = String.fromCharCode(10);   // kacis sorunu yasamamak icin\nconst fs = msg.fsMetni;\nconst oncekiTs = msg.tsMetni || \"\";\nconst bulgular = msg.bulgular || [];\n\nlet duzeltmeBolumu = \"\";\nif (bulgular.length > 0) {\n  const liste = bulgular\n    .map(b => \"- [\" + (b.onem || \"orta\") + \"] \" + b.madde)\n    .join(NL);\n\n  // ONEMLI: onceki TS'in TAMAMINI geri gondermiyoruz.\n  // Ilk denemede gonderdik ve platform gecidi zaman asimina ugradi\n  // (OriginTimeout). Sadece bolum basliklarini gonderiyoruz; yapi\n  // korunuyor ama girdi kucuk kaliyor.\n  const basliklar = oncekiTs\n    .split(NL)\n    .filter(l => l.charAt(0) === \"#\")\n    .join(NL);\n\n  duzeltmeBolumu = [\n    \"\",\n    \"BU BIR DUZELTME TURU (tur \" + msg.tur + \").\",\n    \"Asagidaki bulgulari giderecek sekilde belgeyi YENIDEN uret.\",\n    \"\",\n    \"BULGULAR:\",\n    liste,\n    \"\",\n    \"ONCEKI BELGENIN YAPISI (sadece basliklar -- bu yapiyi koru):\",\n    \"---\",\n    basliklar,\n    \"---\",\n    \"\"\n  ].join(NL);\n}\n\nmsg.payload = [\n  \"Asagidaki fonksiyonel sartnameden bir TEKNIK SARTNAME (TS) uret.\",\n  duzeltmeBolumu,\n  \"Kurallar:\",\n  \"\",\n  \"1. ABAP / SAP S4HANA hedefle.\",\n  \"2. Kullanilacak tablolari ve alanlari acikca yaz.\",\n  \"3. Program adi, tablo tipi, yapi adlarini naming convention'a uydur.\",\n  \"4. Performans kisitini goz ardi etme.\",\n  \"5. KISA TUT: en fazla 180 satir. Uzun belge uretme -- platform gecidi\",\n  \"   uzun cevaplarda zaman asimina ugruyor.\",\n  \"6. Ciktiyi Markdown olarak ver. Baslik yapisi:\",\n  \"   # Teknik Sartname\",\n  \"   ## 1. Genel Bakis\",\n  \"   ## 2. Veri Kaynaklari\",\n  \"   ## 3. Program Yapisi\",\n  \"   ## 4. Algoritma\",\n  \"   ## 5. Yetki ve Zamanlama\",\n  \"   ## 6. Test Senaryolari\",\n  \"\",\n  \"FONKSIYONEL SARTNAME:\",\n  \"---\",\n  fs,\n  \"---\"\n].join(NL);\n\nnode.status({ fill: \"blue\", shape: \"dot\", text: \"TS uretiliyor (tur \" + msg.tur + \")\" });\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 650,
+    "y": 340,
+    "wires": [
+      [
+        "d8_ts"
+      ]
+    ]
+  },
+  {
+    "id": "d8_ts",
+    "type": "axet-agents-execute",
+    "z": "d8tab00000000001",
+    "name": "2. TS Generator",
+    "agentId": "",
+    "agentName": "",
+    "description": "2. TS Generator",
+    "instructions": "Sen kidemli bir ABAP gelistiricisisin. Fonksiyonel sartnameyi uygulanabilir teknik tasarima cevirirsin: tablolar, alanlar, program yapisi, algoritma. Naming convention'a harfiyen uyarsin.",
+    "model": "aws-anthropic/eu.anthropic.claude-haiku-4-5-20251001-v1¬¬0",
+    "input": "",
+    "mcpTools": "[]",
+    "coreTools": "",
+    "customTools": "[]",
+    "temperature": 0.3,
+    "maxRetries": 2,
+    "maxSteps": 15,
+    "timeout": 300000,
+    "stream": false,
+    "outputSchema": "",
+    "projectId": "47fa6592-60f7-4ae2-b540-9234a0b211c0",
+    "x": 880,
+    "y": 340,
+    "wires": [
+      [
+        "d8_ts_kaydet"
+      ],
+      [
+        "d8_hata"
+      ]
+    ]
+  },
+  {
+    "id": "d8_ts_kaydet",
+    "type": "function",
+    "z": "d8tab00000000001",
+    "name": "TS kaydet",
+    "func": "// Her tur ayri dosyaya yazilir: 02-TS-tur1.md, 02-TS-tur2.md ...\n// Boylece \"ikinci turda ne degisti?\" sorusu somut olarak cevaplanabilir.\n\nmsg.tsMetni = msg.payload.response || msg.payload;\nmsg.payload = msg.tsMetni;\nmsg.filename = `/data/cikti/02-TS-tur${msg.tur}.md`;\n\nnode.status({ fill: \"green\", shape: \"dot\", text: `TS tur ${msg.tur} yazildi` });\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1110,
+    "y": 340,
+    "wires": [
+      [
+        "d8_ts_file",
+        "d8_prep_rev"
+      ]
+    ]
+  },
+  {
+    "id": "d8_ts_file",
+    "type": "file",
+    "z": "d8tab00000000001",
+    "name": "02-TS-turN.md",
+    "filename": "filename",
+    "filenameType": "msg",
+    "appendNewline": false,
+    "createDir": true,
+    "overwriteFile": "true",
+    "encoding": "utf8",
+    "x": 1330,
+    "y": 340,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "d8_prep_rev",
+    "type": "function",
+    "z": "d8tab00000000001",
+    "name": "inceleme istegi",
+    "func": "// Reviewer'in cevabi outputSchema ile YAPILANDIRILMIS gelir:\n//   { onay: boolean, bulgular: [{madde, onem}], ozet: string }\n// Bu yuzden switch dugumu metin icinde arama yapmak zorunda kalmaz.\n\nmsg.tsMetni = msg.payload.response || msg.payload;\n\nmsg.payload = `Asagidaki teknik sartnameyi bir SAP kidemli gelistiricisi\ngozuyle incele.\n\nSorulacak sorular:\n- Fonksiyonel sartnamedeki her kural teknik olarak karsilanmis mi?\n- Tablo ve alan secimleri dogru mu?\n- Performans kisiti dikkate alinmis mi?\n- Gelistirici bu belgeyle kod yazmaya baslayabilir mi?\n\nEksik veya hatali bir sey bulursan onay verme; bulgulari maddeler halinde yaz.\nEN FAZLA 5 BULGU yaz -- sadece gelistirmeyi engelleyecek kadar onemli\nolanlari. Kucuk eksikleri gormezden gel.\nBelge yeterliyse onay ver.\n\nFONKSIYONEL SARTNAME:\n---\n${msg.fsMetni}\n---\n\nTEKNIK SARTNAME:\n---\n${msg.tsMetni}\n---`;\n\nnode.status({ fill: \"blue\", shape: \"dot\", text: \"inceleniyor...\" });\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 190,
+    "y": 480,
+    "wires": [
+      [
+        "d8_rev"
+      ]
+    ]
+  },
+  {
+    "id": "d8_rev",
+    "type": "axet-agents-execute",
+    "z": "d8tab00000000001",
+    "name": "3. TS Reviewer",
+    "agentId": "",
+    "agentName": "",
+    "description": "3. TS Reviewer",
+    "instructions": "Sen titiz bir SAP teknik lideri sin. Teknik sartnameleri gelistirmeye hazir olup olmadigi acisindan degerlendirirsin. Eksik varsa onay vermezsin. Degerlendirmeni istenen JSON yapisinda dondurursun.",
+    "model": "aws-anthropic/eu.anthropic.claude-haiku-4-5-20251001-v1¬¬0",
+    "input": "",
+    "mcpTools": "[]",
+    "coreTools": "",
+    "customTools": "[]",
+    "temperature": 0.3,
+    "maxRetries": 2,
+    "maxSteps": 15,
+    "timeout": 300000,
+    "stream": false,
+    "outputSchema": "{\"type\": \"object\", \"properties\": {\"onay\": {\"type\": \"boolean\", \"description\": \"TS gelistirmeye hazir mi\"}, \"bulgular\": {\"type\": \"array\", \"description\": \"Eksik veya hatali maddeler\", \"items\": {\"type\": \"object\", \"properties\": {\"madde\": {\"type\": \"string\"}, \"onem\": {\"type\": \"string\", \"description\": \"yuksek/orta/dusuk\"}}}}, \"ozet\": {\"type\": \"string\", \"description\": \"Tek paragraf degerlendirme\"}}, \"required\": [\"onay\", \"ozet\"]}",
+    "projectId": "47fa6592-60f7-4ae2-b540-9234a0b211c0",
+    "x": 420,
+    "y": 480,
+    "wires": [
+      [
+        "d8_karar"
+      ],
+      [
+        "d8_hata"
+      ]
+    ]
+  },
+  {
+    "id": "d8_karar",
+    "type": "function",
+    "z": "d8tab00000000001",
+    "name": "karari oku",
+    "func": "// Reviewer ciktisini oku ve karari msg'ye yaz.\n// switch dugumu bundan sonra sadece msg.karar alanina bakar.\n\nconst r = msg.payload;           // outputSchema sayesinde nesne\nconst ENUST_TUR = 2;             // duzeltme turu ust siniri\n\nmsg.onay = r.onay === true;\nmsg.bulgular = r.bulgular || [];\nmsg.ozet = r.ozet || \"\";\n\nif (msg.onay) {\n  msg.karar = \"gelistir\";\n  node.status({ fill: \"green\", shape: \"dot\", text: `onaylandi (tur ${msg.tur})` });\n} else if (msg.tur < ENUST_TUR) {\n  msg.karar = \"duzelt\";\n  node.status({ fill: \"yellow\", shape: \"ring\",\n                text: `duzeltme (${msg.bulgular.length} bulgu)` });\n} else {\n  msg.karar = \"mudahale\";\n  node.status({ fill: \"red\", shape: \"dot\", text: \"tur hakki bitti\" });\n}\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 650,
+    "y": 480,
+    "wires": [
+      [
+        "d8_switch"
+      ]
+    ]
+  },
+  {
+    "id": "d8_switch",
+    "type": "switch",
+    "z": "d8tab00000000001",
+    "name": "onay?",
+    "property": "karar",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "gelistir",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "duzelt",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "mudahale",
+        "vt": "str"
+      }
+    ],
+    "checkall": "false",
+    "repair": false,
+    "outputs": 3,
+    "x": 870,
+    "y": 480,
+    "wires": [
+      [
+        "d8_prep_dev"
+      ],
+      [
+        "d8_prep_ts"
+      ],
+      [
+        "d8_mudahale"
+      ]
+    ]
+  },
+  {
+    "id": "d8_prep_dev",
+    "type": "function",
+    "z": "d8tab00000000001",
+    "name": "kod istegi hazirla",
+    "func": "msg.payload = `Asagidaki teknik sartnameye gore ABAP kodunu yaz.\n\nKurallar:\n1. Calisir, eksiksiz bir program yaz -- sozde kod degil.\n2. Naming convention'a uy.\n3. Kodu yorumla; her ana blogun ne yaptigini kisaca acikla.\n4. Sadece kodu dondur, aciklama metni ekleme.\n\nTEKNIK SARTNAME:\n---\n${msg.tsMetni}\n---`;\n\nnode.status({ fill: \"blue\", shape: \"dot\", text: \"kod yaziliyor...\" });\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 190,
+    "y": 620,
+    "wires": [
+      [
+        "d8_dev"
+      ]
+    ]
+  },
+  {
+    "id": "d8_dev",
+    "type": "axet-agents-execute",
+    "z": "d8tab00000000001",
+    "name": "4. Developer",
+    "agentId": "",
+    "agentName": "",
+    "description": "4. Developer",
+    "instructions": "Sen ABAP gelistiricisisin. Teknik sartnameye birebir uyan, calisir ve yorumlu kod yazarsin. Sozde kod yazmazsin.",
+    "model": "aws-anthropic/eu.anthropic.claude-sonnet-4-6",
+    "input": "",
+    "mcpTools": "[]",
+    "coreTools": "",
+    "customTools": "[]",
+    "temperature": 0.3,
+    "maxRetries": 2,
+    "maxSteps": 15,
+    "timeout": 300000,
+    "stream": false,
+    "outputSchema": "",
+    "projectId": "47fa6592-60f7-4ae2-b540-9234a0b211c0",
+    "x": 420,
+    "y": 620,
+    "wires": [
+      [
+        "d8_kod_kaydet"
+      ],
+      [
+        "d8_hata"
+      ]
+    ]
+  },
+  {
+    "id": "d8_kod_kaydet",
+    "type": "function",
+    "z": "d8tab00000000001",
+    "name": "kodu kaydet",
+    "func": "const kod = msg.payload.response || msg.payload;\n\nmsg.payload = kod;\nmsg.filename = \"/data/cikti/03-kod.abap\";\n\nnode.status({ fill: \"green\", shape: \"dot\", text: `kod yazildi (tur ${msg.tur})` });\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 650,
+    "y": 620,
+    "wires": [
+      [
+        "d8_kod_file",
+        "d8_bitti"
+      ]
+    ]
+  },
+  {
+    "id": "d8_kod_file",
+    "type": "file",
+    "z": "d8tab00000000001",
+    "name": "03-kod.abap",
+    "filename": "filename",
+    "filenameType": "msg",
+    "appendNewline": false,
+    "createDir": true,
+    "overwriteFile": "true",
+    "encoding": "utf8",
+    "x": 870,
+    "y": 620,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "d8_bitti",
+    "type": "debug",
+    "z": "d8tab00000000001",
+    "name": "ZINCIR TAMAM",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "tur",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 880,
+    "y": 680,
+    "wires": []
+  },
+  {
+    "id": "d8_mudahale",
+    "type": "function",
+    "z": "d8tab00000000001",
+    "name": "mudahale notu",
+    "func": "// Ust sinira ulasildi: zincir kendini toparlayamadi.\n// Ders 7'nin \"vazgec\" dali ile ayni felsefe -- sessizce durma, iz birak.\n\nconst satirlar = [\n  \"# Insan mudahalesi gerekli\",\n  \"\",\n  `Zincir ${msg.tur} turda onay alamadi.`,\n  \"\",\n  \"## Reviewer ozeti\",\n  msg.ozet || \"(ozet yok)\",\n  \"\",\n  \"## Kalan bulgular\",\n  ...(msg.bulgular || []).map(b => `- [${b.onem || \"orta\"}] ${b.madde}`),\n  \"\",\n  `Son teknik sartname: /data/cikti/02-TS-tur${msg.tur}.md`\n];\n\nmsg.payload = satirlar.join(\"\\n\");\nmsg.filename = \"/data/cikti/MUDAHALE-GEREKLI.md\";\n\nnode.warn([\"ZINCIR ONAY ALAMADI\", msg.ozet]);\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1110,
+    "y": 540,
+    "wires": [
+      [
+        "d8_mud_file"
+      ]
+    ]
+  },
+  {
+    "id": "d8_mud_file",
+    "type": "file",
+    "z": "d8tab00000000001",
+    "name": "MUDAHALE-GEREKLI.md",
+    "filename": "filename",
+    "filenameType": "msg",
+    "appendNewline": false,
+    "createDir": true,
+    "overwriteFile": "true",
+    "encoding": "utf8",
+    "x": 1330,
+    "y": 540,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "d8_catch",
+    "type": "catch",
+    "z": "d8tab00000000001",
+    "name": "zincir hatalari",
+    "scope": null,
+    "uncaught": false,
+    "x": 190,
+    "y": 760,
+    "wires": [
+      [
+        "d8_hata"
+      ]
+    ]
+  },
+  {
+    "id": "d8_hata",
+    "type": "debug",
+    "z": "d8tab00000000001",
+    "name": "ZINCIR HATASI",
+    "active": true,
+    "tosidebar": true,
+    "console": true,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 430,
+    "y": 760,
+    "wires": []
+  }
+]

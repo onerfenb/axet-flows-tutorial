@@ -42,6 +42,7 @@ Her dersin tasarımcıda karşılık gelen bir akış sekmesi vardır:
 | 5 | [aXet AI Ajanı](05-axet-ai.md) | ~30 dk | `Ders 5 - aXet AI` | AI ajanı, model seçimi, **yapılandırılmış çıktı**, hata dalı |
 | 6 | [Versiyon ve Canlıya Alma](06-versiyon-ve-canliya-alma.md) | ~30 dk | (portal) | Versiyon kaydetme, Production mode, kalıcılık |
 | 7 | [Hata Yönetimi](07-hata-yonetimi.md) | ~25 dk | `Ders 7 - Hata Yonetimi` | `catch`, `status`, yeniden deneme, hata günlüğü |
+| 8 | [Ajan Zinciri](08-ajan-zinciri.md) | ~40 dk | `Ders 8 - Ajan Zinciri` | Çok ajanlı akış, denetim döngüsü, geçit sınırları |
 | — | [Sorun Giderme](SORUN-GIDERME.md) | başvuru | — | Hata → çözüm tablosu |
 
 Dersler birbirinin üstüne kurulur; sırayla ilerleyin. Yedisi bittiğinde şunu
@@ -49,6 +50,10 @@ kurabilir hale gelirsiniz: *"her sabah 8'de API'den siparişleri çek,
 bekleyenleri ayır, bir AI ajanına özetlet, dosyaya yaz"* — ve bunu **canlıda**,
 sizden bağımsız, **hata verdiğinde kendini toparlayarak** çalışır halde
 bırakabilirsiniz.
+
+Ders 8 bunun üstüne bir katman koyar: **birbirini denetleyen ajanlardan
+oluşan bir zincir.** Bir ajanın ürettiğini bir başkası denetler, eksik
+bulursa geri gönderir, düzelmezse insana devreder.
 
 > 💡 **Ders 6'yı atlamayın.** Akışlarınız tasarımcı konteynerinde yaşar;
 > versiyon kaydetmezseniz konteynerle birlikte kaybolurlar.
